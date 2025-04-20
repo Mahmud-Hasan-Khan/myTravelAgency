@@ -183,19 +183,149 @@ import React, { useState } from 'react';
 const SearchForm = () => {
 
   const [activeTab, setActiveTab] = useState("tab1")
+  const [tripType, setTripType] = useState('round');
+  const [form, setForm] = useState({
+    from: '',
+    to: '',
+    travelers: 1,
+    travelerType: 'adult',
+    airline: '',
+    departureDate: '',
+    returnDate: '',
+  });
+
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', { activeTab, tripType, ...form });
+  };
 
   const tabs = [
     { id: "tab1", icon: "/airplane.ico", label: "Flight" },
-    { id: "tab2", icon: "/visa.ico", label: "Hotel" },
-    { id: "tab3", icon: "/love-hotel.ico", label: "Visa" },
+    { id: "tab2", icon: "/love-hotel.ico", label: "Hotel" },
+    { id: "tab3", icon: "/visa.ico", label: "Visa" },
     { id: "tab4", icon: "/kaaba.ico", label: "Umrah" },
   ];
 
   const tabContent = {
     tab1: (
       <div>
-        <h2>Tab content 1 </h2>
-      </div>
+        <form>
+          <>
+            {/* Trip Type */}
+            <div className="flex gap-2 py-4">
+              {['oneway', 'round', 'multi'].map((type) => (
+                <label key={type} className={`flex items-center gap-1 cursor-pointer border-[1px] px-2 py-1 rounded-md transition-colors duration-200 ${tripType === type ? 'bg-[#1882ff] text-white border-blue-500' : ' bg-gray-200'}`}>
+                  <input
+                    type="radio"
+                    name="tripType"
+                    value={type}
+                    checked={tripType === type}
+                    onChange={(e) => setTripType(e.target.value)}
+                  />
+                  <span className="capitalize">{type === 'oneway' ? 'One Way' : type === 'round' ? 'Round Trip' : 'Multi City'}</span>
+                </label>
+              ))}
+            </div>
+
+            {/* From / To */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <select
+                name="from"
+                value={form.from}
+                onChange={handleChange}
+                className="p-3 border border-gray-300 rounded-xl"
+              >
+                <option value="">From</option>
+                <option value="NYC">New York</option>
+                <option value="LAX">Los Angeles</option>
+                <option value="LHR">London</option>
+              </select>
+
+              <select
+                name="to"
+                value={form.to}
+                onChange={handleChange}
+                className="p-3 border border-gray-300 rounded-xl"
+              >
+                <option value="">To</option>
+                <option value="DXB">Dubai</option>
+                <option value="DEL">Delhi</option>
+                <option value="SYD">Sydney</option>
+              </select>
+            </div>
+
+            {/* Dates */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Departure Date</label>
+                <input
+                  type="date"
+                  name="departureDate"
+                  value={form.departureDate}
+                  onChange={handleChange}
+                  className="p-3 border border-gray-300 rounded-xl w-full"
+                />
+              </div>
+
+              {tripType === 'round' && (
+                <div>
+                  <label className="block text-sm font-medium mb-1">Return Date</label>
+                  <input
+                    type="date"
+                    name="returnDate"
+                    value={form.returnDate}
+                    onChange={handleChange}
+                    className="p-3 border border-gray-300 rounded-xl w-full"
+                  />
+                </div>
+              )}
+            </div>
+            {/* Travelers + Type */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="number"
+                name="travelers"
+                min="1"
+                value={form.travelers}
+                onChange={handleChange}
+                placeholder="Number of Travelers"
+                className="p-3 border border-gray-300 rounded-xl"
+              />
+
+              <select
+                name="travelerType"
+                value={form.travelerType}
+                onChange={handleChange}
+                className="p-3 border border-gray-300 rounded-xl"
+              >
+                <option value="adult">Adult</option>
+                <option value="child">Child</option>
+                <option value="infant">Infant</option>
+              </select>
+            </div>
+
+            {/* Preferred Airline */}
+            <select
+              name="airline"
+              value={form.airline}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-xl"
+            >
+              <option value="">Preferred Airline</option>
+              <option value="emirates">Emirates</option>
+              <option value="qatar">Qatar Airways</option>
+              <option value="delta">Delta</option>
+            </select>
+          </>
+
+        </form>
+
+
+      </div >
     ),
     tab2: (
       <div>
@@ -216,18 +346,18 @@ const SearchForm = () => {
 
 
   return (
-    <div className='max-w-[600px] mx-auto mt-10 bg-white p-6 shadow-lg space-y-6 border-b' >
+    <div className=' mx-auto mt-10 bg-white p-6 shadow-lg space-y-2 border-[1px] rounded-md' >
 
       {/* For Tab  */}
       <div className='flex justify-evenly flex-wrap border-b'>
         {tabs.map((tab) => (
           <button key={tab.id}
-            className={`px-2 py-2 font-semibold flex  gap-2 ${activeTab === tab.id ? "border-b-2 border-blue-500 text-blue-500" : "text-gray-500 hover:text-blue-500"
+            className={`px-8 py-2 font-semibold flex  gap-2 rounded-lg ${activeTab === tab.id ? "border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 hover:text-[#1882ff]"
               }`}
             onClick={() => setActiveTab(tab.id)}
           >
-           <Image src={tab.icon} alt={tab.label} width={20} height={0} />
-           {tab.label}
+            <Image src={tab.icon} alt={tab.label} width={20} height={0} />
+            {tab.label}
           </button>))}
       </div>
 
