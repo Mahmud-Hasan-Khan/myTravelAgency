@@ -1,198 +1,54 @@
 'use client';
 import Image from 'next/image';
-// import { useState } from 'react';
-
-// export default function SearchTabs() {
-//   const [activeTab, setActiveTab] = useState('flight');
-//   const [tripType, setTripType] = useState('oneway');
-//   const [form, setForm] = useState({
-//     from: '',
-//     to: '',
-//     travelers: 1,
-//     travelerType: 'adult',
-//     airline: '',
-//     departureDate: '',
-//     returnDate: '',
-//   });
-
-//   const handleChange = (e) => {
-//     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log('Form submitted:', { activeTab, tripType, ...form });
-//   };
-
-//   return (
-//     <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-lg space-y-6">
-//       {/* Tabs */}
-//       <div className="flex justify-center gap-4">
-//         {['flight', 'hotel', 'visa'].map((tab) => (
-//           <button
-//             key={tab}
-//             onClick={() => setActiveTab(tab)}
-//             className={`px-5 py-2 rounded-full font-medium capitalize transition ${
-//               activeTab === tab ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'
-//             }`}
-//           >
-//             {tab}
-//           </button>
-//         ))}
-//       </div>
-
-//       {/* Tab Content */}
-//       <form onSubmit={handleSubmit} className="space-y-4">
-//         {activeTab === 'flight' && (
-//           <>
-//             {/* Trip Type */}
-//             <div className="flex gap-6">
-//               {['oneway', 'round', 'multi'].map((type) => (
-//                 <label key={type} className="flex items-center gap-2 cursor-pointer">
-//                   <input
-//                     type="radio"
-//                     name="tripType"
-//                     value={type}
-//                     checked={tripType === type}
-//                     onChange={(e) => setTripType(e.target.value)}
-//                   />
-//                   <span className="capitalize">{type === 'oneway' ? 'One Way' : type === 'round' ? 'Round Trip' : 'Multi City'}</span>
-//                 </label>
-//               ))}
-//             </div>
-
-//             {/* From / To */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <select
-//                 name="from"
-//                 value={form.from}
-//                 onChange={handleChange}
-//                 className="p-3 border border-gray-300 rounded-xl"
-//               >
-//                 <option value="">From</option>
-//                 <option value="NYC">New York</option>
-//                 <option value="LAX">Los Angeles</option>
-//                 <option value="LHR">London</option>
-//               </select>
-
-//               <select
-//                 name="to"
-//                 value={form.to}
-//                 onChange={handleChange}
-//                 className="p-3 border border-gray-300 rounded-xl"
-//               >
-//                 <option value="">To</option>
-//                 <option value="DXB">Dubai</option>
-//                 <option value="DEL">Delhi</option>
-//                 <option value="SYD">Sydney</option>
-//               </select>
-//             </div>
-
-//             {/* Dates */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <div>
-//                 <label className="block text-sm font-medium mb-1">Departure Date</label>
-//                 <input
-//                   type="date"
-//                   name="departureDate"
-//                   value={form.departureDate}
-//                   onChange={handleChange}
-//                   className="p-3 border border-gray-300 rounded-xl w-full"
-//                 />
-//               </div>
-
-//               {tripType === 'round' && (
-//                 <div>
-//                   <label className="block text-sm font-medium mb-1">Return Date</label>
-//                   <input
-//                     type="date"
-//                     name="returnDate"
-//                     value={form.returnDate}
-//                     onChange={handleChange}
-//                     className="p-3 border border-gray-300 rounded-xl w-full"
-//                   />
-//                 </div>
-//               )}
-//             </div>
-
-//             {/* Travelers + Type */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <input
-//                 type="number"
-//                 name="travelers"
-//                 min="1"
-//                 value={form.travelers}
-//                 onChange={handleChange}
-//                 placeholder="Number of Travelers"
-//                 className="p-3 border border-gray-300 rounded-xl"
-//               />
-
-//               <select
-//                 name="travelerType"
-//                 value={form.travelerType}
-//                 onChange={handleChange}
-//                 className="p-3 border border-gray-300 rounded-xl"
-//               >
-//                 <option value="adult">Adult</option>
-//                 <option value="child">Child</option>
-//                 <option value="infant">Infant</option>
-//               </select>
-//             </div>
-
-//             {/* Preferred Airline */}
-//             <select
-//               name="airline"
-//               value={form.airline}
-//               onChange={handleChange}
-//               className="w-full p-3 border border-gray-300 rounded-xl"
-//             >
-//               <option value="">Preferred Airline</option>
-//               <option value="emirates">Emirates</option>
-//               <option value="qatar">Qatar Airways</option>
-//               <option value="delta">Delta</option>
-//             </select>
-//           </>
-//         )}
-
-//         {activeTab === 'hotel' && (
-//           <div className="text-center text-gray-500 italic">
-//             Hotel search form goes here.
-//           </div>
-//         )}
-
-//         {activeTab === 'visa' && (
-//           <div className="text-center text-gray-500 italic">
-//             Visa search form goes here.
-//           </div>
-//         )}
-
-//         <div className="text-center pt-4">
-//           <button
-//             type="submit"
-//             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition"
-//           >
-//             🔍 Search
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// }
 import React, { useState } from 'react';
 
 const SearchForm = () => {
 
   const [activeTab, setActiveTab] = useState("tab1")
   const [tripType, setTripType] = useState('round');
-  const [form, setForm] = useState({
-    from: '',
-    to: '',
-    travelers: 1,
-    travelerType: 'adult',
-    airline: '',
-    departureDate: '',
-    returnDate: '',
+  const [selectedClass, setSelectedClass] = useState('Economy');
+  const [classDropdownOpen, setClassDropdownOpen] = useState(false);
+
+
+  // Traveler Selector
+  const [isOpen, setIsOpen] = useState(false);
+  const [travelers, setTravelers] = useState({
+    Adults: 1,
+    Children: 0,
+    Infants: 0,
   });
+
+  const travelerCategories = [
+    { key: 'Adults', label: 'Adults', description: '12 years & above' },
+    { key: 'Children', label: 'Children', description: 'From 2 to under 12' },
+    // { key: 'Kids', label: 'Kids', description: 'From 2 to under 5' },
+    { key: 'Infants', label: 'Infants', description: 'Under 2 years' },
+  ];
+
+  const handleCountChangeForTraveler = (key, delta) => {
+    setTravelers((prev) => {
+      const updated = { ...prev };
+
+      const newValue = updated[key] + delta;
+      const currentTotal = Object.values(prev).reduce((sum, val) => sum + val, 0);
+
+      // Prevent decreasing Adults below 1
+      if (key === 'Adults' && newValue < 1)
+        return prev;
+      // Prevent total travelers > 9
+      if (delta > 0 && currentTotal >= 9)
+        return prev;
+      // Prevent any category going negative
+      if (newValue < 0) return prev;
+
+      updated[key] = newValue;
+
+      return updated;
+    });
+  };
+
+  const totalTravelers = Object.values(travelers).reduce((sum, val) => sum + val, 0)
+
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -215,111 +71,112 @@ const SearchForm = () => {
       <div>
         <form>
           <>
-            {/* Trip Type */}
-            <div className="flex gap-2 py-4">
-              {['oneway', 'round', 'multi'].map((type) => (
-                <label key={type} className={`flex items-center gap-1 cursor-pointer border-[1px] px-2 py-1 rounded-md transition-colors duration-200 ${tripType === type ? 'bg-[#1882ff] text-white border-blue-500' : ' bg-gray-200'}`}>
-                  <input
-                    type="radio"
-                    name="tripType"
-                    value={type}
-                    checked={tripType === type}
-                    onChange={(e) => setTripType(e.target.value)}
-                  />
-                  <span className="capitalize">{type === 'oneway' ? 'One Way' : type === 'round' ? 'Round Trip' : 'Multi City'}</span>
-                </label>
-              ))}
-            </div>
-
-            {/* From / To */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <select
-                name="from"
-                value={form.from}
-                onChange={handleChange}
-                className="p-3 border border-gray-300 rounded-xl"
-              >
-                <option value="">From</option>
-                <option value="NYC">New York</option>
-                <option value="LAX">Los Angeles</option>
-                <option value="LHR">London</option>
-              </select>
-
-              <select
-                name="to"
-                value={form.to}
-                onChange={handleChange}
-                className="p-3 border border-gray-300 rounded-xl"
-              >
-                <option value="">To</option>
-                <option value="DXB">Dubai</option>
-                <option value="DEL">Delhi</option>
-                <option value="SYD">Sydney</option>
-              </select>
-            </div>
-
-            {/* Dates */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Departure Date</label>
-                <input
-                  type="date"
-                  name="departureDate"
-                  value={form.departureDate}
-                  onChange={handleChange}
-                  className="p-3 border border-gray-300 rounded-xl w-full"
-                />
+            <div className='flex items-center justify-between md:w-[800px]'>
+              {/* Trip Type */}
+              <div className="flex gap-2 py-4">
+                {['oneway', 'round', 'multi'].map((type) => (
+                  <label key={type} className={`flex items-center gap-1 cursor-pointer border-[1px] px-2 py-1 rounded-md transition-colors duration-200 ${tripType === type ? 'bg-[#1882ff] text-white border-blue-500' : ' bg-gray-200'}`}>
+                    <input
+                      type="radio"
+                      name="tripType"
+                      value={type}
+                      checked={tripType === type}
+                      onChange={(e) => setTripType(e.target.value)}
+                    />
+                    <span className="capitalize">{type === 'oneway' ? 'One Way' : type === 'round' ? 'Round Trip' : 'Multi City'}</span>
+                  </label>
+                ))}
               </div>
+              <div className='flex gap-6 items-center'>
 
-              {tripType === 'round' && (
-                <div>
-                  <label className="block text-sm font-medium mb-1">Return Date</label>
-                  <input
-                    type="date"
-                    name="returnDate"
-                    value={form.returnDate}
-                    onChange={handleChange}
-                    className="p-3 border border-gray-300 rounded-xl w-full"
-                  />
+                {/* Travel Class Dropdown */}
+                <div className='relative inline-block text-left'>
+                  <button
+                    type='button'
+                    onClick={() => setClassDropdownOpen(!classDropdownOpen)}
+                    className='px-3 py-1 border-[#dbeafe] text-[#3b82f7] font-semibold rounded-md bg-[#dbeafe] flex items-center space-x-1'
+                  >
+                    <span>{selectedClass}</span>
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {classDropdownOpen && (
+                    <div className="absolute mt-1 w-52 bg-white border rounded-lg shadow-lg z-50">
+                      {['Economy', 'Premium Economy', 'Business'].map((cls) => (
+                        <label
+                          key={cls}
+                          className={`flex items-center px-4 py-2 cursor-pointer hover:bg-blue-100 ${selectedClass === cls ? 'bg-blue-100 text-blue-600' : ''}`}
+                        >
+                          <input
+                            type="radio"
+                            name="travelClass"
+                            value={cls}
+                            checked={selectedClass === cls}
+                            onChange={(e) => {
+                              setSelectedClass(e.target.value);
+                              setClassDropdownOpen(false);
+                            }}
+                            className="mr-2"
+                          />
+                          {cls}
+                        </label>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            {/* Travelers + Type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="number"
-                name="travelers"
-                min="1"
-                value={form.travelers}
-                onChange={handleChange}
-                placeholder="Number of Travelers"
-                className="p-3 border border-gray-300 rounded-xl"
-              />
 
-              <select
-                name="travelerType"
-                value={form.travelerType}
-                onChange={handleChange}
-                className="p-3 border border-gray-300 rounded-xl"
-              >
-                <option value="adult">Adult</option>
-                <option value="child">Child</option>
-                <option value="infant">Infant</option>
-              </select>
-            </div>
+                {/* Traveler add-remove Dropdown */}
+                <div className='relative inline-block text-left'>
+                  <button type='button'
+                    onClick={() => setIsOpen(!isOpen)}
+                    className='px-3 py-1 border-[#dbeafe] text-[#3b82f7] font-semibold rounded-md bg-[#dbeafe] flex items-center space-x-1'
+                  >
+                    <span>
+                      {totalTravelers} {`Traveler${totalTravelers > 1 ? 's' : ''}`}</span>
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {isOpen && (
+                    <div className="absolute mt-1 w-72 bg-white border rounded-lg shadow-lg z-50 p-4">
+                      {travelerCategories.map(({ key, label, description }) => (
+                        <div key={key} className="flex justify-between items-center py-2">
+                          <div>
+                            <p className="font-medium">{label}</p>
+                            <p className="text-sm text-gray-500">{description}</p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <button type='button'
+                              onClick={() => handleCountChangeForTraveler(key, -1)}
+                              className="w-8 h-8 rounded-full border text-blue-600 border-blue-600 flex items-center justify-center"
+                            >
+                              −
+                            </button>
+                            <span className="w-4 text-center">{travelers[key]}</span>
+                            <button type='button'
+                              onClick={() => handleCountChangeForTraveler(key, 1)}
+                              className="w-8 h-8 rounded-full border text-blue-600 border-blue-600 flex items-center justify-center"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                      <button type='button'
+                        onClick={() => setIsOpen(false)}
+                        className="w-full mt-4 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  )}
 
-            {/* Preferred Airline */}
-            <select
-              name="airline"
-              value={form.airline}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-xl"
-            >
-              <option value="">Preferred Airline</option>
-              <option value="emirates">Emirates</option>
-              <option value="qatar">Qatar Airways</option>
-              <option value="delta">Delta</option>
-            </select>
+                </div>
+
+              </div>
+            </div>
           </>
 
         </form>
