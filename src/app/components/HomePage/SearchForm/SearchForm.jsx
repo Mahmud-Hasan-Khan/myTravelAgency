@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 
 const SearchForm = () => {
 
-
   const [activeTab, setActiveTab] = useState("tab1")
   const [tripType, setTripType] = useState('round');
   const [selectedClass, setSelectedClass] = useState('Economy');
@@ -112,6 +111,25 @@ const SearchForm = () => {
         setAirportOptions(formatted);
       });
   }, []);
+
+
+  // Config for all From and To fields across One Way, Round Trip, and Multi City Style
+  const selectClassNamesStyle = {
+    control: ({ isFocused }) =>
+      `w-60 rounded-md border px-2 py-1 text-sm ${isFocused ? 'border-blue-500 ring-1 ring-blue-300' : 'border-gray-300'
+      }`,
+    menu: () => 'mt-1 border border-gray-200 rounded-md shadow-lg bg-white z-50',
+    option: ({ isFocused, isSelected }) =>
+      `px-4 py-2 text-sm cursor-pointer ${isSelected
+        ? 'bg-blue-500 text-white'
+        : isFocused
+          ? 'bg-blue-100'
+          : 'text-gray-700'
+      }`,
+    singleValue: () => 'text-sm text-blue-500',
+    placeholder: () => 'text-sm text-blue-200',
+    input: () => 'text-sm text-gray-800',
+  };
 
 
   const tabs = [
@@ -244,29 +262,24 @@ const SearchForm = () => {
                   <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500 z-50">From
                   </label>
                   <Select
-                    // type="text"
-                    // placeholder=''
-                    // className="border rounded-md p-2 w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
                     options={airportOptions}
                     value={selectedFrom}
                     onChange={setSelectedFrom}
                     placeholder="Select airport"
                     isClearable
-                    className="border-none rounded-md w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                    classNames={selectClassNamesStyle}
                   />
                 </div>
                 <div className='relative '>
                   <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500 z-50">To
                   </label>
                   <Select
-                    // type="text"
-                    // className="border rounded-md p-2 w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
                     options={airportOptions}
                     value={selectedTo}
                     onChange={setSelectedTo}
                     placeholder="Select airport"
                     isClearable
-                    className="border-none rounded-md w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                    classNames={selectClassNamesStyle}
                   />
                 </div>
 
@@ -277,7 +290,7 @@ const SearchForm = () => {
                     type="date"
                     value={departureDate}
                     onChange={handleDepartureChange}
-                    className="border rounded-md px-2 py-2 w-full focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                    className="border border-gray-300 rounded-md px-2 py-2 w-full focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
                   />
                 </div>
               </div>
