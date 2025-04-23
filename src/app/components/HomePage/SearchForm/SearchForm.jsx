@@ -94,7 +94,7 @@ const SearchForm = () => {
   };
 
   const Select = dynamic(() => import('react-select'), { ssr: false });
-  
+
 
   // State to hold airport options
   const [airportOptions, setAirportOptions] = useState([]);
@@ -116,12 +116,12 @@ const SearchForm = () => {
   }, []);
 
   // Label Style for Airport Name Select 
-  const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-sm z-10";
+  const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-base z-10";
 
   // Config for all From and To fields across One Way, Round Trip, and Multi City Style
   const selectClassNamesStyle = {
     control: ({ isFocused }) =>
-      `w-60 rounded-md border px-2 py-1 text-sm ${isFocused ? 'border-blue-500 ring-1 ring-blue-300' : 'border-gray-300'
+      `w-60 rounded-md border px-2 py-1 text-base ${isFocused ? 'border-blue-500 ring-1 ring-blue-300' : 'border-gray-300'
       }`,
     menu: () => 'mt-1 border border-gray-200 rounded-md shadow-lg bg-white z-50',
     option: ({ isFocused, isSelected }) =>
@@ -131,13 +131,13 @@ const SearchForm = () => {
           ? 'bg-blue-100'
           : 'text-gray-700'
       }`,
-    singleValue: () => 'text-sm text-blue-500',
-    placeholder: () => 'text-sm text-blue-200',
-    input: () => 'text-sm text-gray-800',
+    singleValue: () => 'text-base text-blue-500',
+    placeholder: () => 'text-base text-blue-200',
+    input: () => 'text-base text-gray-800',
   };
 
   // Journey & Return Date style 
-  const JourneyDateStyle="border border-gray-300 rounded-md px-2 py-[9px]  focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+  const JourneyDateStyle = "border border-gray-300 rounded-md px-2 py-[9px]  focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
 
 
   const tabs = [
@@ -292,7 +292,7 @@ const SearchForm = () => {
                 </div>
 
                 <div className='relative '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500">Journey Date
+                  <label className={floatingLabelClass}>Journey Date
                   </label>
                   <input
                     type="date"
@@ -300,6 +300,19 @@ const SearchForm = () => {
                     onChange={handleDepartureChange}
                     className={JourneyDateStyle}
                   />
+                </div>
+                <div className='flex justify-center border rounded-md px-8 text-white border-gray-300 bg-orange-500 hover:bg-orange-600'>
+                  <button className='flex items-center justify-center gap-2 '><svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="white"
+                    className="w-5 h-5">
+                    <path strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                  </svg>Search
+                  </button>
                 </div>
               </div>
             )}
@@ -331,7 +344,7 @@ const SearchForm = () => {
                   />
                 </div>
                 <div className='relative '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500">Journey Date
+                  <label className={floatingLabelClass}>Journey Date
                   </label>
                   <input
                     type="date"
@@ -341,7 +354,7 @@ const SearchForm = () => {
                   />
                 </div>
                 <div className='relative '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500">Return Date
+                  <label className={floatingLabelClass}>Return Date
                   </label>
                   <input
                     type="date"
@@ -351,12 +364,25 @@ const SearchForm = () => {
                     className={JourneyDateStyle}
                   />
                 </div>
+                <div className='flex justify-center border rounded-md px-8 text-white border-gray-300 bg-orange-500 hover:bg-orange-600'>
+                  <button className='flex items-center justify-center gap-2 '><svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="white"
+                    className="w-5 h-5">
+                    <path strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                  </svg>Search
+                  </button>
+                </div>
               </div>
             )}
 
             {tripType === 'multi' && (
-              <div className="flex flex-col gap-2">
-                {[1, 2, 3].map((i) => (
+              <div className="flex flex-col gap-2  space-y-1">
+                {[1, 2].map((i) => (
                   <div key={i} className="flex gap-4">
                     <div className='relative'>
                       <label className={floatingLabelClass}>From
@@ -382,12 +408,30 @@ const SearchForm = () => {
                         classNames={selectClassNamesStyle}
                       />
                     </div>
-                    <input type="date"
-                      value={departureDate}
-                      onChange={handleDepartureChange} placeholder={`Date ${i}`} className={JourneyDateStyle} />
+                    <div className='relative'>
+                      <label className={floatingLabelClass}>Journey Date
+                      </label>
+                      <input type="date"
+                        value={departureDate}
+                        onChange={handleDepartureChange} placeholder={`Date ${i}`} className={JourneyDateStyle} />
+                    </div>
+
                   </div>
                 ))}
                 <button type="button" className="text-blue-600 hover:underline text-sm">+ Add another city</button>
+                <div className='flex justify-center border rounded-md px-8 text-white border-gray-300 bg-orange-500 hover:bg-orange-600'>
+                  <button className='flex items-center justify-center gap-2 '><svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="white"
+                    className="w-5 h-10">
+                    <path strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                  </svg>Search
+                  </button>
+                </div>
               </div>
             )}
           </div>
