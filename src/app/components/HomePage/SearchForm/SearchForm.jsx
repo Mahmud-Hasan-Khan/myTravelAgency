@@ -260,7 +260,6 @@ const SearchForm = () => {
                   </label>
                   <Select
                     // type="text"
-                    // placeholder=''
                     // className="border rounded-md p-2 w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
                     options={airportOptions}
                     value={selectedTo}
