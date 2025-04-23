@@ -2,7 +2,7 @@
 import Select from 'react-select';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-
+import dynamic from 'next/dynamic';
 
 const SearchForm = () => {
 
@@ -93,6 +93,9 @@ const SearchForm = () => {
     console.log('Form submitted:', { activeTab, tripType, ...form });
   };
 
+  const Select = dynamic(() => import('react-select'), { ssr: false });
+  
+
   // State to hold airport options
   const [airportOptions, setAirportOptions] = useState([]);
   const [selectedFrom, setSelectedFrom] = useState(null);
@@ -112,6 +115,8 @@ const SearchForm = () => {
       });
   }, []);
 
+  // Label Style for Airport Name Select 
+  const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-sm z-10";
 
   // Config for all From and To fields across One Way, Round Trip, and Multi City Style
   const selectClassNamesStyle = {
@@ -130,6 +135,9 @@ const SearchForm = () => {
     placeholder: () => 'text-sm text-blue-200',
     input: () => 'text-sm text-gray-800',
   };
+
+  // Journey & Return Date style 
+  const JourneyDateStyle="border border-gray-300 rounded-md px-2 py-[9px]  focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
 
 
   const tabs = [
@@ -258,8 +266,8 @@ const SearchForm = () => {
             {/* Input Fields Based on Trip Type */}
             {tripType === 'oneway' && (
               <div className="flex gap-4">
-                <div className='relative w-60 '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500 z-50">From
+                <div className='relative'>
+                  <label className={floatingLabelClass}>From
                   </label>
                   <Select
                     options={airportOptions}
@@ -270,8 +278,8 @@ const SearchForm = () => {
                     classNames={selectClassNamesStyle}
                   />
                 </div>
-                <div className='relative '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500 z-50">To
+                <div className='relative'>
+                  <label className={floatingLabelClass}>To
                   </label>
                   <Select
                     options={airportOptions}
@@ -290,7 +298,7 @@ const SearchForm = () => {
                     type="date"
                     value={departureDate}
                     onChange={handleDepartureChange}
-                    className="border border-gray-300 rounded-md px-2 py-2 w-full focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                    className={JourneyDateStyle}
                   />
                 </div>
               </div>
@@ -298,22 +306,28 @@ const SearchForm = () => {
 
             {tripType === 'round' && (
               <div className="flex gap-4">
-                <div className='relative '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500">From
+                <div className='relative'>
+                  <label className={floatingLabelClass}>From
                   </label>
-                  <input
-                    type="text"
-                    placeholder=''
-                    className="border rounded-md p-2 w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                  <Select
+                    options={airportOptions}
+                    value={selectedFrom}
+                    onChange={setSelectedFrom}
+                    placeholder="Select airport"
+                    isClearable
+                    classNames={selectClassNamesStyle}
                   />
                 </div>
-                <div className='relative '>
-                  <label className="absolute -top-3 left-3 bg-white px-1  text-blue-500">To
+                <div className='relative'>
+                  <label className={floatingLabelClass}>To
                   </label>
-                  <input
-                    type="text"
-                    placeholder=''
-                    className="border rounded-md p-2 w-60 focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                  <Select
+                    options={airportOptions}
+                    value={selectedTo}
+                    onChange={setSelectedTo}
+                    placeholder="Select airport"
+                    isClearable
+                    classNames={selectClassNamesStyle}
                   />
                 </div>
                 <div className='relative '>
@@ -323,7 +337,7 @@ const SearchForm = () => {
                     type="date"
                     value={departureDate}
                     onChange={handleDepartureChange}
-                    className="border rounded-md p-2 w-full focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                    className={JourneyDateStyle}
                   />
                 </div>
                 <div className='relative '>
@@ -334,7 +348,7 @@ const SearchForm = () => {
                     value={returnDate}
                     onChange={handleReturnChange}
                     min={departureDate}
-                    className="border rounded-md p-2 w-full focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
+                    className={JourneyDateStyle}
                   />
                 </div>
               </div>
@@ -344,11 +358,33 @@ const SearchForm = () => {
               <div className="flex flex-col gap-2">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="flex gap-4">
-                    <input type="text" placeholder={`From ${i}`} className="border p-2 rounded-md w-full" />
-                    <input type="text" placeholder={`To ${i}`} className="border p-2 rounded-md w-full" />
+                    <div className='relative'>
+                      <label className={floatingLabelClass}>From
+                      </label>
+                      <Select
+                        options={airportOptions}
+                        value={selectedFrom}
+                        onChange={setSelectedFrom}
+                        placeholder="Select airport"
+                        isClearable
+                        classNames={selectClassNamesStyle}
+                      />
+                    </div>
+                    <div className='relative'>
+                      <label className={floatingLabelClass}>To
+                      </label>
+                      <Select
+                        options={airportOptions}
+                        value={selectedTo}
+                        onChange={setSelectedTo}
+                        placeholder="Select airport"
+                        isClearable
+                        classNames={selectClassNamesStyle}
+                      />
+                    </div>
                     <input type="date"
                       value={departureDate}
-                      onChange={handleDepartureChange} placeholder={`Date ${i}`} className="border p-2 rounded-md w-full" />
+                      onChange={handleDepartureChange} placeholder={`Date ${i}`} className={JourneyDateStyle} />
                   </div>
                 ))}
                 <button type="button" className="text-blue-600 hover:underline text-sm">+ Add another city</button>
