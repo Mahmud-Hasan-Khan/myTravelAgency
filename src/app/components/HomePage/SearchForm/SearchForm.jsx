@@ -1,8 +1,10 @@
 'use client';
-import Select from 'react-select';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useMemo } from "react";
+
+const Select = dynamic(() => import('react-select'), { ssr: false });
 
 const SearchForm = () => {
 
@@ -93,8 +95,6 @@ const SearchForm = () => {
     console.log('Form submitted:', { activeTab, tripType, ...form });
   };
 
-  const Select = dynamic(() => import('react-select'), { ssr: false });
-
 
   // State to hold airport options
   const [airportOptions, setAirportOptions] = useState([]);
@@ -102,18 +102,21 @@ const SearchForm = () => {
   const [selectedTo, setSelectedTo] = useState(null);
 
   // Load JSON data from public folder
+
   useEffect(() => {
-    fetch('/data/airports.json')
-      .then(res => res.json())
-      .then(data => {
-        // console.log('Loaded airport data:', data);
-        const formatted = data.map((airport) => ({
-          label: `${airport.name} (${airport.iata}) - ${airport.city}, ${airport.country}`,
-          value: airport.iata,
-        }));
-        setAirportOptions(formatted);
-      });
-  }, []);
+    if (!airportOptions.length) {
+      fetch('/data/AirportData.json')
+        .then(res => res.json())
+        .then(data => {
+          console.log('Loaded airport data:', data);
+          const formatted = data.map((airport) => ({
+            label: `${airport.Name} (${airport.IATA}) - ${airport.City}, ${airport.Country}`,
+            value: airport.IATA,
+          }));
+          setAirportOptions(formatted);
+        });
+    }
+  }, [airportOptions.length]);
 
   // Label Style for Airport Name Select 
   const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-base z-10";
@@ -266,7 +269,7 @@ const SearchForm = () => {
             {/* Input Fields Based on Trip Type */}
             {tripType === 'oneway' && (
               <div className="flex gap-4">
-                <div className='relative'>
+                <div className='relative w-60'>
                   <label className={floatingLabelClass}>From
                   </label>
                   <Select
@@ -278,7 +281,7 @@ const SearchForm = () => {
                     classNames={selectClassNamesStyle}
                   />
                 </div>
-                <div className='relative'>
+                <div className='relative w-60'>
                   <label className={floatingLabelClass}>To
                   </label>
                   <Select
@@ -291,7 +294,7 @@ const SearchForm = () => {
                   />
                 </div>
 
-                <div className='relative '>
+                <div className='relative'>
                   <label className={floatingLabelClass}>Journey Date
                   </label>
                   <input
@@ -319,7 +322,7 @@ const SearchForm = () => {
 
             {tripType === 'round' && (
               <div className="flex gap-4">
-                <div className='relative'>
+                <div className='relative w-60'>
                   <label className={floatingLabelClass}>From
                   </label>
                   <Select
@@ -331,7 +334,7 @@ const SearchForm = () => {
                     classNames={selectClassNamesStyle}
                   />
                 </div>
-                <div className='relative'>
+                <div className='relative w-60'>
                   <label className={floatingLabelClass}>To
                   </label>
                   <Select
@@ -460,7 +463,7 @@ const SearchForm = () => {
     <div className=' mx-auto mt-10 bg-white p-6 shadow-lg space-y-2 border-[1px] rounded-md' >
 
       {/* For Tab  */}
-      <div className='flex justify-between flex-wrap border-b'>
+      <div className='flex justify-around flex-wrap border-b'>
         {tabs.map((tab) => (
           <button key={tab.id}
             className={`px-3 py-2 font-semibold flex  gap-2 rounded-lg ${activeTab === tab.id ? "border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 hover:text-[#1882ff]"
@@ -473,8 +476,8 @@ const SearchForm = () => {
       </div>
 
       {/* For Tab Content  */}
-      <div> {tabContent[activeTab]}
-
+      <div>
+        {tabContent[activeTab]}
       </div>
     </div>
   );
