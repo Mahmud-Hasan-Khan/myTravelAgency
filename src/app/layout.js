@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Wakia Travels",
+  title: "Wakia Travels : Book Air Ticket, Hotel, Visa, Umhar Package",
   description: "The travel agency that really cares",
 };
 
