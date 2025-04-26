@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-// import { useMemo } from "react";
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
 
@@ -38,7 +37,6 @@ const SearchForm = () => {
   const travelerCategories = [
     { key: 'Adults', label: 'Adults', description: '12 years & above' },
     { key: 'Children', label: 'Children', description: 'From 2 to under 12' },
-    // { key: 'Kids', label: 'Kids', description: 'From 2 to under 5' },
     { key: 'Infants', label: 'Infants', description: 'Under 2 years' },
   ];
 
@@ -102,7 +100,6 @@ const SearchForm = () => {
   const [selectedTo, setSelectedTo] = useState(null);
 
   // Load JSON data from public folder
-
   useEffect(() => {
     if (!airportOptions.length) {
       fetch('/data/AirportData.json')
@@ -119,14 +116,14 @@ const SearchForm = () => {
   }, [airportOptions.length]);
 
   // Label Style for Airport Name Select 
-  const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-base z-50";
+  const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-base z-10";
 
   // Config for all From and To fields across One Way, Round Trip, and Multi City Style
   const selectClassNamesStyle = {
     control: ({ isFocused }) =>
       `w-60 rounded-md border px-2 py-1 text-base ${isFocused ? 'border-blue-500 ring-1 ring-blue-300' : 'border-gray-300'
       }`,
-    menu: () => 'mt-1 border border-gray-200 rounded-md shadow-lg bg-white z-10',
+    menu: () => 'mt-1 border border-gray-200 rounded-md shadow-lg bg-white',
     option: ({ isFocused, isSelected }) =>
       `px-4 py-2 text-sm cursor-pointer ${isSelected
         ? 'bg-blue-500 text-white'
@@ -142,7 +139,6 @@ const SearchForm = () => {
   // Journey & Return Date style 
   const JourneyDateStyle = "w-full border border-gray-300 rounded-md px-2 py-[9px]  focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
 
-
   const tabs = [
     { id: "tab1", icon: "/airplane.ico", label: "Flight" },
     { id: "tab2", icon: "/love-hotel.ico", label: "Hotel" },
@@ -153,7 +149,7 @@ const SearchForm = () => {
   const tabContent = {
     tab1: (
       <form>
-        <div className='w-full px-0 sm:px-6 md:px-10 lg:px-10 xl:px-10 max-w-screen-xl mx-auto'>
+        <div className='w-full px-0 sm:px-2 md:px-10 lg:px-10 xl:px-10 max-w-screen-xl mx-auto'>
           {/* Trip Type Selection */}
           <div className="lg:flex justify-between items-center">
             <div className="lg:flex gap-2 space-y-2 lg:space-y-0 py-4">
@@ -171,7 +167,7 @@ const SearchForm = () => {
               ))}
             </div>
             {/* (Traveler class & traveler dropdown code stays as-is here) */}
-            <div className='flex justify-between items-center gap-3'>
+            <div className='flex justify-between items-center gap-1 md:gap-3'>
               {/* Travel Class Dropdown */}
               <div className='relative inline-block text-left'>
                 <button
@@ -223,7 +219,7 @@ const SearchForm = () => {
                   </svg>
                 </button>
                 {isOpen && (
-                  <div className="absolute mt-1 w-72 bg-white border rounded-lg shadow-lg z-50 p-4">
+                  <div className="absolute mt-1 w-72 bg-white border rounded-lg shadow-lg z-50 p-4 -left-full">
                     {travelerCategories.map(({ key, label, description }) => (
                       <div key={key} className="flex justify-between items-center py-2">
                         <div>
@@ -262,8 +258,8 @@ const SearchForm = () => {
 
           {/* Input Fields Based on Trip Type */}
           {tripType === 'oneway' && (
-            <div className="flex gap-4">
-              <div className='relative w-60'>
+            <div className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">
+              <div className='relative w-full'>
                 <label className={floatingLabelClass}>From
                 </label>
                 <Select
@@ -273,9 +269,17 @@ const SearchForm = () => {
                   placeholder="Select airport"
                   isClearable
                   classNames={selectClassNamesStyle}
+                  menuPortalTarget={typeof window !== 'undefined' ? document.body : null}  // Important for Next.js SSR
+                  menuPosition="fixed"
+                  styles={{
+                    menuPortal: (base) => ({
+                      ...base,
+                      zIndex: 9999,  // Make sure dropdown is always on top
+                    }),
+                  }}
                 />
               </div>
-              <div className='relative w-60'>
+              <div className='relative w-full'>
                 <label className={floatingLabelClass}>To
                 </label>
                 <Select
@@ -285,6 +289,14 @@ const SearchForm = () => {
                   placeholder="Select airport"
                   isClearable
                   classNames={selectClassNamesStyle}
+                  menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                  menuPosition="fixed"
+                  styles={{
+                    menuPortal: (base) => ({
+                      ...base,
+                      zIndex: 9999,
+                    }),
+                  }}
                 />
               </div>
 
@@ -298,24 +310,23 @@ const SearchForm = () => {
                   className={JourneyDateStyle}
                 />
               </div>
-              <div className='flex justify-center border rounded-md px-8 text-white border-gray-300 bg-orange-500 hover:bg-orange-600'>
-                <button className='flex items-center justify-center gap-2 '><svg xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="white"
-                  className="w-5 h-5">
-                  <path strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-                </svg>Search
-                </button>
-              </div>
+              <button className='w-full flex items-center justify-center gap-2 border rounded-md p-[10px] text-white border-orange-500 bg-orange-500 hover:bg-orange-600'><svg xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="white"
+                className="w-5 h-5">
+                <path strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+              </svg>Search
+              </button>
             </div>
           )}
 
           {tripType === 'round' && (
             <div className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">
+              {/* Style for Airport Name Select From */}
               <div className='relative w-full'>
                 <label className={floatingLabelClass}>From
                 </label>
@@ -326,8 +337,17 @@ const SearchForm = () => {
                   placeholder="Select airport"
                   isClearable
                   classNames={selectClassNamesStyle}
+                  menuPortalTarget={typeof window !== 'undefined' ? document.body : null}  // Important for Next.js SSR
+                  menuPosition="fixed"
+                  styles={{
+                    menuPortal: (base) => ({
+                      ...base,
+                      zIndex: 9999,  // Make sure dropdown is always on top
+                    }),
+                  }}
                 />
               </div>
+              {/* Style for Airport Name Select To */}
               <div className='relative w-full'>
                 <label className={floatingLabelClass}>To
                 </label>
@@ -338,6 +358,14 @@ const SearchForm = () => {
                   placeholder="Select airport"
                   isClearable
                   classNames={selectClassNamesStyle}
+                  menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                  menuPosition="fixed"
+                  styles={{
+                    menuPortal: (base) => ({
+                      ...base,
+                      zIndex: 9999,
+                    }),
+                  }}
                 />
               </div>
               <div className='relative w-full'>
@@ -361,25 +389,24 @@ const SearchForm = () => {
                   className={JourneyDateStyle}
                 />
               </div>
-                <button className='w-full flex items-center justify-center gap-2 border rounded-md p-[9px] text-white border-orange-500 bg-orange-500 hover:bg-orange-600'><svg xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="white"
-                  className="w-5 h-5">
-                  <path strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-                </svg>Search
-                </button>
-
+              <button className='w-full flex items-center justify-center gap-2 border rounded-md p-[10px] text-white border-orange-500 bg-orange-500 hover:bg-orange-600'><svg xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="white"
+                className="w-5 h-5">
+                <path strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+              </svg>Search
+              </button>
             </div>
           )}
 
           {tripType === 'multi' && (
             <div className="flex flex-col gap-2  space-y-1">
               {[1, 2].map((i) => (
-                <div key={i} className="flex gap-4">
+                <div key={i} className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">
                   <div className='relative'>
                     <label className={floatingLabelClass}>From
                     </label>
@@ -390,6 +417,14 @@ const SearchForm = () => {
                       placeholder="Select airport"
                       isClearable
                       classNames={selectClassNamesStyle}
+                      menuPortalTarget={typeof window !== 'undefined' ? document.body : null}  // Important for Next.js SSR
+                      menuPosition="fixed"
+                      styles={{
+                        menuPortal: (base) => ({
+                          ...base,
+                          zIndex: 9999,  // Make sure dropdown is always on top
+                        }),
+                      }}
                     />
                   </div>
                   <div className='relative'>
@@ -402,6 +437,14 @@ const SearchForm = () => {
                       placeholder="Select airport"
                       isClearable
                       classNames={selectClassNamesStyle}
+                      menuPortalTarget={typeof window !== 'undefined' ? document.body : null}  // Important for Next.js SSR
+                      menuPosition="fixed"
+                      styles={{
+                        menuPortal: (base) => ({
+                          ...base,
+                          zIndex: 9999,  // Make sure dropdown is always on top
+                        }),
+                      }}
                     />
                   </div>
                   <div className='relative'>
