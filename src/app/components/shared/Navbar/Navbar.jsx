@@ -282,7 +282,9 @@ const Navbar = () => {
 
         {/* Mobile Logo */}
         <div>
+          <Link href={'/'}>
           <Image className="sm:hidden flex items-center justify-center pl-1" src="/WebLogo2.png" alt="Logo" width={170} height={110} />
+          </Link>
         </div>
       </div>
 
