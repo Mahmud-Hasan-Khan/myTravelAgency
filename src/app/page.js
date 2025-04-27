@@ -11,7 +11,7 @@ export default function Home() {
         <VideoBanner></VideoBanner>
         <div className="absolute lg:top-48 left-1/2 transform -translate-x-1/2">
           <SearchForm></SearchForm>
-          <GoogleReviews></GoogleReviews>
+          {/* <GoogleReviews></GoogleReviews> */}
 
 
         </div>

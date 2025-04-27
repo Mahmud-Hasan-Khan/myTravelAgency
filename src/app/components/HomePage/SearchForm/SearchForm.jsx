@@ -98,22 +98,49 @@ const SearchForm = () => {
   const [airportOptions, setAirportOptions] = useState([]);
   const [selectedFrom, setSelectedFrom] = useState(null);
   const [selectedTo, setSelectedTo] = useState(null);
-
+  const [loadingAirports, setLoadingAirports] = useState(true);
+  const [errorLoadingAirports, setErrorLoadingAirports] = useState(null);
   // Load JSON data from public folder
+  // useEffect(() => {
+  //   if (!airportOptions.length) {
+  //     fetch('/data/AirportData.json')
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         console.log('Loaded airport data:', data);
+  //         const formatted = data.map((airport) => ({
+  //           label: `(${airport.IATA}) ${airport.Name} - ${airport.City}, ${airport.Country}`,
+  //           value: airport.IATA,
+  //         }));
+  //         setAirportOptions(formatted);
+  //       });
+  //   }
+  // }, [airportOptions.length]);
+
   useEffect(() => {
-    if (!airportOptions.length) {
-      fetch('/data/AirportData.json')
-        .then(res => res.json())
-        .then(data => {
-          console.log('Loaded airport data:', data);
+    const fetchAirportData = async () => {
+      try {
+        if (typeof window !== 'undefined' && airportOptions.length === 0) {
+          const response = await fetch('AirportData.json');
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
           const formatted = data.map((airport) => ({
             label: `(${airport.IATA}) ${airport.Name} - ${airport.City}, ${airport.Country}`,
             value: airport.IATA,
           }));
           setAirportOptions(formatted);
-        });
-    }
-  }, [airportOptions.length]);
+        }
+      } catch (error) {
+        console.error("Failed to load airport data:", error);
+        setErrorLoadingAirports(error.message || "Unknown error");
+      } finally {
+        setLoadingAirports(false);
+      }
+    };
+  
+    fetchAirportData();
+  }, []);
 
   // Label Style for Airport Name Select 
   const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-blue-500 text-base z-10";
