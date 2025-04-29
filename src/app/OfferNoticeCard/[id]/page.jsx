@@ -22,9 +22,18 @@ export default function CardDetails() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-2xl font-semibold">{card.title}</h1>
+      <div className="divider my-1"></div>
       <img src={card.image} alt={card.title} className="w-full h-64 object-cover rounded-lg" />
-      <h1 className="text-2xl font-bold mt-4">{card.title}</h1>
-      <p className="text-gray-700 mt-2">{card.description}</p>
+      {/* <p className="text-gray-700 mt-2 text-[14px] py-2 whitespace-pre-line">{card.description}</p>
+       */}
+       <div className="text-gray-700 mt-2 text-[14px]">
+  {card.description.split('\n').map((line, index) => (
+    <p key={index} className="py-1">
+      {line}
+    </p>
+  ))}
+</div>
     </div>
   );
 }
