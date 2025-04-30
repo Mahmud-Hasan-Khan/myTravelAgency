@@ -14,17 +14,18 @@ export default function Home() {
         </div>
 
         {/* Container that reserves space */}
-        <div className="relative z-10 -mt-[430px] md:-mt-80 flex justify-center">
+        <div className="relative z-50 -mt-[430px] md:-mt-80 flex justify-center">
           <div className=" px-4">
             <SearchForm />
           </div>
         </div>
-      </div>
-
-      {/* Offer Notice */}
-      <div className="bg-[#ecf0f5] mx-auto md:px-32 sm:px-0 mt-0 py-6">
+        {/* Offer Notice */}
+      <div className="bg-[#ecf0f5] mx-auto md:px-32 sm:px-0 mt-0 py-6 z-10">
         <OfferNoticeSlider />
       </div>
+      </div>
+
+      
     </div>
   );
 }

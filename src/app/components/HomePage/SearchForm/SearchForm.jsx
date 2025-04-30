@@ -237,7 +237,7 @@ const SearchForm = () => {
               <div className='relative inline-block text-left'>
                 <button type='button'
                   onClick={() => setIsOpen(!isOpen)}
-                  className='px-3 py-1 border-[#dbeafe] text-[#3b82f7] font-semibold rounded-md bg-[#dbeafe] flex items-center space-x-1'
+                  className='px-3 py-1 border-[#dbeafe] text-[#3b82f7] font-semibold rounded-md bg-[#dbeafe] flex items-center space-x-1 z-50'
                 >
                   <span>
                     {totalTravelers} {`Traveler${totalTravelers > 1 ? 's' : ''}`}</span>
