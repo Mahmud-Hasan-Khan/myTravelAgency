@@ -1,4 +1,13 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+// next.config.mjs
+export default {
 
-export default nextConfig;
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'i.ibb.co.com',
+            },
+        ],
+    },
+
+};
