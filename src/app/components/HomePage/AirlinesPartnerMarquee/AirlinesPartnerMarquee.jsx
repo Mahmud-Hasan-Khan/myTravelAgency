@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
+import SectionTitle from '../../SectionTitle/SectionTitle';
 
 const AirlinesPartnerMarquee = () => {
 
@@ -19,12 +20,10 @@ const AirlinesPartnerMarquee = () => {
     fetchAirlinesLogo();
   }, []);
 
-
   return (
     <div className="my-3">
-      <div className='divider'>
-      <h1 className='text-center md:text-2xl font-semibold text-[#1a2b3d]'>Key Airlines Partner</h1>
-      </div>
+      
+      <SectionTitle heading="Top Airlines Partner" subheading="Wakia Travels connects all top airlines. Enjoy a comfortable and hassle-free journey on any destination and get tickets of top airlines easily." />
       <div className="">
         <Marquee pauseOnHover speed={80}>
           {airlinesLogo.map((logo, index) => (
