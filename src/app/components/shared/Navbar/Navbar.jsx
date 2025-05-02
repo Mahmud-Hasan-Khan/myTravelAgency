@@ -264,7 +264,7 @@ const NavLink = ({ href, icon, label }) => {
 
 const Navbar = () => {
   return (
-    <Popover className="container sticky top-0 z-20 bg-white border-b-[1px] mx-auto flex items-center h-16 md:px-32 sm:px-0">
+    <Popover className="container sticky top-0 z-50 bg-white border-b-[1px] mx-auto flex items-center h-16 md:px-32 sm:px-0">
       {/* Logo */}
       <Link href="/">
         <Image className="hidden sm:block" src="/webLogo.png" alt="Logo" width={140} height={100} />

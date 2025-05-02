@@ -27,13 +27,12 @@ export default function CardDetails() {
       <div className='bg-[#222d32] h-10 md:h-12 text-white px-1 md:px-96 flex items-center justify-between'>
         <h4 className='text-xs md:text-xl'>{card.title}</h4>
         <div>
-          <Link href={'/'} className="text-xs md:text-base px-1 md:px-2 py-1 bg-[#1882ff] text-white rounded-md font-semibold  translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 hover:bg-[#126fde]">GO HOME
-          </Link>
+          <Link href={'/'} className="text-xs md:text-base px-1 md:px-2 py-1 bg-[#1882ff] text-white rounded-md font-semibold  translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 hover:bg-[#126fde]">GO HOME</Link>
         </div>
       </div>
       <div className="max-w-3xl h-dvh mx-auto p-6 bg-white">
         <div className='max-w-xl'>
-          <h1 className="text-base md:text-2xl font-semibold">{card.title}</h1>
+          <h1 className="text-base md:text-2xl">{card.title}</h1>
           <div className="divider my-1"></div>
           <div className="relative w-full h-40 md:h-56 rounded-lg overflow-hidden">
             <Image

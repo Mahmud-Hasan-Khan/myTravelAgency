@@ -1,4 +1,5 @@
 import GoogleReviews from "./components/GoogleReviews/GoogleReviews";
+import AirlinesPartnerMarquee from "./components/HomePage/AirlinesPartnerMarquee/AirlinesPartnerMarquee";
 import OfferNoticeSlider from "./components/HomePage/OfferNoticeSlider/OfferNoticeSlider";
 import SearchForm from "./components/HomePage/SearchForm/SearchForm";
 import VideoBanner from "./components/HomePage/VideoBanner/VideoBanner";
@@ -14,18 +15,21 @@ export default function Home() {
         </div>
 
         {/* Container that reserves space */}
-        <div className="relative z-50 -mt-[430px] md:-mt-80 flex justify-center">
-          <div className=" px-4">
+        <div className="relative z-20 -mt-[430px] md:-mt-80 flex justify-center">
+          <div className="px-4">
             <SearchForm />
           </div>
         </div>
         {/* Offer Notice */}
-      <div className="bg-[#ecf0f5] mx-auto md:px-32 sm:px-0 mt-0 py-6 z-10">
-        <OfferNoticeSlider />
+        <div className="bg-[#ecf0f5] mx-auto md:px-32 sm:px-0 mt-0 py-8 z-10">
+          <OfferNoticeSlider />
+        </div>
       </div>
+      <div className="mx-auto md:px-32 sm:px-0 mt-6 border-e-2">
+        <AirlinesPartnerMarquee></AirlinesPartnerMarquee>
       </div>
 
-      
+
     </div>
   );
 }
