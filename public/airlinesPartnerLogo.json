@@ -8,8 +8,40 @@
         "image": "https://i.ibb.co.com/S4X6tCs5/us-bangla.png"
     },
     {
+        "name": "AirAstra",
+        "image": "https://i.ibb.co.com/wZz0JY3w/air-astra.png"
+    },
+    {
+        "name": "Novo Air",
+        "image": "https://i.ibb.co.com/Kjgz2h0t/NovoAir.png"
+    },
+    {
         "name": "Emirates",
         "image": "https://i.ibb.co.com/JwBmzrkG/emirats.png"
+    },
+    {
+        "name": "Qatar Airways",
+        "image": "https://i.ibb.co.com/KjrzNZqt/Qater.png"
+    },
+    {
+        "name": "Turkish Airlines",
+        "image": "https://i.ibb.co.com/V0QLRmRN/Turkish.png"
+    },
+    {
+        "name": "Saudia",
+        "image": "https://i.ibb.co.com/GQ3mJZRs/Saudia.png"
+    },
+    {
+        "name": "Singapore Airlines",
+        "image": "https://i.ibb.co.com/60rVjGxf/singapur.png"
+    },
+    {
+        "name": "SriLankan Airlines",
+        "image": "https://i.ibb.co.com/HpkH3v1Q/Srilankan.png"
+    },
+    {
+        "name": "Thai Airways",
+        "image": "https://i.ibb.co.com/gLQJJMrm/thai.png"
     },
     {
         "name": "Air Arabia",
@@ -34,6 +66,10 @@
     {
         "name": "China Southern",
         "image": "https://i.ibb.co.com/gF3075NX/CZ.jpg"
+    },
+    {
+        "name": "Air China",
+        "image": "https://i.ibb.co.com/Txy91J5P/Air-China-logo-logotype-emblem-Custom.png"
     },
     {
         "name": "FitsAir",
@@ -73,34 +109,12 @@
     },
     {
         "name": "Oman Air",
-        "image": "https://i.ibb.co.com/bgqP5rNx/omanAir.png"
-    },
-    {
-        "name": "Qatar Airways",
-        "image": "https://i.ibb.co.com/KjrzNZqt/Qater.png"
-    },
-    {
-        "name": "Saudia",
-        "image": "https://i.ibb.co.com/GQ3mJZRs/Saudia.png"
-    },
-    {
-        "name": "Singapore Airlines",
-        "image": "https://i.ibb.co.com/60rVjGxf/singapur.png"
-    },
-    {
-        "name": "SriLankan Airlines",
-        "image": "https://i.ibb.co.com/HpkH3v1Q/Srilankan.png"
-    },
-    {
-        "name": "Thai Airways",
-        "image": "https://i.ibb.co.com/gLQJJMrm/thai.png"
-    },
-    {
-        "name": "Turkish Airlines",
-        "image": "https://i.ibb.co.com/V0QLRmRN/Turkish.png"
-    },
+        "image": "https://i.ibb.co.com/JWc1dcRL/Oman-Air-Logo-wine-Custom.png"
+    },  
     {
         "name": "Vistara",
         "image": "https://i.ibb.co.com/9kW8btPJ/Vistara.png"
     }
 ]
+
+
