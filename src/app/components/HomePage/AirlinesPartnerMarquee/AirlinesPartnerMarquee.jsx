@@ -35,6 +35,7 @@ const AirlinesPartnerMarquee = () => {
                 height={40}
                 className="object-contain h-12 w-auto"
                 priority
+                loading="eager"
               />
             </div>
           ))}
