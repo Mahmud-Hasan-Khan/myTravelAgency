@@ -44,16 +44,17 @@ export default function CardDetails() {
           </div>
           {/* <p className="text-gray-700 mt-2 text-[14px] py-2 whitespace-pre-line">{card.description}</p>
        */}
-          <div className="text-gray-700 mt-2 text-sm">
+          <p className="text-gray-700 pt-2 my-1 text-sm">সম্মানিত গ্রাহক,</p>
+          <div className="text-gray-700 text-sm">
             {card.description.split('\n').map((line, index) => (
               <p key={index} className="py-1">
                 {line}
               </p>
             ))}
           </div>
-          <div className='text-sm pt-1'>
+          <div className='text-sm pt-2'>
             <p>যদি কোনো প্রশ্ন থাকে বা সাহায্য প্রয়োজন হয়, দয়া করে আমাদের ইমেইল করুন wakia.info@gmail -তে অথবা যোগাযোগ করুন +8801913509561 হটলাইনে।</p>
-            <p>ধন্যবাদ</p>
+            <p className='text-sm pt-1'>ধন্যবাদ</p>
             <p>টিম ওয়াকিয়া ট্রাভেলস</p>
           </div>
         </div>
