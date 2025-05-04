@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import OfferNoticeCard from './OfferNoticeCard';
+import SectionTitle from '@/app/components/SectionTitle/SectionTitle';
 
 const OfferNoticeSlider = () => {
   // Setup Embla carousel instance
@@ -95,6 +96,7 @@ const OfferNoticeSlider = () => {
 
   return (
     <div className="relative w-full">
+      <SectionTitle heading="Travel Updates & Exclusive Offers" subheading="Stay up to date with official airline Updates and limited-time promotional fares" ></SectionTitle>
       {/* Carousel */}
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex">
@@ -120,9 +122,8 @@ const OfferNoticeSlider = () => {
             >
               {/* Inner dot */}
               <div
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  selectedIndex === index ? 'bg-[#1882ff] scale-100' : 'bg-transparent scale-75'
-                }`}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${selectedIndex === index ? 'bg-[#1882ff] scale-100' : 'bg-transparent scale-75'
+                  }`}
               />
             </button>
           ))}

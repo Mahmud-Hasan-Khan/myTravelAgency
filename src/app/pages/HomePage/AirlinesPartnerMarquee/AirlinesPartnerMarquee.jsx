@@ -2,8 +2,8 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
-import SectionTitle from '../../SectionTitle/SectionTitle';
 import airlinesData from '../../../../../public/airlinesPartnerLogo.json'
+import SectionTitle from '@/app/components/SectionTitle/SectionTitle';
 
 const AirlinesPartnerMarquee = () => {
 
