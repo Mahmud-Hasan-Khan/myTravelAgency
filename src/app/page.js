@@ -1,4 +1,5 @@
 import AirlinesPartnerMarquee from "./pages/HomePage/AirlinesPartnerMarquee/AirlinesPartnerMarquee";
+import GoogleReviews from "./pages/HomePage/GoogleReviews/GoogleReviews";
 import OfferNoticeSlider from "./pages/HomePage/OfferNoticeSlider/OfferNoticeSlider";
 import SearchForm from "./pages/HomePage/SearchForm/SearchForm";
 import VideoBanner from "./pages/HomePage/VideoBanner/VideoBanner";
@@ -29,8 +30,11 @@ export default function Home() {
 
       </div>
       {/* Airlines Partner Logo */}
-      <div className="mx-auto md:px-32 sm:px-0 mt-6 border-e-2">
+      <div className="mx-auto md:px-32 sm:px-0 mt-6">
         <AirlinesPartnerMarquee></AirlinesPartnerMarquee>
+      </div>
+      <div className="mt-6 pt-4 md:px-32 sm:px-0 bg-[#ecf0f5]">
+        <GoogleReviews></GoogleReviews>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 "use client"
+import SectionTitle from '@/app/components/SectionTitle/SectionTitle';
 import React, { useEffect } from 'react';
 
 const GoogleReviews = () => {
@@ -16,6 +17,7 @@ const GoogleReviews = () => {
 
     return (
         <div>
+            <SectionTitle heading='What Our Customers Say' subheading='Hear Directly from Our Happy Clients'></SectionTitle>
             <div className="elfsight-app-988aa58e-51ae-41c8-807a-d5a716d7faa2" data-elfsight-app-lazy></div>
         </div>
     );
