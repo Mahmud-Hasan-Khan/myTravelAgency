@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
 
@@ -84,37 +85,12 @@ const SearchForm = () => {
     }
   };
 
-  // const handleChange = (e) => {
-  //   setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log('Form submitted:', { activeTab, tripType, ...form });
-  // };
-
-
   // State to hold airport options
   const [airportOptions, setAirportOptions] = useState([]);
   const [selectedFrom, setSelectedFrom] = useState(null);
   const [selectedTo, setSelectedTo] = useState(null);
   const [loadingAirports, setLoadingAirports] = useState(true);
   const [errorLoadingAirports, setErrorLoadingAirports] = useState(null);
-  // Load JSON data from public folder
-  // useEffect(() => {
-  //   if (!airportOptions.length) {
-  //     fetch('/data/AirportData.json')
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         console.log('Loaded airport data:', data);
-  //         const formatted = data.map((airport) => ({
-  //           label: `(${airport.IATA}) ${airport.Name} - ${airport.City}, ${airport.Country}`,
-  //           value: airport.IATA,
-  //         }));
-  //         setAirportOptions(formatted);
-  //       });
-  //   }
-  // }, [airportOptions.length]);
 
   useEffect(() => {
     const fetchAirportData = async () => {
@@ -138,7 +114,7 @@ const SearchForm = () => {
         setLoadingAirports(false);
       }
     };
-  
+
     fetchAirportData();
   }, []);
 
@@ -168,15 +144,25 @@ const SearchForm = () => {
 
   const tabs = [
     { id: "tab1", icon: "/airplane.ico", label: "Flight" },
-    { id: "tab2", icon: "/love-hotel.ico", label: "Hotel" },
-    { id: "tab3", icon: "/visa.ico", label: "Visa" },
+    { id: "tab2", icon: "/visa.ico", label: "Visa" },
+    { id: "tab3", icon: "/love-hotel.ico", label: "Hotel" },
     { id: "tab4", icon: "/kaaba.ico", label: "Umrah" },
   ];
+
+  // const router = useRouter();
+
+  // const handleTabClick = (tabId) => {
+  //   if (tabId === 'tab2') {
+  //     router.push('/visa');
+  //   } else {
+  //     setActiveTab(tabId);
+  //   }
+  // };
 
   const tabContent = {
     tab1: (
       <form>
-        <div className='w-full px-0 sm:px-2 md:px-10 lg:px-10 xl:px-10 max-w-screen-xl mx-auto'>
+        <div className='w-full px-0 mx-auto'>
           {/* Trip Type Selection */}
           <div className="lg:flex justify-between items-center">
             <div className="lg:flex gap-2 space-y-2 lg:space-y-0 py-4">
@@ -504,8 +490,61 @@ const SearchForm = () => {
       </form>
     ),
     tab2: (
-      <div>
-        <h2>Tab content 2 </h2>
+      <div className='md:mt-6'>
+        <div className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">
+          <div className='relative w-full'>
+            <label className={floatingLabelClass}>Select Country
+            </label>
+            <Select
+              options={airportOptions}
+              value={selectedFrom}
+              onChange={setSelectedFrom}
+              placeholder="Select airport"
+              isClearable
+              classNames={selectClassNamesStyle}
+              menuPortalTarget={typeof window !== 'undefined' ? document.body : null}  // Important for Next.js SSR
+              menuPosition="fixed"
+              styles={{
+                menuPortal: (base) => ({
+                  ...base,
+                  zIndex: 9999,  // Make sure dropdown is always on top
+                }),
+              }}
+            />
+          </div>
+          <div className='relative w-full'>
+            <label className={floatingLabelClass}>Traveler Nationality
+            </label>
+            <Select
+              // options="Bangladeshi"
+              value="Bangladeshi"
+              onChange="Bangladeshi"
+              placeholder="Bangladeshi"
+              isClearable
+              classNames={selectClassNamesStyle}
+              menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+              menuPosition="fixed"
+              styles={{
+                menuPortal: (base) => ({
+                  ...base,
+                  zIndex: 9999,
+                }),
+              }}
+            />
+          </div>
+
+          <button className='w-full flex items-center justify-center gap-2 border rounded-md p-[10px] text-white border-orange-500 bg-orange-500 hover:bg-orange-600'><svg xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="white"
+            className="w-5 h-5">
+            <path strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+          </svg>Search
+          </button>
+        </div>
       </div>
     ),
     tab3: (
@@ -525,7 +564,7 @@ const SearchForm = () => {
     <div className='mx-auto my-6 md:my-10 bg-white p-6 shadow-lg space-y-2 border-[1px] rounded-md' >
 
       {/* For Tab  */}
-      <div className='flex justify-around flex-wrap border-b'>
+      <div className='flex justify-between flex-wrap border-b pb-1'>
         {tabs.map((tab) => (
           <button key={tab.id}
             className={`px-3 py-2 font-semibold flex  gap-2 rounded-lg ${activeTab === tab.id ? "border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 hover:text-[#1882ff]"
