@@ -53,61 +53,66 @@ const VisaCountryPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h1 className="text-2xl font-bold mb-4">Visa Information</h1>
+    <div className='bg-[#ecf0f5]'>
+    <div className='mx-auto md:px-32 sm:px-0 mt-0 py-8 container'>
+      <div className="mx-auto mt-10 p-6 bg-white shadow rounded">
+        <h1 className="text-2xl font-bold mb-4">Visa Information</h1>
 
-      {/* Country dropdown */}
-      <div className="mb-6">
-        <label className="block text-gray-700 font-medium mb-2">Select Country:</label>
-        <Select
-          options={visaData.map((d) => ({
-            label: d.country,
-            value: d.country,
-          }))}
-          value={selectedCountry}
-          onChange={handleCountryChange}
-          placeholder="Choose a country"
-          isClearable
-        />
-      </div>
-
-      {/* Spinner during loading */}
-      {loading && (
-        <div className="flex justify-center items-center mb-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 border-solid"></div>
-          <span className="ml-3 text-blue-500 font-medium">Loading visa details...</span>
-        </div>
-      )}
-
-      {/* Visa info display */}
-      {!loading && visaInfo ? (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">{visaInfo.country} Visa Details</h2>
-          <img
-            src={visaInfo.image}
-            alt={visaInfo.country}
-            className="w-full max-w-md rounded"
+        {/* Country dropdown */}
+        <div className="mb-6 w-96">
+          <label className=" text-gray-700 font-medium mb-2">Select Country:</label>
+          <Select
+            options={visaData.map((d) => ({
+              label: d.country,
+              value: d.country,
+            }))}
+            value={selectedCountry}
+            onChange={handleCountryChange}
+            placeholder="Choose a country"
+            isClearable
           />
-          <p>{visaInfo.description}</p>
-          <div>
-            <h3 className="font-semibold">Required Documents:</h3>
-            <ul className="list-disc list-inside">
-              {visaInfo.documents.map((doc, i) => (
-                <li key={i}>{doc}</li>
-              ))}
-            </ul>
-          </div>
-          <p className="font-semibold">
-            Price: <span className="text-green-600">{visaInfo.price}</span>
-          </p>
         </div>
-      ) : (
-        !loading && (
-          <div className="text-red-500 font-medium mt-4">
-            Visa information not found for this country.
+
+        {/* Spinner during loading */}
+        {loading && (
+          <div className="flex justify-center items-center mb-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 border-solid"></div>
+            <span className="ml-3 text-blue-500 font-medium">Loading visa details...</span>
           </div>
-        )
-      )}
+        )}
+
+        {/* Visa info display */}
+        {!loading && visaInfo ? (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">{visaInfo.country} Visa Details</h2>
+            <img
+              src={visaInfo.image}
+              alt={visaInfo.country}
+              className="w-full max-w-md rounded"
+            />
+            <p>{visaInfo.description}</p>
+            <div>
+              <h3 className="font-semibold">Required Documents:</h3>
+              <ul className="list-disc list-inside">
+                {visaInfo.documents.map((doc, i) => (
+                  <li key={i}>{doc}</li>
+                ))}
+              </ul>
+            </div>
+            <p className="font-semibold">
+              Price: <span className="text-green-600">{visaInfo.price}</span>
+            </p>
+          </div>
+        ) : (
+          !loading && (
+            <div className="text-red-500 font-medium mt-4">
+              Visa information not found for this country.
+            </div>
+          )
+        )}
+      </div>
+    </div>
+
     </div>
   );
 };
