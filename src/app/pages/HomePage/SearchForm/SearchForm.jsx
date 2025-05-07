@@ -636,7 +636,7 @@ const SearchForm = () => {
       <div className='flex justify-between flex-wrap border-b pb-1'>
         {tabs.map((tab) => (
           <button key={tab.id}
-            className={`px-3 py-2 font-semibold flex  gap-2 rounded-lg ${activeTab === tab.id ? "border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 hover:text-[#1882ff]"
+            className={`px-3 py-1 font-semibold flex my-1 gap-2 rounded-lg ${activeTab === tab.id ? "border-t shadow-md border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 border-b shadow-md border-gray-300 hover:text-[#1882ff] hover:border-[#1882ff] hover:transition-colors duration-200 border-t"
               }`}
             onClick={() => setActiveTab(tab.id)}
           >
