@@ -8,6 +8,7 @@
             "Photo",
             "Flight Ticket"
         ],
+        "visaType":"E Visa",
         "price": "$100"
     },
     {
@@ -18,6 +19,7 @@
             "Passport",
             "Hotel Booking"
         ],
+        "visaType":"E Visa",
         "price": "$120"
     },
     {
@@ -28,6 +30,7 @@
             "Passport",
             "Return Ticket"
         ],
+        "visaType":"E Visa",
         "price": "$90"
     }
 ]

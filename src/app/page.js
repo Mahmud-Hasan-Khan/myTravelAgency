@@ -24,7 +24,7 @@ export default function Home() {
         </div>
 
         {/* Offer Notice */}
-        <div className="bg-[#ecf0f5] mx-auto md:px-32 sm:px-0 mt-0 py-8 z-10">
+        <div className="bg-[#e2e8f0] mx-auto md:px-32 sm:px-0 mt-0 py-8 z-10">
           <OfferNoticeSlider />
         </div>
 
@@ -33,7 +33,7 @@ export default function Home() {
       <div className="mx-auto md:px-32 sm:px-0 mt-6">
         <AirlinesPartnerMarquee></AirlinesPartnerMarquee>
       </div>
-      <div className="mt-6 pt-4 md:px-32 sm:px-0 bg-[#ecf0f5]">
+      <div className="mt-6 pt-4 md:px-32 sm:px-0 bg-[#e2e8f0]">
         <GoogleReviews></GoogleReviews>
       </div>
     </div>
