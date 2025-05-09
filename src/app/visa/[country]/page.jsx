@@ -92,7 +92,7 @@ const VisaCountryPage = () => {
                   <path d="M1.58965 2.83807V2.18182H1.35721C1.17869 2.18182 1.03397 2.32872 1.03397 2.50994C1.03397 2.69116 1.17869 2.83807 1.35721 2.83807H1.58965Z" fill="#9BA6B2"></path>
                   <path d="M1.58965 2.83807V2.18182M1.58965 2.83807H1.35721C1.17869 2.83807 1.03397 2.69116 1.03397 2.50994C1.03397 2.32872 1.17869 2.18182 1.35721 2.18182H1.58965M1.58965 2.83807H8.41034V9.98437C8.41034 10.3209 8.14158 10.5937 7.81004 10.5937H2.18995C1.85841 10.5937 1.58965 10.3209 1.58965 9.98437V2.83807ZM1.58965 2.18182V2.01562C1.58965 1.67908 1.85841 1.40625 2.18995 1.40625H8.40639H8.73358C8.91209 1.40625 9.05681 1.25934 9.05681 1.07812C9.05681 0.896907 8.91209 0.75 8.73358 0.75H2.18995C1.50137 0.75 0.943176 1.31664 0.943176 2.01562V9.98437C0.943176 10.6834 1.50137 11.25 2.18995 11.25H7.81004C8.49862 11.25 9.05681 10.6834 9.05681 9.98437V2.18182H8.45428H1.58965Z" stroke="#9BA6B2" stroke-width="0.3" stroke-linecap="round"></path>
                 </svg>
-                <h2 className="text-sm font-medium">Processing Time <span className='font-bold'>{visaInfo?.visaType}</span> </h2>
+                <h2 className="text-sm font-medium">Processing Time <span className='font-bold'>{visaInfo?.ProcessingTime}</span> </h2>
               </div>
             </div>
             <div className='bg-white h-full mt-4 p-3 rounded-md'>
@@ -108,7 +108,7 @@ const VisaCountryPage = () => {
             div 2
           </div>
           <div className="flex items-center justify-center border border-black min-h-[150px] bg-amber-200">
-            div 3
+           <h6>{visaInfo?.price} </h6>
           </div>
         </div>
       </div>
