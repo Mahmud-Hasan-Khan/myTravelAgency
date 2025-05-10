@@ -3,19 +3,103 @@
         "country": "Thailand",
         "image": "https://images.unsplash.com/photo-1588513646744-e94675143d6f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTY1fHxzYXVkaSUyMGFyYWJpYXxlbnwwfHwwfHx8MA%3D%3D",
         "description": "E-Visa for visiting Thailand.",
-        "documents": [
-            "Passport Biodata page scan copy",
-            "Recent 3.5 cm x 4.5 cm size Photo with white background scan copy",
-            "Visiting Card & NID",
-            "Bank Statement for last six months & Bank Solvency Certificate",
-            "Document indicating current location ( If Stay Outside of Bangladesh )"
-        ],
-        "extraDocuments": [
-            "Letter of appointment from hospital/medical center for Medical Visa",
-            "Student ID Card for Student (if child travel with parent )",
-            "Birth Certificate for Infant (if child travel with parent )",
-            "Marriage Certificate (only for newly married couple )"
-        ],
+         "documents": {
+            "Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "No objection certificate (NOC)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Businessman": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal or Company bank statement for the last 06 months.",
+                "Renewal trade license copy with notary public (english translated)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Memorandum for limited company form page XII (One photo copy)",
+                "Company letter head pad",
+                "Personal or company bank solvency certificate",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Govt Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "GO (Government order) for official passport"
+            ],
+            "Doctor": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BMDC certificate for doctor (Scan copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Company letter head pad",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Advocate _ Lawyer": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BAR council certificate (One photo copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Student": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "ID card (Student) one photocopy both sides",
+                "Leave letter from school or collage original copy",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Non-student Child": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Birth certificate",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )"
+            ],
+            "Housewife": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Retired person": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Retirement document (Retired Person) one photo copy",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Unemployed": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "NID or birth certificate (must) one photo copy",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ]
+        },
         "visaType":"E Visa",
         "ProcessingTime":"5 - 10 Working Days",
         "price": "$100"
@@ -24,11 +108,103 @@
         "country": "Saudi Arabia",
         "image": "https://images.unsplash.com/photo-1588513646744-e94675143d6f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTY1fHxzYXVkaSUyMGFyYWJpYXxlbnwwfHwwfHx8MA%3D%3D",
         "description": "Visa for visiting Saudi Arabia.",
-        "documents": [
-            "Passport",
-            "Photo",
-            "Flight Ticket"
-        ],
+         "documents": {
+            "Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "No objection certificate (NOC)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Businessman": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal or Company bank statement for the last 06 months.",
+                "Renewal trade license copy with notary public (english translated)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Memorandum for limited company form page XII (One photo copy)",
+                "Company letter head pad",
+                "Personal or company bank solvency certificate",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Govt Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "GO (Government order) for official passport"
+            ],
+            "Doctor": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BMDC certificate for doctor (Scan copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Company letter head pad",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Advocate _ Lawyer": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BAR council certificate (One photo copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Student": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "ID card (Student) one photocopy both sides",
+                "Leave letter from school or collage original copy",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Non-student Child": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Birth certificate",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )"
+            ],
+            "Housewife": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Retired person": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Retirement document (Retired Person) one photo copy",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Unemployed": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "NID or birth certificate (must) one photo copy",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ]
+        },
         "visaType":"E Visa",
         "ProcessingTime":"5 Days",
         "price": "$100"
@@ -37,10 +213,103 @@
         "country": "UAE",
         "image": "https://images.unsplash.com/photo-1636435462738-4166c45015b3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ5fHx1YWV8ZW58MHx8MHx8fDA%3D",
         "description": "Tourist visa for UAE.",
-        "documents": [
-            "Passport",
-            "Hotel Booking"
-        ],
+          "documents": {
+            "Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "No objection certificate (NOC)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Businessman": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal or Company bank statement for the last 06 months.",
+                "Renewal trade license copy with notary public (english translated)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Memorandum for limited company form page XII (One photo copy)",
+                "Company letter head pad",
+                "Personal or company bank solvency certificate",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Govt Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "GO (Government order) for official passport"
+            ],
+            "Doctor": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BMDC certificate for doctor (Scan copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Company letter head pad",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Advocate _ Lawyer": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BAR council certificate (One photo copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Student": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "ID card (Student) one photocopy both sides",
+                "Leave letter from school or collage original copy",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Non-student Child": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Birth certificate",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )"
+            ],
+            "Housewife": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Retired person": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Retirement document (Retired Person) one photo copy",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Unemployed": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "NID or birth certificate (must) one photo copy",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ]
+        },
         "visaType":"E Visa",
         "price": "$120"
     },
@@ -48,10 +317,103 @@
         "country": "Malaysia",
         "image": "https://images.unsplash.com/photo-1577931683033-1059552104e0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1hbGF5c2lhfGVufDB8fDB8fHww",
         "description": "Visa for tourism in Malaysia.",
-        "documents": [
-            "Passport",
-            "Return Ticket"
-        ],
+          "documents": {
+            "Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "No objection certificate (NOC)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Businessman": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal or Company bank statement for the last 06 months.",
+                "Renewal trade license copy with notary public (english translated)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Memorandum for limited company form page XII (One photo copy)",
+                "Company letter head pad",
+                "Personal or company bank solvency certificate",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Govt Job Holder": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Employee Id card copy (One photo copy)",
+                "Salary bank statement (Last 06 months) and bank solvency certificate or salary certificate or pay slip",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "GO (Government order) for official passport"
+            ],
+            "Doctor": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BMDC certificate for doctor (Scan copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Company letter head pad",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Advocate _ Lawyer": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Visiting card",
+                "BAR council certificate (One photo copy)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Student": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "ID card (Student) one photocopy both sides",
+                "Leave letter from school or collage original copy",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Non-student Child": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Birth certificate",
+                "Parents bank statement (Last 06 months) & solvency certificate ( Minimum balance BDT 70,000 for each applicant )"
+            ],
+            "Housewife": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Retired person": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Retirement document (Retired Person) one photo copy",
+                "Marriage certificate copy (if spouse name not mentioned in the passport)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ],
+            "Unemployed": [
+                "07 Months Valid Passport With Old Passport (If have)",
+                "Recent 2 copy photograph taken in last 3 months (white background only, photo size 35 mm X 45 mm)",
+                "Personal bank solvency certificate",
+                "Personal bank statement of last 06 months and minimum balance BDT 70,000 for each applicant.",
+                "NID or birth certificate (must) one photo copy",
+                "Proof of Residence (Present): A copy of National ID Card and Latest Utility Bill such as electricity, telephone, gas or water bill (not more than 3 months old) copy."
+            ]
+        },
         "visaType":"E Visa",
         "price": "$90"
     }

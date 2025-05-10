@@ -6,11 +6,12 @@ import Select from 'react-select';
 const VisaCountryPage = () => {
   const { country } = useParams(); // e.g. "uae"
   const router = useRouter();
-
   const [visaData, setVisaData] = useState([]);
   const [visaInfo, setVisaInfo] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [loading, setLoading] = useState(false); // <-- 🔹 Loading state
+  // Loading state
+  const [loading, setLoading] = useState(false); // <-- 🔹 
+  const [activeTravelerOccupation, setActiveTravelerOccupation] = useState(null);
 
   // Fetch visa data and set matched country
   useEffect(() => {
@@ -31,6 +32,8 @@ const VisaCountryPage = () => {
         if (matched) {
           setVisaInfo(matched);
           setSelectedCountry({ label: matched.country, value: matched.country });
+          const travelerOccupation = Object.keys(matched.documents || {});
+          if (travelerOccupation.length > 0) setActiveTravelerOccupation(travelerOccupation[0]);
         } else {
           setVisaInfo(null);
           setSelectedCountry(null);
@@ -59,9 +62,25 @@ const VisaCountryPage = () => {
         {/* Left large div (div 1) */}
         <div className="col-span-2 flex min-h-96">
           <div className='flex-col w-full'>
-            <div className='bg-white w-full rounded-t-md px-3 py-2'>
-              <h2 className="text-xl text-[#9ca3af] font-bold">{visaInfo?.country}</h2>
-              <h2 className="text-lg font-bold">Tourist Visa Only</h2>
+            <div className='bg-white w-full rounded-t-md px-3 py-2 flex justify-between items-center'>
+              <div>
+                <h2 className="text-xl text-[#9ca3af] font-bold">{visaInfo?.country}</h2>
+                <h2 className="text-lg font-bold">Tourist Visa Only</h2>
+              </div>
+              {/* Country dropdown */}
+              <div className="w-fit">
+                <label className=" text-gray-700 font-medium mb-2">Select Country:</label>
+                <Select
+                  options={visaData.map((d) => ({
+                    label: d.country,
+                    value: d.country,
+                  }))}
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  placeholder="Choose a country"
+                  isClearable
+                />
+              </div>
             </div>
             <div className='bg-[#f3f4f6] p-3 rounded-b-md flex space-x-2'>
               <div className='rounded-full px-2 py-1 bg-[#e5e7eb] flex justify-center items-center space-x-1'>
@@ -95,8 +114,41 @@ const VisaCountryPage = () => {
                 <h2 className="text-sm font-medium">Processing Time <span className='font-bold'>{visaInfo?.ProcessingTime}</span> </h2>
               </div>
             </div>
-            <div className='bg-white h-full mt-4 p-3 rounded-md'>
+            <div className='bg-white h-fit mt-4 p-3 rounded-md'>
               <h5 className="text-sm font-bold text-[#333333]">Required Documents for E visa</h5>
+              {/* name of each tab group should be unique */}
+              <div className=" ">
+                <div className='flex flex-wrap gap-2 my-4 bg-[#e2e8f0]'>
+                  {visaInfo?.documents && Object.keys(visaInfo.documents).map((occupation) => (
+                    <button
+                      key={occupation}
+                      onClick={() => setActiveTravelerOccupation(occupation)}
+                      className={`px-4 py-1 rounded-lg border text-sm ${activeTravelerOccupation === occupation ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                    >
+                      {occupation}
+                    </button>
+                  ))}
+                </div>
+                {/* Visa info display */}
+                {!loading && visaInfo ? (
+
+                  <div className='bg-white'>
+                    <h3 className="font-semibold">Required Documents:</h3>
+                    <ul className="list-disc list-inside">
+                      {visaInfo.documents[activeTravelerOccupation]?.map((doc, i) => (
+                        <li key={i}>{doc}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                ) : (
+                  !loading && (
+                    <div className="text-red-500 font-medium mt-4">
+                      Visa information not found for this country.
+                    </div>
+                  )
+                )}
+              </div>
             </div>
 
           </div>
@@ -108,73 +160,10 @@ const VisaCountryPage = () => {
             div 2
           </div>
           <div className="flex items-center justify-center border border-black min-h-[150px] bg-amber-200">
-           <h6>{visaInfo?.price} </h6>
+            <h6>{visaInfo?.price} </h6>
           </div>
         </div>
       </div>
-
-
-      <div className='mx-auto md:px-32 sm:px-0 mt-0 py-8 container'>
-        <div className="mx-auto mt-10 p-6 bg-white shadow rounded">
-          <h1 className="text-2xl font-bold mb-4">Visa Information</h1>
-
-          {/* Country dropdown */}
-          <div className="mb-6 w-96">
-            <label className=" text-gray-700 font-medium mb-2">Select Country:</label>
-            <Select
-              options={visaData.map((d) => ({
-                label: d.country,
-                value: d.country,
-              }))}
-              value={selectedCountry}
-              onChange={handleCountryChange}
-              placeholder="Choose a country"
-              isClearable
-            />
-          </div>
-
-          {/* Spinner during loading */}
-          {loading && (
-            <div className="flex justify-center items-center mb-4">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 border-solid"></div>
-              <span className="ml-3 text-blue-500 font-medium">Loading visa details...</span>
-            </div>
-          )}
-
-          {/* Visa info display */}
-          {!loading && visaInfo ? (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">{visaInfo.country} Visa Details</h2>
-              <img
-                src={visaInfo.image}
-                alt={visaInfo.country}
-                className="w-full max-w-md rounded"
-              />
-              <p>{visaInfo.description}</p>
-              <div>
-                <h3 className="font-semibold">Required Documents:</h3>
-                <ul className="list-disc list-inside">
-                  {visaInfo.documents.map((doc, i) => (
-                    <li key={i}>{doc}</li>
-                  ))}
-                </ul>
-              </div>
-              <p className="font-semibold">
-                Price: <span className="text-green-600">{visaInfo.price}</span>
-              </p>
-            </div>
-          ) : (
-            !loading && (
-              <div className="text-red-500 font-medium mt-4">
-                Visa information not found for this country.
-              </div>
-            )
-          )}
-        </div>
-      </div>
-
-
-
     </div>
   );
 };
