@@ -101,8 +101,10 @@
             ]
         },
         "visaType":"E Visa",
-        "ProcessingTime":"5 - 10 Working Days",
-        "price": "$100"
+        "ProcessingTime":"5-10 Working",
+        "Validity":"90",
+        "maxStay": "30",
+        "price": "5800"
     },
     {
         "country": "Saudi Arabia",
@@ -207,7 +209,7 @@
         },
         "visaType":"E Visa",
         "ProcessingTime":"5 Days",
-        "price": "$100"
+        "price": "100"
     },
     {
         "country": "UAE",
@@ -311,7 +313,7 @@
             ]
         },
         "visaType":"E Visa",
-        "price": "$120"
+        "price": "120"
     },
     {
         "country": "Malaysia",
@@ -415,6 +417,6 @@
             ]
         },
         "visaType":"E Visa",
-        "price": "$90"
+        "price": "90"
     }
 ]
