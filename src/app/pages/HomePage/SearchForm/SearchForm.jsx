@@ -500,64 +500,7 @@ const SearchForm = () => {
         </div>
       </form>
     ),
-    // tab2: (
-    //   <div className='md:mt-6'>
-    //     <div className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">
-    //       <div className='relative w-full'>
-    //         <label className={floatingLabelClass}>Select Country
-    //         </label>
-    //         <Select
-    //           options={airportOptions}
-    //           value={selectedFrom}
-    //           onChange={setSelectedFrom}
-    //           placeholder="Select airport"
-    //           isClearable
-    //           classNames={selectClassNamesStyle}
-    //           menuPortalTarget={typeof window !== 'undefined' ? document.body : null}  // Important for Next.js SSR
-    //           menuPosition="fixed"
-    //           styles={{
-    //             menuPortal: (base) => ({
-    //               ...base,
-    //               zIndex: 9999,  // Make sure dropdown is always on top
-    //             }),
-    //           }}
-    //         />
-    //       </div>
-    //       <div className='relative w-full'>
-    //         <label className={floatingLabelClass}>Traveler Nationality
-    //         </label>
-    //         <Select
-    //           // options="Bangladeshi"
-    //           value="Bangladeshi"
-    //           onChange="Bangladeshi"
-    //           placeholder="Bangladeshi"
-    //           isClearable
-    //           classNames={selectClassNamesStyle}
-    //           menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
-    //           menuPosition="fixed"
-    //           styles={{
-    //             menuPortal: (base) => ({
-    //               ...base,
-    //               zIndex: 9999,
-    //             }),
-    //           }}
-    //         />
-    //       </div>
 
-    //       <button className='w-full flex items-center justify-center gap-2 border rounded-md p-[10px] text-white border-orange-500 bg-orange-500 hover:bg-orange-600'><svg xmlns="http://www.w3.org/2000/svg"
-    //         fill="none"
-    //         viewBox="0 0 24 24"
-    //         strokeWidth="2"
-    //         stroke="white"
-    //         className="w-5 h-5">
-    //         <path strokeLinecap="round"
-    //           strokeLinejoin="round"
-    //           d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-    //       </svg>Search
-    //       </button>
-    //     </div>
-    //   </div>
-    // ),
     tab2: (
       <div className='md:mt-6'>
         <div className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">
