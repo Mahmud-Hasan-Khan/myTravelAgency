@@ -5,6 +5,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import OfferNoticeCard from './OfferNoticeCard';
 import SectionTitle from '@/app/components/SectionTitle/SectionTitle';
+import useSWR from 'swr';
+import OfferNoticeSkeleton from '@/app/components/OfferNoticeSkeleton/OfferNoticeSkeleton';
+
+const fetcher = (...args)=> fetch(...args).then(res=>res.json());
 
 const OfferNoticeSlider = () => {
   // Setup Embla carousel instance
@@ -14,23 +18,12 @@ const OfferNoticeSlider = () => {
     slidesToScroll: 1,
   });
 
-  // State to store cards data
-  const [cards, setCards] = useState([]);
+  // Fetch cards data from mongoDB API using SWR & State to store cards data
+  const {data:cards=[], isLoading, error}= useSWR('/api/offer-notice', fetcher);
 
   // State to track selected slide index
   const [selectedIndex, setSelectedIndex] = useState(0);
-
   const router = useRouter();
-
-  // Fetch cards data from local JSON file
-  useEffect(() => {
-    const fetchCards = async () => {
-      const response = await fetch('/OfferNoticeCard.json');
-      const data = await response.json();
-      setCards(data);
-    };
-    fetchCards();
-  }, []);
 
   // Update selected index when slide changes
   useEffect(() => {
@@ -82,8 +75,8 @@ const OfferNoticeSlider = () => {
 
   // Handle clicking on a card to navigate to its page
   const handleCardClick = useCallback(
-    (id) => {
-      router.push(`/OfferNoticeCard/${id}`);
+    (_id) => {
+      router.push(`/offer-notice/${_id}`);
     },
     [router]
   );
@@ -94,6 +87,9 @@ const OfferNoticeSlider = () => {
     emblaApi.scrollTo(index);
   };
 
+  if (isLoading) return <OfferNoticeSkeleton />;
+
+
   return (
     <div className="relative w-full">
       <SectionTitle heading="Travel Updates & Exclusive Offers" subheading="Stay up to date with official airline Updates and limited-time promotional fares" ></SectionTitle>
@@ -102,10 +98,10 @@ const OfferNoticeSlider = () => {
         <div className="flex">
           {cards.map((card) => (
             <div
-              key={card.id}
+              key={card._id}
               className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] p-2"
             >
-              <OfferNoticeCard card={card} onClick={() => handleCardClick(card.id)} />
+              <OfferNoticeCard card={card} onClick={() => handleCardClick(card._id)} />
             </div>
           ))}
         </div>

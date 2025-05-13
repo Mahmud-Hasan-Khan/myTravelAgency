@@ -3,6 +3,8 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
+import useSWR from 'swr';
+import { useMemo } from 'react';
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
 
@@ -150,27 +152,23 @@ const SearchForm = () => {
   ];
 
   const router = useRouter();
-  const [visaCountries, setVisaCountries] = useState([]);
+  // const [visaCountries, setVisaCountries] = useState([]);
   const [selectedVisaCountry, setSelectedVisaCountry] = useState(null);
 
-  useEffect(() => {
-    const loadVisaOptions = async () => {
-      try {
-        const res = await fetch('/visaData.json');
-        const data = await res.json();
-        const countryOptions = data.map(item => ({
-          label: item.country,
-          value: item.country,
-        }));
-        setVisaCountries(countryOptions);
-      } catch (err) {
-        console.error("Failed to load visa country data:", err);
-      }
-    };
-    loadVisaOptions();
-  }, []);
+  const fetcher = (url) => fetch(url).then(res => res.json());
 
-  const tabContent = {
+  const { data, error, isLoading } = useSWR('/api/visaRequirements', fetcher);
+
+  const visaCountries= useMemo(()=>{
+    if(!data)return [];
+    return data.map((item)=>({
+      label: item.country,
+      value: item.country,
+    }));
+    
+  },[data])
+
+   const tabContent = {
     tab1: (
       <form>
         <div className='w-full px-0 mx-auto'>
@@ -501,6 +499,7 @@ const SearchForm = () => {
       </form>
     ),
 
+    //Visa Tab
     tab2: (
       <div className='md:mt-6'>
         <div className="flex flex-col gap-4 md:flex-row lg:items-end my-4 lg:my-0">

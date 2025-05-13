@@ -2,25 +2,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useMemo } from 'react';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function CardDetails() {
   const { id } = useParams();
-  const [card, setCard] = useState(null);
 
-  useEffect(() => {
-    const fetchCard = async () => {
-      const response = await fetch('/OfferNoticeCard.json');
-      const data = await response.json();
-      const found = data.find((item) => item.id === id);
-      setCard(found);
-    };
-    fetchCard();
-  }, [id]);
+  const { data, error, isLoading } = useSWR('/api/offer-notice', fetcher);
 
-  if (!card) {
-    return <div className="text-center mt-10">Loading...</div>;
-  }
+  const card = useMemo(() => {
+    if (!data) return null;
+    return data.find((item) => item._id === id);
+  }, [data, id]);
+
+
+  if (isLoading) return <div className="text-center mt-10">Loading...</div>;
+  if (error) return <div className="text-center mt-10 text-red-500">Failed to load</div>;
+  if (!card) return <div className="text-center mt-10">Card not found</div>;
 
   return (
     <div className='bg-[#e2e8f0]'>
