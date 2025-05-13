@@ -1,25 +1,13 @@
-"use client"
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
 import Marquee from 'react-fast-marquee';
-import airlinesData from '../../../../../public/airlinesPartnerLogo.json'
 import SectionTitle from '@/app/components/SectionTitle/SectionTitle';
+import dbConnect from '@/lib/dbConnect';
 
-const AirlinesPartnerMarquee = () => {
+const AirlinesPartnerMarquee = async () => {
 
-  // State to store airlinesLogo data
-  const [airlinesLogo, setAirlinesLogo] = useState(airlinesData);
-
-  // Fetch airlinesLogo data from local JSON file
-  // useEffect(() => {
-  //   const fetchAirlinesLogo = async () => {
-  //     const response = await fetch('/airlinesPartnerLogo.json');
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setAirlinesLogo(data);
-  //   };
-  //   fetchAirlinesLogo();
-  // }, []);
+  // load api data from mongoDB Server .. 
+  const airlinesPartnerLogoCollection =dbConnect("airlinesPartnerLogo");
+  const airlinesLogo = await airlinesPartnerLogoCollection.find({}).toArray();
 
   return (
     <div className="my-3">
