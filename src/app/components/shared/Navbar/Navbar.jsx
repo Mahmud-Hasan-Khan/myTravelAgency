@@ -329,9 +329,9 @@ const Navbar = () => {
 
       {/* Login Button (Desktop) */}
       <div className="hidden sm:block">
-        <button className="bg-[#1882ff] hover:bg-[#126fde] text-white font-medium px-4 py-2 rounded-3xl transition-colors duration-300 ease-linear">
+        <NavLink href="/login" className="bg-[#1882ff] hover:bg-[#126fde] text-white font-medium px-4 py-2 rounded-3xl transition-colors duration-300 ease-linear">
           Login
-        </button>
+        </NavLink>
       </div>
     </Popover>
   );
