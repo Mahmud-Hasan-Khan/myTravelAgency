@@ -6,41 +6,56 @@ import { FcGoogle } from 'react-icons/fc';
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
 import Link from 'next/link';
 
-const Login = () => {
-    
+const Register = () => {
+
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLoginWithEmailAndPassword = (e) => {
+    const handleRegisterWithEmailAndPassword = (e) => {
         e.preventDefault();
 
         const form = e.currentTarget;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+        console.log(name, email, password);
     }
 
 
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className='flex flex-col rounded-md shadow-lg border border-gray-200 lg:w-[30%] px-6 lg:px-10 border-t-4 border-t-[#4081ec]'>
-                <h4 className='mt-4 pb-1 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Please  Login</h4>
+                <h4 className='mt-4 pb-1 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Register now</h4>
                 <p className='md:text-base text-sm text-center text-[#5a6573]'>You need to Login first to continue</p>
+                <div
+                    className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white mt-3'
+                >
+                    <FcGoogle className='bg-white rounded-full' size={32} />
+                    <p className='text-center'>Login with Google</p>
+                </div>
+                <div className="divider mb-0 lg:pt-4">Or Create account with</div>
 
                 <form
-                    onSubmit={handleLoginWithEmailAndPassword}
+                    onSubmit={handleRegisterWithEmailAndPassword}
                     noValidate=''
                     action=''
                     className='space-y-6'
                 >
                     <div className='md:space-y-4 mt-4'>
-                        <div
-                            className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white'
-                        >
-                            <FcGoogle className='bg-white rounded-full' size={32} />
-                            <p className='text-center'>Login with Google</p>
+                        <div>
+                            <label className="label">
+                                <span className="inputLabel">Name</span>
+                            </label>
+                            <input
+                                type='name'
+                                name="text"
+                                id='name'
+                                required
+                                placeholder='Your Full Name'
+                                className='w-full px-3 py-3 rounded-md border border-gray-300 focus:outline-[#4081ec] bg-base-200 text-gray-900'
+                                data-temp-mail-org='0'
+                            />
                         </div>
-                        <div className="divider mb-0 lg:pt-4">Or Login with</div>
                         <div>
                             <label className="label">
                                 <span className="inputLabel">Email</span>
@@ -90,7 +105,7 @@ const Login = () => {
                             type='submit'
                             className='flex justify-center items-center space-x-2 border p-3 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white w-full'
                         >
-                            Login
+                            Register
                             {/* {loading ? (
                                     <ImSpinner3 className='m-auto animate-spin' size={24} />
                                 ) : (
@@ -100,11 +115,11 @@ const Login = () => {
                     </div>
                 </form>
                 <p className='py-3 text-sm font-medium text-center mb-4 text-red-500'>
-                    Don't have an account yet?
-                    <Link href={'/register'}
+                    Already have an account yet?
+                    <Link href={'/login'}
                         className='text-[#4081ec] hover:underline font-semibold ml-1'
                     >
-                        Register now
+                        Login now
                     </Link>
                 </p>
             </div>
@@ -112,4 +127,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
