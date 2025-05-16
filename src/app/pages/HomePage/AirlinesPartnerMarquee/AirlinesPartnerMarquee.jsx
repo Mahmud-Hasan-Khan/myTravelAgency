@@ -6,7 +6,7 @@ import dbConnect from '@/lib/dbConnect';
 const AirlinesPartnerMarquee = async () => {
 
   // load api data from mongoDB Server .. 
-  const airlinesPartnerLogoCollection =dbConnect("airlinesPartnerLogo");
+  const {collection: airlinesPartnerLogoCollection} =await dbConnect("airlinesPartnerLogo");
   const airlinesLogo = await airlinesPartnerLogoCollection.find({}).toArray();
 
   return (

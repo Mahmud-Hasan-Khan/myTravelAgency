@@ -7,7 +7,7 @@ import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
 import Link from 'next/link';
 
 const Login = () => {
-    
+
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
 
@@ -26,6 +26,13 @@ const Login = () => {
             <div className='flex flex-col rounded-md shadow-lg border border-gray-200 lg:w-[30%] px-6 lg:px-10 border-t-4 border-t-[#4081ec]'>
                 <h4 className='mt-4 pb-1 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Please  Login</h4>
                 <p className='md:text-base text-sm text-center text-[#5a6573]'>You need to Login first to continue</p>
+                <div
+                    className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white mt-3'
+                >
+                    <FcGoogle className='bg-white rounded-full' size={32} />
+                    <p className='text-center'>Login with Google</p>
+                </div>
+                <div className="divider mb-0 lg:pt-4">Or Login with</div>
 
                 <form
                     onSubmit={handleLoginWithEmailAndPassword}
@@ -34,13 +41,6 @@ const Login = () => {
                     className='space-y-6'
                 >
                     <div className='md:space-y-4 mt-4'>
-                        <div
-                            className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white'
-                        >
-                            <FcGoogle className='bg-white rounded-full' size={32} />
-                            <p className='text-center'>Login with Google</p>
-                        </div>
-                        <div className="divider mb-0 lg:pt-4">Or Login with</div>
                         <div>
                             <label className="label">
                                 <span className="inputLabel">Email</span>

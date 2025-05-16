@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 
 export async function GET() {
     try {
-        const OfferNoticeCardCollection = dbConnect("visaRequirements");
+        const {collection: OfferNoticeCardCollection} =await dbConnect("visaRequirements");
         const data = await OfferNoticeCardCollection.find({}).toArray();
 
         // Convert MongoDB ObjectId to string
