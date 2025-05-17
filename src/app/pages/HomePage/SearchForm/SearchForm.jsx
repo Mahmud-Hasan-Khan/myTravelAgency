@@ -11,7 +11,7 @@ const Select = dynamic(() => import('react-select'), { ssr: false });
 const SearchForm = () => {
 
   const [activeTab, setActiveTab] = useState("tab1")
-  const [tripType, setTripType] = useState('round');
+  const [tripType, setTripType] = useState('oneway');
   const [selectedClass, setSelectedClass] = useState('Economy');
   const [classDropdownOpen, setClassDropdownOpen] = useState(false);
   const getFormattedDate = (date) => {

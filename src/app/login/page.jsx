@@ -1,43 +1,55 @@
 "use client"
 
-import React from 'react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn } from "next-auth/react";
 import { FcGoogle } from 'react-icons/fc';
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
+import { ImSpinner3 } from "react-icons/im";
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 const Login = () => {
-
-    const [errors, setErrors] = useState({});
+    const [form, setForm] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
 
-    const handleLoginWithEmailAndPassword = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        const form = e.currentTarget;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(email, password);
-    }
+        const res = await signIn("credentials", {
+            ...form,
+            redirect: false,
+        });
 
+        if (res.ok) {
+            toast.success("Login successful");
+            router.push("/"); // Adjust based on user.role if needed
+        } else {
+            toast.error(res.error || "Login failed");
+        }
+
+        setLoading(false);
+    };
 
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className='flex flex-col rounded-md shadow-lg border border-gray-200 lg:w-[30%] px-6 lg:px-10 border-t-4 border-t-[#4081ec]'>
                 <h4 className='mt-4 pb-1 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Please  Login</h4>
                 <p className='md:text-base text-sm text-center text-[#5a6573]'>You need to Login first to continue</p>
-                <div
+                <button
+                    onClick={() => signIn("google",{ callbackUrl: "/" })}
                     className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white mt-3'
                 >
                     <FcGoogle className='bg-white rounded-full' size={32} />
                     <p className='text-center'>Login with Google</p>
-                </div>
+                </button>
                 <div className="divider mb-0 lg:pt-4">Or Login with</div>
 
                 <form
-                    onSubmit={handleLoginWithEmailAndPassword}
-                    noValidate=''
-                    action=''
+                    onSubmit={handleLogin}
                     className='space-y-6'
                 >
                     <div className='md:space-y-4 mt-4'>
@@ -49,10 +61,10 @@ const Login = () => {
                                 type='email'
                                 name="email"
                                 id='email'
-                                required
                                 placeholder='Your email address'
+                                onChange={(e) => setForm({ ...form, email: e.target.value })}
                                 className='w-full px-3 py-3 rounded-md border border-gray-300 focus:outline-[#4081ec] bg-base-200 text-gray-900'
-                                data-temp-mail-org='0'
+                                required
                             />
                         </div>
 
@@ -66,9 +78,11 @@ const Login = () => {
                                     placeholder='Your password'
                                     name="password"
                                     id='password'
-                                    required
+                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
                                     className='w-full px-2 py-3  bg-base-200 rounded-md border border-gray-300 focus:outline-[#4081ec]'
+                                    required
                                 />
+                                {/* button for show input password */}
                                 <button
                                     type="button"
                                     className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
@@ -82,7 +96,6 @@ const Login = () => {
                                 </button>
                             </div>
                         </div>
-
                     </div>
 
                     <div>
@@ -90,12 +103,11 @@ const Login = () => {
                             type='submit'
                             className='flex justify-center items-center space-x-2 border p-3 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white w-full'
                         >
-                            Login
-                            {/* {loading ? (
-                                    <ImSpinner3 className='m-auto animate-spin' size={24} />
-                                ) : (
-                                    'Continue'
-                                )} */}
+                            {loading ? (
+                                <ImSpinner3 className='m-auto animate-spin' size={24} />
+                            ) : (
+                                'Login'
+                            )}
                         </button>
                     </div>
                 </form>
