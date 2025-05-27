@@ -11,9 +11,9 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const { country, visaType, price, validity, applicantName, visaStatus } = body;
+    const { country, visaType, price, validity, applicantName, visaStatus, mobileNumber } = body;
 
-    if (!country || !visaType || !price || !validity || !applicantName || !visaStatus) {
+    if (!country || !visaType || !price || !validity || !applicantName || !visaStatus || !mobileNumber) {
         return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
@@ -21,9 +21,10 @@ export async function POST(request) {
         const { db } = await dbConnect();
 
         const application = {
+            country,
             name: applicantName,
             email: session.user.email,
-            country,
+            mobileNumber,
             visaType,
             price,
             validity,

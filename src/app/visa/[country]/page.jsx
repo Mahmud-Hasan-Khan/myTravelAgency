@@ -26,6 +26,7 @@ const VisaCountryPage = () => {
   const [selectedVisaType, setSelectedVisaType] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [applicantName, setApplicantName] = useState("")
+  const [applicantMobileNumber, setApplicantMobileNumber] = useState('');
   const [isEditable, setIsEditable] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef(null);
@@ -134,6 +135,7 @@ const VisaCountryPage = () => {
           country: visaInfo.country,
           visaType: selectedVisaType,
           applicantName: applicantName.trim(),
+          mobileNumber: Number(applicantMobileNumber),
           price: visaDetails.price,
           validity: visaDetails.validity,
           email: session.user.email,
@@ -323,7 +325,7 @@ const VisaCountryPage = () => {
                       value={applicantName}
                       onChange={(e) => setApplicantName(e.target.value)}
                       readOnly={!isEditable}
-                      className={`peer w-full border rounded px-2 pt-3 pb-1 placeholder-transparent focus:outline-none ${error ? "border-red-500 focus:border-red-500" :"focus:border-blue-500"} ${!isEditable ? "bg-gray-100 cursor-not-allowed" :"bg-white"}`}
+                      className={`peer w-full border rounded px-2 pt-3 pb-1 placeholder-transparent focus:outline-none ${error ? "border-red-500 focus:border-red-500" : "focus:border-blue-500"} ${!isEditable ? "bg-gray-100 cursor-not-allowed" : "bg-white"}`}
                       placeholder="Enter applicant name"
                       required
                     />
@@ -336,14 +338,34 @@ const VisaCountryPage = () => {
                     {session?.user?.name && !isEditable && (
                       <div className='flex items-center justify-end'>
                         <button
-                        type="button"
-                        onClick={() => handleApplyForOthers(true)}
-                        className="mt-0.5 text-sm text-blue-600  hover:underline"
-                      >
-                        Apply for others
-                      </button>
+                          type="button"
+                          onClick={() => handleApplyForOthers(true)}
+                          className="mt-0.5 text-sm text-blue-600  hover:underline"
+                        >
+                          Apply for others
+                        </button>
                       </div>
                     )}
+                  </div>
+
+                  {/* number input field */}
+                  <div className="relative mt-6 px-1 py-2 md:px-4 bg-[#f3f4f6] mx-4 rounded-md">
+                    <input
+                      ref={inputRef}
+                      type="tel"
+                      id="applicantMobileNumber"
+                      value={applicantMobileNumber}
+                      onChange={(e) => setApplicantMobileNumber(e.target.value)}
+                      className={`peer w-full border rounded px-2 pt-3 pb-1 placeholder-transparent focus:outline-none ${error ? "border-red-500 focus:border-red-500" : "focus:border-blue-500"}`}
+                      placeholder="Enter your mobile number"
+                      required
+                    />
+                    <label
+                      htmlFor="applicantMobileNumber"
+                      className={`absolute left-6 top-0 text-[#333333] text-sm transition-all peer-placeholder-shown:top-[15px] peer-placeholder-shown:text-base peer-placeholder-shown:text-[#333333] peer-focus:-top-1 peer-focus:bg-white peer-focus:text-sm peer-focus:text-blue-500`}
+                    >
+                      Enter your mobile number
+                    </label>
                   </div>
 
                   {/* Validity */}
@@ -404,7 +426,7 @@ const VisaCountryPage = () => {
                       <p className='font-bold'>{selectedVisaType ? visaInfo?.visaTypes[selectedVisaType]?.price : 'N/A'} BDT</p>
                     </div>
                   </div>
-                 
+
                   {/* Apply now button */}
                   <button
                     onClick={handleApplyVisa}
