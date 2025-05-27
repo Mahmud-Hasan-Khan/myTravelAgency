@@ -1,9 +1,8 @@
-import AirlinesPartnerMarquee from "./pages/HomePage/AirlinesPartnerMarquee/AirlinesPartnerMarquee";
-import GoogleReviews from "./pages/HomePage/GoogleReviews/GoogleReviews";
-import OfferNoticeSlider from "./pages/HomePage/OfferNoticeSlider/OfferNoticeSlider";
-import SearchForm from "./pages/HomePage/SearchForm/SearchForm";
-import VideoBanner from "./pages/HomePage/VideoBanner/VideoBanner";
-
+import AirlinesPartnerMarquee from "./HomePage/AirlinesPartnerMarquee/AirlinesPartnerMarquee";
+import GoogleReviews from "./HomePage/GoogleReviews/GoogleReviews";
+import OfferNoticeSlider from "./HomePage/OfferNoticeSlider/OfferNoticeSlider";
+import SearchForm from "./HomePage/SearchForm/SearchForm";
+import VideoBanner from "./HomePage/VideoBanner/VideoBanner";
 
 export default function Home() {
   return (
@@ -31,10 +30,10 @@ export default function Home() {
       </div>
       {/* Airlines Partner Logo */}
       <div className="mx-auto md:px-32 sm:px-0 mt-6">
-        <AirlinesPartnerMarquee></AirlinesPartnerMarquee>
+        <AirlinesPartnerMarquee/>
       </div>
       <div className="mt-6 pt-4 md:px-32 sm:px-0 bg-[#e2e8f0]">
-        <GoogleReviews></GoogleReviews>
+        <GoogleReviews/>
       </div>
     </div>
   );
