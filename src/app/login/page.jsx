@@ -1,15 +1,18 @@
 "use client"
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from "next-auth/react";
 import { FcGoogle } from 'react-icons/fc';
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
 import { ImSpinner3 } from "react-icons/im";
 import Link from 'next/link';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl") || "/";
     const [form, setForm] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -18,15 +21,15 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-
         const res = await signIn("credentials", {
             ...form,
-            redirect: false,
+            redirect: true,
+            callbackUrl
         });
 
         if (res.ok) {
             toast.success("Login successful");
-            router.push("/"); // Adjust based on user.role if needed
+            // router.push("/"); // Adjust based on user.role if needed
         } else {
             toast.error(res.error || "Login failed");
         }
@@ -40,7 +43,7 @@ const Login = () => {
                 <h4 className='mt-4 pb-1 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Please  Login</h4>
                 <p className='md:text-base text-sm text-center text-[#5a6573]'>You need to Login first to continue</p>
                 <button
-                    onClick={() => signIn("google",{ callbackUrl: "/" })}
+                    onClick={() => signIn("google", { callbackUrl })}
                     className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white mt-3'
                 >
                     <FcGoogle className='bg-white rounded-full' size={32} />
@@ -70,7 +73,7 @@ const Login = () => {
 
                         <div>
                             <label htmlFor='password' className='label'>
-                                <span className='inputLabel;'>Password</span>
+                                <span className='inputLabel'>Password</span>
                             </label>
                             <div className="relative flex justify-items-start items-center">
                                 <input
@@ -85,6 +88,7 @@ const Login = () => {
                                 {/* button for show input password */}
                                 <button
                                     type="button"
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
                                     className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
@@ -101,10 +105,14 @@ const Login = () => {
                     <div>
                         <button
                             type='submit'
-                            className='flex justify-center items-center space-x-2 border p-3 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white w-full'
+                            disabled={loading}
+                            className={`flex justify-center items-center space-x-2 border p-3 border-gray-300 border-rounded rounded-md cursor-pointer w-full ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4081ec]'} text-white`}
                         >
                             {loading ? (
-                                <ImSpinner3 className='m-auto animate-spin' size={24} />
+                                <>
+                                    <ImSpinner3 className='animate-spin' size={24} />
+                                    <span>Login...</span>
+                                </>
                             ) : (
                                 'Login'
                             )}

@@ -1,24 +1,55 @@
 'use client';
 import Spinner from '@/app/components/shared/Spinner/Spinner';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useRef } from 'react';
 import { useEffect, useState } from 'react';
+import { ImSpinner3 } from 'react-icons/im';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const VisaCountryPage = () => {
-  const { country } = useParams(); // e.g. "uae"
+  const { data: session } = useSession();
+  const pathname = usePathname();
   const router = useRouter();
+  const { country } = useParams(); // e.g. "uae"
   const [visaData, setVisaData] = useState([]);
   const [visaInfo, setVisaInfo] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [activeTravelerOccupation, setActiveTravelerOccupation] = useState(null);
+  const [selectedVisaType, setSelectedVisaType] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [applicantName, setApplicantName] = useState("")
+  const [isEditable, setIsEditable] = useState(false);
+  const [error, setError] = useState("");
+  const inputRef = useRef(null);
+
+  // Set default name from session when available
+  useEffect(() => {
+    if (session?.user?.name) {
+      setApplicantName(session.user.name);
+      setIsEditable(false);
+    }
+  }, [session]);
+
+  const handleApplyForOthers = () => {
+    setIsEditable(true);
+
+    // 🔹 Focus the input after it's editable
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0); // next tick to ensure DOM updates
+  };
+
+
   // Loading state
   const [loading, setLoading] = useState(false); // <-- 🔹 
-  const [activeTravelerOccupation, setActiveTravelerOccupation] = useState(null);
 
   // Label Style for Country Name Select dropdown menu 
   const floatingLabelClass = "absolute -top-3 left-3 bg-white px-1 text-[#585c63] font-semibold z-10";
@@ -65,33 +96,90 @@ const VisaCountryPage = () => {
     router.push(`/visa/${slug}`);
   };
 
+  // Apply Visa handler 
+  const handleApplyVisa = async () => {
+    // 🔹 Check login status first
+    if (!session?.user) {
+      signIn(undefined, { callbackUrl: pathname });
+      return;
+    }
+
+    // 🔹 Check visa type
+    if (!selectedVisaType) {
+      toast.error('Please select visa type');
+      return;
+    }
+
+    // 🔹 Check applicant name
+    if (!applicantName.trim()) {
+      setError("Applicant name is required.");
+      return;
+    } else {
+      setError("");
+    }
+
+    const visaDetails = visaInfo?.visaTypes[selectedVisaType];
+    if (!visaDetails) {
+      toast.error('Invalid visa details');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch('/api/apply-visa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          country: visaInfo.country,
+          visaType: selectedVisaType,
+          applicantName: applicantName.trim(),
+          price: visaDetails.price,
+          validity: visaDetails.validity,
+          email: session.user.email,
+          visaStatus: "Verification Pending",
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message);
+
+      toast.success('Visa application submitted!');
+      router.push('/bookings/visa');
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message || 'Something went wrong');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div>
       {
         loading ? (
-          <div className="flex justify-center items-center h-64" >
+          <div className="flex justify-center items-center h-full" >
             <Spinner />
           </div >
         ) : (
-          // Your regular UI
+
           <div className='bg-[#e2e8f0] mx-auto md:px-52 sm:px-0 mt-0 py-1 md:py-8 container'>
-
-            <div className="grid md:grid-cols-3 gap-6 p-4">
-
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-2 md:p-4">
               {/* Left large div  */}
-              <div className="col-span-2 flex min-h-96">
+              <div className="col-span-2 flex">
                 <div className='flex-col w-full'>
-
                   {/* heading start */}
                   <div className='bg-white w-full rounded-t-md px-3 py-2 flex flex-col md:flex-row justify-between items-center space-x-1 space-y-4 md:space-y-0'>
                     <div>
-                      <h2 className="text-xl text-center md:text-left text-[#9ca3af] font-bold">{visaInfo?.country}</h2>
+                      <h2 className="text-xl text-center md:text-left text-brandBlue font-bold">{visaInfo?.country}</h2>
                       <h2 className="md:text-lg font-bold">Tourist Visa Only</h2>
                     </div>
                     {/* Country selection dropdown */}
                     <div className="relative w-44 md:w-52">
                       <label className={floatingLabelClass}>Select Country</label>
                       <Select
+                        instanceId="select-country"
                         options={visaData.map((d) => ({
                           label: d.country,
                           value: d.country,
@@ -104,22 +192,33 @@ const VisaCountryPage = () => {
                     </div>
                   </div>  {/* heading end */}
 
-                  <div className='bg-[#f3f4f6] p-3 rounded-b-md flex flex-col items-center md:flex-row space-x-2 space-y-2 md:space-y-0'>
-                    <div className='rounded-full px-3 py-2 bg-[#e5e7eb] flex justify-center items-center space-x-1'>
-                      <svg width="16" height="16" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <mask id="path-1-inside-1_5996_13793" fill="white">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M4.99998 6.76364C5.55352 6.76364 6.00226 6.31491 6.00226 5.76137C6.00226 5.20783 5.55352 4.75909 4.99998 4.75909C4.44644 4.75909 3.99771 5.20783 3.99771 5.76137C3.99771 6.31491 4.44644 6.76364 4.99998 6.76364ZM4.99998 7.43182C5.92255 7.43182 6.67044 6.68393 6.67044 5.76137C6.67044 4.8388 5.92255 4.09091 4.99998 4.09091C4.07742 4.09091 3.32953 4.8388 3.32953 5.76137C3.32953 6.68393 4.07742 7.43182 4.99998 7.43182Z"></path>
-                        </mask>
-                        <path fillRule="evenodd" clipRule="evenodd" d="M4.99998 6.76364C5.55352 6.76364 6.00226 6.31491 6.00226 5.76137C6.00226 5.20783 5.55352 4.75909 4.99998 4.75909C4.44644 4.75909 3.99771 5.20783 3.99771 5.76137C3.99771 6.31491 4.44644 6.76364 4.99998 6.76364ZM4.99998 7.43182C5.92255 7.43182 6.67044 6.68393 6.67044 5.76137C6.67044 4.8388 5.92255 4.09091 4.99998 4.09091C4.07742 4.09091 3.32953 4.8388 3.32953 5.76137C3.32953 6.68393 4.07742 7.43182 4.99998 7.43182Z" fill="#9BA6B2"></path>
-                        <path d="M4.00226 5.76137C4.00226 5.21034 4.44895 4.76364 4.99998 4.76364V8.76364C6.65809 8.76364 8.00226 7.41948 8.00226 5.76137H4.00226ZM4.99998 6.75909C4.44895 6.75909 4.00226 6.3124 4.00226 5.76137H8.00226C8.00226 4.10326 6.65809 2.75909 4.99998 2.75909V6.75909ZM5.99771 5.76137C5.99771 6.3124 5.55101 6.75909 4.99998 6.75909V2.75909C3.34187 2.75909 1.99771 4.10326 1.99771 5.76137H5.99771ZM4.99998 4.76364C5.55101 4.76364 5.99771 5.21034 5.99771 5.76137H1.99771C1.99771 7.41948 3.34187 8.76364 4.99998 8.76364V4.76364ZM4.67044 5.76137C4.67044 5.57936 4.81798 5.43182 4.99998 5.43182V9.43182C7.02712 9.43182 8.67044 7.7885 8.67044 5.76137H4.67044ZM4.99998 6.09091C4.81798 6.09091 4.67044 5.94337 4.67044 5.76137H8.67044C8.67044 3.73423 7.02712 2.09091 4.99998 2.09091V6.09091ZM5.32953 5.76137C5.32953 5.94337 5.18199 6.09091 4.99998 6.09091V2.09091C2.97285 2.09091 1.32953 3.73423 1.32953 5.76137H5.32953ZM4.99998 5.43182C5.18199 5.43182 5.32953 5.57936 5.32953 5.76137H1.32953C1.32953 7.7885 2.97285 9.43182 4.99998 9.43182V5.43182Z" fill="#9BA6B2" mask="url(#path-1-inside-1_5996_13793)"></path>
-                        <path fillRule="evenodd" clipRule="evenodd" d="M2.85223 8.72044C2.85223 8.53593 2.97032 8.38635 3.11599 8.38635H6.88393C7.0296 8.38635 7.14769 8.53593 7.14769 8.72044C7.14769 8.90496 7.0296 9.05453 6.88393 9.05453H3.11599C2.97032 9.05453 2.85223 8.90496 2.85223 8.72044Z" fill="#1A2B3D"></path>
-                        <path d="M3.05223 8.72044C3.05223 8.66975 3.06864 8.63071 3.08646 8.60813C3.10386 8.5861 3.11565 8.58635 3.11598 8.58635L3.11599 8.58635H6.88393L6.88394 8.58635C6.88427 8.58635 6.89606 8.5861 6.91346 8.60813C6.93128 8.63071 6.94769 8.66975 6.94769 8.72044C6.94769 8.77114 6.93128 8.81018 6.91346 8.83275C6.89606 8.85479 6.88427 8.85454 6.88394 8.85453L6.88393 8.85453H3.11599L3.11598 8.85453C3.11565 8.85454 3.10386 8.85479 3.08646 8.83275C3.06864 8.81018 3.05223 8.77113 3.05223 8.72044Z" stroke="#9BA6B2" strokeWidth="0.4" strokeLinecap="round"></path>
-                        <path fillRule="evenodd" clipRule="evenodd" d="M0.943176 2.01562C0.943176 1.31664 1.50137 0.75 2.18995 0.75H8.73357C8.91209 0.75 9.05681 0.896907 9.05681 1.07812C9.05681 1.25934 8.91209 1.40625 8.73357 1.40625H8.40639H2.18995C1.85841 1.40625 1.58965 1.67908 1.58965 2.01562V2.18182V2.83807V9.98437C1.58965 10.3209 1.85841 10.5937 2.18995 10.5937H7.81004C8.14158 10.5937 8.41034 10.3209 8.41034 9.98437V2.83807H1.58965H1.35721C1.17869 2.83807 1.03397 2.69116 1.03397 2.50994C1.03397 2.32872 1.17869 2.18182 1.35721 2.18182H1.58965H8.45428H9.05681V9.98437C9.05681 10.6834 8.49862 11.25 7.81004 11.25H2.18995C1.50137 11.25 0.943176 10.6834 0.943176 9.98437V2.01562Z" fill="#9BA6B2"></path>
-                        <path d="M1.58965 2.83807V2.18182H1.35721C1.17869 2.18182 1.03397 2.32872 1.03397 2.50994C1.03397 2.69116 1.17869 2.83807 1.35721 2.83807H1.58965Z" fill="#9BA6B2"></path>
-                        <path d="M1.58965 2.83807V2.18182M1.58965 2.83807H1.35721C1.17869 2.83807 1.03397 2.69116 1.03397 2.50994C1.03397 2.32872 1.17869 2.18182 1.35721 2.18182H1.58965M1.58965 2.83807H8.41034V9.98437C8.41034 10.3209 8.14158 10.5937 7.81004 10.5937H2.18995C1.85841 10.5937 1.58965 10.3209 1.58965 9.98437V2.83807ZM1.58965 2.18182V2.01562C1.58965 1.67908 1.85841 1.40625 2.18995 1.40625H8.40639H8.73358C8.91209 1.40625 9.05681 1.25934 9.05681 1.07812C9.05681 0.896907 8.91209 0.75 8.73358 0.75H2.18995C1.50137 0.75 0.943176 1.31664 0.943176 2.01562V9.98437C0.943176 10.6834 1.50137 11.25 2.18995 11.25H7.81004C8.49862 11.25 9.05681 10.6834 9.05681 9.98437V2.18182H8.45428H1.58965Z" stroke="#9BA6B2" strokeWidth="0.3" strokeLinecap="round"></path>
-                      </svg>
-                      <h2 className="text-sm font-medium">Type <span className='font-bold'>{visaInfo?.visaType}</span> </h2>
-                    </div>
+                  {/* Price Details */}
+                  <div className="bg-[#f3f4f6] rounded-b-md px-0 py-4">
+                    {visaInfo?.visaTypes && (
+                      <div className="overflow-x-auto border-2 rounded-lg w-full max-w-full mx-auto">
+                        <table className="table table-zebra w-fit md:w-full">
+                          {/* Table Head */}
+                          <thead>
+                            <tr className='text-base font-semibold bg-blue-100 text-brandBlue'>
+                              <th>Visa Type</th>
+                              <th>Delivery Time</th>
+                              <th>Price</th>
+                            </tr>
+                          </thead>
+
+                          {/* Table Body */}
+                          <tbody className='bg-white'>
+                            {Object.entries(visaInfo.visaTypes).map(([type, details]) => (
+                              <tr key={type} className="font-semibold hover:bg-orange-200">
+                                <td >{type}</td>
+                                <td>{details.processingTime} Days</td>
+                                <td>{details.price} BDT</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
                   </div>
 
                   {/* Required documents */}
@@ -134,16 +233,16 @@ const VisaCountryPage = () => {
                           setActiveTravelerOccupation(newOccupation);
                         }}>
                           {/* Tabs */}
-                          <TabList className="flex flex-wrap justify-between items-center space-x-2 rounded-xl bg-[#e2e8f0] p-2 space-y-2">
+                          <TabList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-y-2">
                             {Object.keys(visaInfo.documents).map((occupation) => (
                               <Tab
                                 key={occupation}
                                 className={({ selected }) =>
                                   classNames(
-                                    'w-fit px-2 py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg',
+                                    'text-sm font-medium md:px-1 py-1 border-x-2  transition duration-200',
                                     selected
-                                      ? 'bg-white shadow border border-blue-300'
-                                      : 'text-zinc-700 border-2 border-white hover:bg-white/[0.12] hover:text-blue-600'
+                                      ? 'bg-white border-t-4 border-brandBlue text-brandBlue rounded-t-lg shadow-sm'
+                                      : 'bg-gray-100 border-x-gray-400 border-y border-y-gray-400 text-gray-700 rounded-t-lg hover:bg-white hover:border-gray-300'
                                   )
                                 }
                               >
@@ -155,8 +254,8 @@ const VisaCountryPage = () => {
                           {/* Tab panels */}
                           <TabPanels className="mt-4">
                             {Object.values(visaInfo.documents).map((docs, idx) => (
-                              <TabPanel key={idx} className="bg-white rounded-xl p-3">
-                                <ul className="list-disc list-inside text-sm text-gray-800">
+                              <TabPanel key={idx} className="bg-white rounded-xl p-3 mt-2 border border-gray-200 shadow-sm">
+                                <ul className="list-disc list-inside text-sm text-gray-800 space-y-1">
                                   {docs.map((doc, i) => (
                                     <li key={i}>{doc}</li>
                                   ))}
@@ -172,7 +271,7 @@ const VisaCountryPage = () => {
               </div>
 
               {/* Right column (div 2 -- Looking for Expert Visa Guidance and div 3--- Select offer stacked) */}
-              <div className="grid content-start grid-cols-1 md:col-span-1 col-span-2 gap-4 ">
+              <div className="grid md:content-start grid-cols-1 md:col-span-1 col-span-2 gap-4 ">
 
                 {/* div 2 -- Looking for Expert Visa Guidance */}
                 <div className="rounded-md flex-row text-center justify-center place-content-center h-fit bg-[#ffe1c2] space-y-1 p-4 items-start">
@@ -191,11 +290,64 @@ const VisaCountryPage = () => {
                   </div>
                 </div>
 
-                {/* div 3--- Select offer */}
+                {/* div 3--- Apply now section */}
                 <div className="bg-white rounded-md space-y-3 pb-3">
                   <h4 className='rounded-t-md bg-[#f3f4f6] text-sm font-bold text-[#333333] w-full text-center py-2'>{visaInfo?.visaType} ({visaInfo?.country}) </h4>
+                  <div className='rounded-md px-1 md:px-4 py-2 m-4 bg-[#f3f4f6] '>
+                    <Select
+                      instanceId="select-visa-type"
+                      options={
+                        visaInfo?.visaTypes
+                          ? Object.entries(visaInfo.visaTypes).map(([type, details]) => ({
+                            label: type,
+                            value: type,
+                          }))
+                          : []
+                      }
+                      value={
+                        selectedVisaType
+                          ? { label: selectedVisaType, value: selectedVisaType } : null
+                      }
+                      onChange={(option) => setSelectedVisaType(option?.value || null)}
+                      placeholder="Please select visa type"
+                      isClearable
+                    ></Select>
+                  </div>
 
-                  <div className='rounded-md px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
+                  {/* name input field */}
+                  <div className="relative mt-6 px-1 py-2 md:px-4 bg-[#f3f4f6] mx-4 rounded-md">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      id="applicantName"
+                      value={applicantName}
+                      onChange={(e) => setApplicantName(e.target.value)}
+                      readOnly={!isEditable}
+                      className={`peer w-full border rounded px-2 pt-3 pb-1 placeholder-transparent focus:outline-none ${error ? "border-red-500 focus:border-red-500" :"focus:border-blue-500"} ${!isEditable ? "bg-gray-100 cursor-not-allowed" :"bg-white"}`}
+                      placeholder="Enter applicant name"
+                      required
+                    />
+                    <label
+                      htmlFor="applicantName"
+                      className={`absolute left-6 top-0 text-[#333333] text-sm transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-[#333333] peer-focus:-top-1 peer-focus:bg-white peer-focus:text-sm peer-focus:text-blue-500`}
+                    >
+                      Enter applicant name
+                    </label>
+                    {session?.user?.name && !isEditable && (
+                      <div className='flex items-center justify-end'>
+                        <button
+                        type="button"
+                        onClick={() => handleApplyForOthers(true)}
+                        className="mt-0.5 text-sm text-blue-600  hover:underline"
+                      >
+                        Apply for others
+                      </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Validity */}
+                  <div className='rounded-md px-1 md:px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
                     <div className='flex space-x-1 items-center'>
                       <svg width="16" height="16" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="path-1-inside-1_5996_13793" fill="white">
@@ -212,10 +364,12 @@ const VisaCountryPage = () => {
                       <h2 className="text-sm font-medium">Validity</h2>
                     </div>
                     <div>
-                      <p className='font-bold'>{visaInfo?.Validity} Days</p>
+                      <p className='font-bold'>{selectedVisaType ? visaInfo?.visaTypes[selectedVisaType]?.validity : 'N/A'} Days</p>
                     </div>
                   </div>
-                  <div className='rounded-md px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
+
+                  {/* Max Stay */}
+                  <div className='rounded-md px-1 md:px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
                     <div className='flex space-x-1 items-center'>
                       <svg width="16" height="16" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="path-1-inside-1_5996_13793" fill="white">
@@ -232,22 +386,12 @@ const VisaCountryPage = () => {
                       <h2 className="text-sm font-medium">Max Stay</h2>
                     </div>
                     <div>
-                      <p className='font-bold'>{visaInfo?.maxStay} Days</p>
+                      <p className='font-bold'>{selectedVisaType ? visaInfo?.visaTypes[selectedVisaType]?.maxStay : 'N/A'} Days</p>
                     </div>
                   </div>
 
-                  <div className='rounded-md px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
-                    <div className='flex space-x-1 items-center'>
-                      <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.99996 1.16632C5.84624 1.16632 4.71842 1.50844 3.75914 2.14941C2.79985 2.79039 2.05218 3.70143 1.61066 4.76733C1.16915 5.83324 1.05363 7.00613 1.27871 8.13768C1.50379 9.26924 2.05937 10.3086 2.87517 11.1244C3.69098 11.9403 4.73038 12.4958 5.86194 12.7209C6.99349 12.946 8.16638 12.8305 9.23228 12.389C10.2982 11.9474 11.2092 11.1998 11.8502 10.2405C12.4912 9.28119 12.8333 8.15338 12.8333 6.99965C12.8333 6.23361 12.6824 5.47507 12.3893 4.76733C12.0961 4.0596 11.6664 3.41654 11.1248 2.87486C10.5831 2.33319 9.94002 1.90351 9.23228 1.61036C8.52455 1.3172 7.76601 1.16632 6.99996 1.16632ZM6.99996 11.6663C6.07698 11.6663 5.17473 11.3926 4.4073 10.8798C3.63987 10.3671 3.04173 9.63823 2.68852 8.78551C2.33532 7.93279 2.2429 6.99448 2.42296 6.08923C2.60303 5.18399 3.04749 4.35247 3.70013 3.69982C4.35278 3.04718 5.1843 2.60272 6.08954 2.42266C6.99479 2.24259 7.9331 2.33501 8.78582 2.68822C9.63854 3.04143 10.3674 3.63956 10.8802 4.40699C11.3929 5.17442 11.6666 6.07667 11.6666 6.99965C11.6666 8.23733 11.175 9.42432 10.2998 10.2995C9.42462 11.1747 8.23764 11.6663 6.99996 11.6663ZM8.8083 7.36715L7.5833 6.66132V4.08299C7.5833 3.92828 7.52184 3.77991 7.41244 3.67051C7.30305 3.56111 7.15467 3.49965 6.99996 3.49965C6.84525 3.49965 6.69688 3.56111 6.58748 3.67051C6.47809 3.77991 6.41663 3.92828 6.41663 4.08299V6.99965C6.41663 6.99965 6.41663 7.04632 6.41663 7.06965C6.42008 7.10985 6.42993 7.14923 6.4458 7.18632C6.45781 7.22093 6.47345 7.25417 6.49246 7.28549C6.50842 7.31864 6.52799 7.34994 6.5508 7.37882L6.64413 7.45465L6.69663 7.50715L8.2133 8.38215C8.3022 8.43254 8.40278 8.45869 8.50496 8.45799C8.63412 8.45889 8.75993 8.4169 8.86265 8.3386C8.96538 8.2603 9.03921 8.15013 9.07258 8.02535C9.10594 7.90057 9.09695 7.76824 9.04701 7.64913C8.99707 7.53001 8.909 7.43083 8.79663 7.36715H8.8083Z" fill="#9BA6B2"></path>
-                      </svg>
-                      <h2 className="text-sm font-medium">Processing Time</h2>
-                    </div>
-                    <div>
-                      <p className='font-semibold'>{visaInfo?.ProcessingTime} Days</p>
-                    </div>
-                  </div>
-                  <div className='rounded-md px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
+                  {/* Price */}
+                  <div className='rounded-md px-1 md:px-4 py-2 m-4 bg-[#f3f4f6] flex justify-between items-center space-x-1'>
                     <div className='flex space-x-1 items-center'>
                       <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M7.00002 12.8333C10.2217 12.8333 12.8334 10.2217 12.8334 6.99999C12.8334 3.77833 10.2217 1.16666 7.00002 1.16666C3.77836 1.16666 1.16669 3.77833 1.16669 6.99999C1.16669 10.2217 3.77836 12.8333 7.00002 12.8333ZM7.00002 11.6667C9.57735 11.6667 11.6667 9.57732 11.6667 6.99999C11.6667 4.42266 9.57735 2.33332 7.00002 2.33332C4.42269 2.33332 2.33335 4.42266 2.33335 6.99999C2.33335 9.57732 4.42269 11.6667 7.00002 11.6667Z" fill="#9BA6B2"></path>
@@ -257,19 +401,36 @@ const VisaCountryPage = () => {
                       <h2 className="text-sm font-medium">Total Price</h2>
                     </div>
                     <div>
-                      <p className='font-bold'>{visaInfo?.price} BDT /Person</p>
+                      <p className='font-bold'>{selectedVisaType ? visaInfo?.visaTypes[selectedVisaType]?.price : 'N/A'} BDT</p>
                     </div>
                   </div>
-                  <button className='mx-auto flex items-center justify-center gap-2 border rounded-md px-8 py-2 text-white border-orange-500 bg-orange-500 hover:bg-orange-600'>Select Offer
+                 
+                  {/* Apply now button */}
+                  <button
+                    onClick={handleApplyVisa}
+                    disabled={isSubmitting}
+                    className={`mx-auto flex items-center justify-center gap-2 border rounded-md px-8 py-2 text-white ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'
+                      }`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <ImSpinner3 className="animate-spin text-white text-lg" />
+                        Submitting...
+                      </>
+                    ) : (
+                      'Apply now'
+                    )}
                   </button>
+
                 </div>
               </div>
             </div>
           </div>
         )
       }
-    </div>
+    </div >
   );
 };
 
 export default VisaCountryPage;
+

@@ -24,7 +24,7 @@ const VideoBanner = () => {
         playsInline
         aria-hidden="true"
       />
-      <div className="absolute inset-0 flex flex-col items-start justify-center px-8 md:px-32 text-white bg-black/30">
+      <div className="absolute inset-0 flex flex-col items-start justify-center px-8 md:px-32 text-white bg-black/30 md:pb-0 pb-4">
         <h1 className="text-lg md:text-5xl font-semibold md:font-bold mb-0 md:mb-2">
           Welcome to <strong>Wakia Travels!</strong>
         </h1>

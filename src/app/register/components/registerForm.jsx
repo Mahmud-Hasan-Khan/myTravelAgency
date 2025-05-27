@@ -1,10 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
+import { ImSpinner3 } from 'react-icons/im';
 import { HiMiniEye, HiEyeSlash } from "react-icons/hi2";
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const isStrongPassword = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return regex.test(password);
+    };
 
     const handleRegisterWithEmailAndPassword = async (e) => {
         e.preventDefault();
@@ -16,6 +24,14 @@ const RegisterForm = () => {
         const role = 'user';
         // console.log({name, email, password, role});
 
+        // Password validation
+        if (!isStrongPassword(password)) {
+            toast.error('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+            return;
+        }
+
+        setLoading(true);
+
         try {
             const res = await fetch('/api/register', {
                 method: 'POST',
@@ -25,10 +41,12 @@ const RegisterForm = () => {
             const data = await res.json();
 
             if (!res.ok) throw new Error(data.message);
-            alert('Registration successful!');
+            toast.success('Registration successful!');
             form.reset();
         } catch (error) {
-            alert('Error: ' + error.message);
+            toast.error('Error: ' + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -80,6 +98,7 @@ const RegisterForm = () => {
                         />
                         <button
                             type="button"
+                            aria-label={showPassword ? "Hide password" : "Show password"}
                             className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500"
                             onClick={() => setShowPassword(!showPassword)}
                         >
@@ -97,14 +116,18 @@ const RegisterForm = () => {
             <div>
                 <button
                     type='submit'
-                    className='flex justify-center items-center space-x-2 border p-3 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white w-full'
+                    disabled={loading}
+                    className={`flex justify-center items-center space-x-2 border p-3 rounded-md w-full ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#4081ec]'
+                        } text-white`}
                 >
-                    Register
-                    {/* {loading ? (
-                                    <ImSpinner3 className='m-auto animate-spin' size={24} />
-                                ) : (
-                                    'Continue'
-                                )} */}
+                    {loading ? (
+                        <>
+                            <ImSpinner3 className="animate-spin" size={20} />
+                            <span>Registering...</span>
+                        </>
+                    ) : (
+                        'Register'
+                    )}
                 </button>
             </div>
         </form>

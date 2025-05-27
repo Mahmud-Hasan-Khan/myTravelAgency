@@ -145,10 +145,10 @@ const SearchForm = () => {
   const JourneyDateStyle = "w-full border border-gray-300 rounded-md px-2 py-[9px]  focus:outline-none focus:ring-1 focus:ring-blue-100 focus:border-blue-500"
 
   const tabs = [
-    { id: "tab1", icon: "/airplane.ico", label: "Flight" },
-    { id: "tab2", icon: "/visa.ico", label: "Visa" },
-    { id: "tab3", icon: "/love-hotel.ico", label: "Hotel" },
-    { id: "tab4", icon: "/kaaba.ico", label: "Umrah" },
+    { id: "tab1", icon: "/Icon/airplane.ico", label: "Flight" },
+    { id: "tab2", icon: "/Icon/visa.png", label: "Visa" },
+    { id: "tab3", icon: "/Icon/love-hotel.ico", label: "Hotel" },
+    { id: "tab4", icon: "/Icon/kaaba.png", label: "Umrah" },
   ];
 
   const router = useRouter();
@@ -159,16 +159,16 @@ const SearchForm = () => {
 
   const { data, error, isLoading } = useSWR('/api/visaRequirements', fetcher);
 
-  const visaCountries= useMemo(()=>{
-    if(!data)return [];
-    return data.map((item)=>({
+  const visaCountries = useMemo(() => {
+    if (!data) return [];
+    return data.map((item) => ({
       label: item.country,
       value: item.country,
     }));
-    
-  },[data])
 
-   const tabContent = {
+  }, [data])
+
+  const tabContent = {
     tab1: (
       <form>
         <div className='w-full px-0 mx-auto'>
@@ -578,11 +578,12 @@ const SearchForm = () => {
       <div className='flex justify-between flex-wrap border-b pb-1'>
         {tabs.map((tab) => (
           <button key={tab.id}
-            className={`px-3 py-1 font-semibold flex my-1 gap-2 rounded-lg ${activeTab === tab.id ? "border-t shadow-md border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 border-b shadow-md border-gray-300 hover:text-[#1882ff] hover:border-[#1882ff] hover:transition-colors duration-200 border-t"
+            className={`w-24 mx-auto items-center px-3 py-1 font-semibold flex my-1 gap-2 rounded-lg ${activeTab === tab.id ? "border-t shadow-md border-b-2 border-[#1882ff] text-[#1882ff] transition-colors duration-200" : "text-gray-500 border-b shadow-md border-gray-300 hover:text-[#1882ff] hover:border-[#1882ff] hover:transition-colors duration-200 border-t"
               }`}
             onClick={() => setActiveTab(tab.id)}
           >
-            <Image src={tab.icon} alt={tab.label} width={20} height={0} />
+            <Image src={tab.icon} alt={tab.label} style={{ width: 25, height: 'auto' }} width={25}
+              height={20} />
             {tab.label}
           </button>))}
       </div>

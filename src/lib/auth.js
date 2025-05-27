@@ -1,84 +1,94 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "./dbConnect";
-import bcrypt from "bcrypt"
-
+import bcrypt from "bcrypt";
 
 export const authOptions = {
-    providers: [
-        // email/password provider here
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {},
-            async authorize(credentials) {
-                const { email, password } = credentials;
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {},
+      async authorize(credentials) {
+        const { email, password } = credentials;
 
-                const { collection } = await dbConnect("users");
-                const user = await collection.findOne({ email });
+        const { collection } = await dbConnect("users");
+        const user = await collection.findOne({ email });
 
-                if (!user) throw new Error("User not found");
+        if (!user) throw new Error("User not found");
 
-                const valid = await bcrypt.compare(password, user.password);
-                if (!valid) throw new Error("Invalid password");
+        const valid = await bcrypt.compare(password, user.password);
+        if (!valid) throw new Error("Invalid password");
 
-                return {
-                    id: user._id.toString(),
-                    name: user.name,
-                    email: user.email,
-                    role: user.role || "user",
-                };
-            },
-        }),
-        // Google provider
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        })
-    ],
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role || "user",
+        };
+      },
+    }),
 
-    callbacks: {
-        async signIn({ user, account }) {
-            if (account.provider === "google") {
-                const { name, email } = user;
-                const { collection } = await dbConnect("users");
-                const existingUser = await collection.findOne({ email });
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+  ],
 
-                if (!existingUser) {
-                    const bangladeshTime = new Date(
-                        new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
-                    );
-                    await collection.insertOne({
-                        name,
-                        email,
-                        role: "user",
-                        provider: "google",
-                        createdAt: bangladeshTime,
-                    });
-                }
-            }
-            return true;
-        },
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account.provider === "google") {
+        const { name, email } = user;
+        const { collection } = await dbConnect("users");
+        const existingUser = await collection.findOne({ email });
 
-        async jwt({ token, user }) {
-            if (user) token.role = user.role;
-            return token;
-        },
+        if (!existingUser) {
+          const bangladeshTime = new Date(
+            new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
+          );
 
-        async session({ session, token }) {
-            session.user.id = token.sub;
-            session.user.role = token.role;
-            return session;
-        },
-        async redirect({ url, baseUrl }) {
-            return baseUrl; // Always redirect to homepage "/"
+          await collection.insertOne({
+            name,
+            email,
+            role: "user",
+            provider: "google",
+            createdAt: bangladeshTime,
+          });
         }
+      }
+
+      return true;
     },
 
-    pages: {
-        signIn: "/login",
+    async jwt({ token, user }) {
+      if (user) {
+        const { collection } = await dbConnect("users");
+        const dbUser = await collection.findOne({ email: user.email });
+
+        token.role = dbUser?.role || "user";
+      }
+
+      return token;
     },
 
-    secret: process.env.NEXTAUTH_SECRET,
+    async session({ session, token }) {
+      session.user.role = token.role;
+      return session;
+    },
 
-    session: { strategy: "jwt" },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (url.startsWith(baseUrl)) return url;
+      return baseUrl;
+    },
+  },
+
+  session: {
+    strategy: "jwt",
+  },
+
+  pages: {
+    signIn: "/login",
+  },
+
+  secret: process.env.NEXTAUTH_SECRET,
 };

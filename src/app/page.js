@@ -17,7 +17,7 @@ export default function Home() {
         </div>
 
         {/* Container that reserves space */}
-        <div className="relative z-20 -mt-[430px] md:-mt-80 flex justify-center">
+        <div className="relative z-20 -mt-[450px] md:-mt-80 flex justify-center">
           <div className="px-4">
             <SearchForm />
           </div>

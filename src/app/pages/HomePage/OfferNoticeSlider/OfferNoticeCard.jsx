@@ -13,6 +13,8 @@ const OfferNoticeCard = ({ card, onClick }) => {
           alt={card.title || 'Card Image'}
           fill
           className="object-fill"
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 

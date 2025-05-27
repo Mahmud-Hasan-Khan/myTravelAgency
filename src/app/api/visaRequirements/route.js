@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
+import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
@@ -11,11 +12,11 @@ export async function GET() {
       _id: doc._id.toString()
     }));
 
-        return Response.json(sanitized);
+        return NextResponse.json(sanitized);
     } catch (error) {
         {
             console.error('Error fetching offer notices:', error);
-            return Response.json({ error: 'Failed to load offer notices' }, { status: 500 });
+            return NextResponse.json({ error: 'Failed to load offer notices' }, { status: 500 });
         }
     }
 

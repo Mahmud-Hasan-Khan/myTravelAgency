@@ -10,6 +10,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        brandBlue: '#1882ff',
       },
     },
   },
@@ -20,4 +21,5 @@ export default {
     themes: ["light"], // Add the themes you want to use
 
   },
+  darkMode: 'class',
 };
