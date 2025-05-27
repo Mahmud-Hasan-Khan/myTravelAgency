@@ -14,6 +14,8 @@ const SearchForm = () => {
   const [tripType, setTripType] = useState('oneway');
   const [selectedClass, setSelectedClass] = useState('Economy');
   const [classDropdownOpen, setClassDropdownOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
   const getFormattedDate = (date) => {
     return date.toISOString().split('T')[0];
   };
@@ -538,21 +540,30 @@ const SearchForm = () => {
           <button
             onClick={() => {
               if (selectedVisaCountry) {
+                setIsSearching(true);
                 const slug = selectedVisaCountry.value.toLowerCase().replace(/\s+/g, '-');
                 router.push(`/visa/${slug}`);
               }
             }}
+            disabled={isSearching}
             className='w-full flex items-center justify-center gap-2 border rounded-md p-[10px] text-white border-orange-500 bg-orange-500 hover:bg-orange-600'
           >
-            <svg xmlns="http://www.w3.org/2000/svg"
-              fill="none" viewBox="0 0 24 24"
-              strokeWidth="2" stroke="white"
-              className="w-5 h-5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round"
-                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-            </svg>
-            Search
+            {isSearching ? (
+              <>
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                </svg>
+                Searching...
+              </>
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="white" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                </svg>
+                Search
+              </>
+            )}
           </button>
         </div>
       </div>

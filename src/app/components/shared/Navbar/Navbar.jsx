@@ -167,7 +167,7 @@ export default function Navbar() {
                     <div className="py-1 flex flex-col items-center gap-2 border-b shadow-sm">
                       <div className="flex items-center justify-between gap-x-1 text-sm font-semibold">
                         <Image
-                          src={session.user.image || "/default-avatar.png"}
+                          src={session.user.image || "/Icon/default-avatar.png"}
                           alt="User"
                           width={35}
                           height={30}
