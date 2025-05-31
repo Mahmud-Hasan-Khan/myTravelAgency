@@ -80,7 +80,7 @@ export default function Navbar() {
           </AnimatePresence>
 
           {/* Navbar Top */}
-          <div className="bg-white border-b w-full h-16 shadow-sm px-4 sm:px-10 md:px-32 flex items-center justify-between">
+          <div className="bg-white border-b border-gray-100 w-full h-16 shadow-md px-4 sm:px-10 md:px-32 flex items-center justify-between">
             {/* Desktop Logo */}
             <Link href="/" className="hidden sm:block">
               <img src="/Icon/logoDesktop.png" alt="Logo" width={130} />

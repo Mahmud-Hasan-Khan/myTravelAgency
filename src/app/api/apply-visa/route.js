@@ -11,9 +11,9 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const { country, visaType, price, validity, applicantName, visaStatus, mobileNumber } = body;
+    const { country, visaType, price, validity, maxStay, applicantName, visaStatus, passportNumber, mobileNumber, paymentStats } = body;
 
-    if (!country || !visaType || !price || !validity || !applicantName || !visaStatus || !mobileNumber) {
+    if (!country || !visaType || !price || !validity || !maxStay || !applicantName || !visaStatus || !passportNumber || !mobileNumber || !paymentStats) {
         return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
@@ -25,12 +25,15 @@ export async function POST(request) {
             name: applicantName,
             email: session.user.email,
             mobileNumber,
+            passportNumber,
             visaType,
             price,
             validity,
-            applicationId: `WV-${Date.now()}`,
+            maxStay,
+            orderId: `WV-${Date.now()}`,
             appliedAt: new Date(),
             visaStatus,
+            paymentStats,
         };
 
         const result = await db.collection('applied_visas').insertOne(application);

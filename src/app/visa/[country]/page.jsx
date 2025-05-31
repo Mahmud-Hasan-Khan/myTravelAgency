@@ -27,6 +27,7 @@ const VisaCountryPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [applicantName, setApplicantName] = useState("")
   const [applicantMobileNumber, setApplicantMobileNumber] = useState('');
+  const [applicantPassportNumber, setApplicantPassportNumber] = useState('');
   const [isEditable, setIsEditable] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef(null);
@@ -136,10 +137,13 @@ const VisaCountryPage = () => {
           visaType: selectedVisaType,
           applicantName: applicantName.trim(),
           mobileNumber: Number(applicantMobileNumber),
+          passportNumber: applicantPassportNumber,
           price: visaDetails.price,
           validity: visaDetails.validity,
+          maxStay: visaDetails.maxStay,
           email: session.user.email,
-          visaStatus: "Verification Pending",
+          visaStatus: "Entry",
+          paymentStats:"Unpaid",
         }),
       });
 
@@ -348,7 +352,26 @@ const VisaCountryPage = () => {
                     )}
                   </div>
 
-                  {/* number input field */}
+                  {/* Passport input field */}
+                  <div className="relative mt-6 px-1 py-2 md:px-4 bg-[#f3f4f6] mx-4 rounded-md">
+                    <input
+                      ref={inputRef}
+                      type="tel"
+                      id="applicantPassportNumber"
+                      value={applicantPassportNumber}
+                      onChange={(e) => setApplicantPassportNumber(e.target.value)}
+                      className={`peer w-full border rounded px-2 pt-3 uppercase pb-1 placeholder-transparent focus:outline-none ${error ? "border-red-500 focus:border-red-500" : "focus:border-blue-500"}`}
+                      placeholder="Enter your Passport number"
+                      required
+                    />
+                    <label
+                      htmlFor="applicantPassportNumber"
+                      className={`absolute left-6 top-0 text-[#333333] text-sm transition-all peer-placeholder-shown:top-[15px] peer-placeholder-shown:text-base peer-placeholder-shown:text-[#333333] peer-focus:-top-1 peer-focus:bg-white peer-focus:text-sm peer-focus:text-blue-500`}
+                    >
+                      Enter your Passport number
+                    </label>
+                  </div>
+                  {/* Mobile number input field */}
                   <div className="relative mt-6 px-1 py-2 md:px-4 bg-[#f3f4f6] mx-4 rounded-md">
                     <input
                       ref={inputRef}
@@ -364,7 +387,7 @@ const VisaCountryPage = () => {
                       htmlFor="applicantMobileNumber"
                       className={`absolute left-6 top-0 text-[#333333] text-sm transition-all peer-placeholder-shown:top-[15px] peer-placeholder-shown:text-base peer-placeholder-shown:text-[#333333] peer-focus:-top-1 peer-focus:bg-white peer-focus:text-sm peer-focus:text-blue-500`}
                     >
-                      Enter your mobile number
+                      Enter your Mobile number
                     </label>
                   </div>
 
