@@ -23,18 +23,19 @@ const Login = () => {
         setLoading(true);
         const res = await signIn("credentials", {
             ...form,
-            redirect: true,
-            callbackUrl
+            redirect: false,
+            callbackUrl,
         });
+        
+        setLoading(false);
 
         if (res.ok) {
             toast.success("Login successful");
-            // router.push("/"); // Adjust based on user.role if needed
+            router.push("/"); // Adjust based on user.role if needed
         } else {
             toast.error(res.error || "Login failed");
         }
 
-        setLoading(false);
     };
 
     return (

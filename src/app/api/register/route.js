@@ -19,7 +19,8 @@ export async function POST(req) {
             email,
             password: hashedPassword,
             createdAt: new Date(),
-            role
+            role,
+            status: "unblocked"
         };
         await collection.insertOne(newUser);
         return NextResponse.json({ message: 'User registered successfully' }, { status: 201 });

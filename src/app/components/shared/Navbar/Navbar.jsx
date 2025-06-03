@@ -13,7 +13,6 @@ import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import { toast } from "react-toastify";
 
 export default function Navbar() {
   const { data: session, status } = useSession();

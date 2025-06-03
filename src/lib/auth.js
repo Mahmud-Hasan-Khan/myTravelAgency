@@ -15,6 +15,7 @@ export const authOptions = {
         const user = await collection.findOne({ email });
 
         if (!user) throw new Error("User not found");
+        if (user.status === "blocked") throw new Error("Your account has been blocked");
 
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) throw new Error("Invalid password");
@@ -36,12 +37,17 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ user, account }) {
-      if (account.provider === "google") {
-        const { name, email } = user;
-        const { collection } = await dbConnect("users");
-        const existingUser = await collection.findOne({ email });
+      const { name, email } = user;
+      const { collection } = await dbConnect("users");
 
-        if (!existingUser) {
+      const existingUser = await collection.findOne({ email });
+
+      if (account.provider === "google") {
+        if (existingUser) {
+          if (existingUser.status === "blocked") {
+            throw new Error("Your account has been blocked");
+          }
+        } else {
           const bangladeshTime = new Date(
             new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
           );
@@ -50,6 +56,7 @@ export const authOptions = {
             name,
             email,
             role: "user",
+            status: "unblocked", // default for new users
             provider: "google",
             createdAt: bangladeshTime,
           });

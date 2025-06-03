@@ -22,6 +22,7 @@ const RegisterForm = () => {
         const email = form.email.value;
         const password = form.password.value;
         const role = 'user';
+        const status = "unblocked"
         // console.log({name, email, password, role});
 
         // Password validation
@@ -36,7 +37,7 @@ const RegisterForm = () => {
             const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password, role }),
+                body: JSON.stringify({ name, email, password, role, status }),
             });
             const data = await res.json();
 

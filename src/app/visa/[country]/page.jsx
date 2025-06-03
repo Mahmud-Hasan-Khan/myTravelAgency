@@ -355,7 +355,7 @@ const VisaCountryPage = () => {
                   {/* Passport input field */}
                   <div className="relative mt-6 px-1 py-2 md:px-4 bg-[#f3f4f6] mx-4 rounded-md">
                     <input
-                      ref={inputRef}
+                      // ref={inputRef}
                       type="tel"
                       id="applicantPassportNumber"
                       value={applicantPassportNumber}
@@ -374,7 +374,7 @@ const VisaCountryPage = () => {
                   {/* Mobile number input field */}
                   <div className="relative mt-6 px-1 py-2 md:px-4 bg-[#f3f4f6] mx-4 rounded-md">
                     <input
-                      ref={inputRef}
+                      // ref={inputRef}
                       type="tel"
                       id="applicantMobileNumber"
                       value={applicantMobileNumber}
