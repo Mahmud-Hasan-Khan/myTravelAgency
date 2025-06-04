@@ -67,7 +67,7 @@ export const authOptions = {
     },
 
     async jwt({ token, user }) {
-      if (user) {
+      if (user?.email) {
         const { collection } = await dbConnect("users");
         const dbUser = await collection.findOne({ email: user.email });
 
@@ -78,7 +78,11 @@ export const authOptions = {
     },
 
     async session({ session, token }) {
-      session.user.role = token.role;
+      // session.user.role = token.role;
+      // return session;
+      if (token?.role) {
+        session.user.role = token.role;
+      }
       return session;
     },
 

@@ -128,7 +128,7 @@ import { usePathname } from 'next/navigation';
 const adminMenu = [
   { label: 'Dashboard', href: '/admin' },
   { label: 'User Management', href: '/admin/users' },
-  { label: 'Visa Services', href: '/admin/visas' },
+  { label: 'Visa Services', href: '/admin/visa' },
   { label: 'Air Ticket', href: '/admin/tickets' },
   { label: 'Reports', href: '/admin/reports' },
 ];

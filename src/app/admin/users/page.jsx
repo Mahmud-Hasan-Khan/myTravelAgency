@@ -3,7 +3,7 @@
 import useSWR from 'swr';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 
@@ -18,9 +18,8 @@ export default function AdminUsersPage() {
   const { data: users, error, isLoading, mutate } = useSWR('/api/admin/users', fetcher);
   const [promotingId, setPromotingId] = useState(null);
 
-  if (!session || session.user.role !== 'admin') {
-    router.push('/');
-    return null;
+  if (!session || !session.user || session.user.role !== "admin") {
+    redirect("/unauthorized");
   }
 
   const handleUserStatus = async (id, currentStatus) => {
@@ -76,7 +75,7 @@ export default function AdminUsersPage() {
               <th className="px-4 py-2 text-left text-sm font-medium">S.No</th>
               <th className="px-4 py-2 text-left text-sm font-medium">Name</th>
               <th className="px-4 py-2 text-left text-sm font-medium">Email</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-center">Role</th>
+              <th className="px-4 py-2 text-sm font-medium text-center">Role</th>
               <th className="px-4 py-2 text-left text-sm font-medium">Status</th>
               <th className="px-4 py-2 text-left text-sm font-medium">Actions</th>
             </tr>
