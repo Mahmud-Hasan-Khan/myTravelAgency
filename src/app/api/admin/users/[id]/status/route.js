@@ -2,8 +2,10 @@ import dbConnect from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
-export async function PUT(req, { params }) {
+export async function PUT(req, context) {
+    const params = await context.params;
     const { id } = params;
+
     const { status } = await req.json();
 
     if (!['blocked', 'unblocked'].includes(status)) {
@@ -16,6 +18,7 @@ export async function PUT(req, { params }) {
 
         return NextResponse.json({ message: 'Status updated' });
     } catch (err) {
+        console.error("DB error:", err);
         return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
