@@ -1,9 +1,37 @@
-import { NextResponse } from 'next/server';
-import { connectToDB } from '@/lib/db';
-import User from '@/models/User';
+// import dbConnect from '@/lib/dbConnect';
+// import { ObjectId } from 'mongodb';
+// import { NextResponse } from 'next/server';
 
-export async function PUT(req, { params }) {
+
+// export async function PUT(req, context) {
+//   const params = await context.params;
+//   const { id } = params;
+
+//   const { role } = await req.json();
+
+//   if (!['admin', 'user'].includes(role)) {
+//     return NextResponse.json({ error: 'Invalid role' }, { status: 400 });
+//   }
+
+//   try {
+//     const { collection } = await dbConnect('users');
+//     await collection.updateOne({ _id: new ObjectId(id) }, { $set: { role } });
+
+//   } catch (error) {
+//     console.error('Role Update Error:', error);
+//     return NextResponse.json({ error: 'Failed to update role' }, { status: 500 });
+//   }
+// }
+
+import dbConnect from '@/lib/dbConnect';
+import { ObjectId } from 'mongodb';
+import { NextResponse } from 'next/server';
+
+export async function PUT(req, context) {
+  const params = await context.params;
   const { id } = params;
+
+
   const { role } = await req.json();
 
   if (!['admin', 'user'].includes(role)) {
@@ -11,9 +39,18 @@ export async function PUT(req, { params }) {
   }
 
   try {
-    await connectToDB();
-    await User.findByIdAndUpdate(id, { role });
-    return NextResponse.json({ message: 'Role updated' }, { status: 200 });
+    const { collection } = await dbConnect('users');
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { role } }
+    );
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: 'Role updated successfully' });
   } catch (error) {
     console.error('Role Update Error:', error);
     return NextResponse.json({ error: 'Failed to update role' }, { status: 500 });
