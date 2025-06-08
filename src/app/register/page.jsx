@@ -25,7 +25,7 @@ const Register = () => {
                     <Link href={'/login'}
                         className='text-[#4081ec] hover:underline font-semibold ml-1'
                     >
-                        Login now
+                        Login now!
                     </Link>
                 </p>
             </div>

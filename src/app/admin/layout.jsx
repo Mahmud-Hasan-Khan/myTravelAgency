@@ -27,7 +27,7 @@ export default function AdminLayout({ children }) {
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside
-        className={`z-50 bg-white border-r w-64 p-4 fixed h-full transform transition-transform duration-300 ease-in-out 
+        className={`z-50 bg-white border-r w-56 p-4 fixed h-full transform transition-transform duration-300 ease-in-out 
         ${open ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0`}
       >
         {/* Logo */}
@@ -76,13 +76,13 @@ export default function AdminLayout({ children }) {
         onClick={() => setOpen(!open)}
         aria-label={open ? 'Close sidebar' : 'Open sidebar'}
         aria-expanded={open}
-        className="sm:hidden fixed top-4 left-4 z-50 text-gray-700"
+        className="sm:hidden fixed top-6 left-4 z-50 text-gray-700 "
       >
         {open ? <FiX size={24} /> : <FiMenu size={24} />}
       </button>
 
       {/* Main Content */}
-      <main className="flex-1 ml-0 sm:ml-64 p-8">{children}</main>
+      <main className="flex-1 ml-0 sm:ml-64 pr-6 pt-7 md:pt-0">{children}</main>
     </div>
   );
 }
