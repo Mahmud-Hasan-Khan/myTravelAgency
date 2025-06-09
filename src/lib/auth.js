@@ -55,14 +55,16 @@ export const authOptions = {
           await collection.insertOne({
             name,
             email,
+            phoneNumber: null,
+            passportImage: null,
             role: "user",
             status: "unblocked", // default for new users
             provider: "google",
             createdAt: bangladeshTime,
           });
+          return "/update-user-profile";
         }
       }
-
       return true;
     },
 
@@ -72,6 +74,7 @@ export const authOptions = {
         const dbUser = await collection.findOne({ email: user.email });
 
         token.role = dbUser?.role || "user";
+        token.phoneNumber = dbUser?.phoneNumber || null;
       }
 
       return token;
@@ -80,9 +83,12 @@ export const authOptions = {
     async session({ session, token }) {
       // session.user.role = token.role;
       // return session;
-      if (token?.role) {
+      if (token?.role)
         session.user.role = token.role;
-      }
+      session.user.phoneNumber = token.phoneNumber || null;
+
+      session.user.profileComplete = !!(token.phoneNumber);
+
       return session;
     },
 

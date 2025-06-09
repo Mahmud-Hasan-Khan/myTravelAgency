@@ -19,6 +19,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const userName = session?.user?.name || "User";
+  const userImage = session?.user?.image;
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
@@ -103,9 +107,35 @@ export default function Navbar() {
                   ) : (
                     // Desktop MyBookingMenu (inline)
                     <div className="relative group">
-                      <button className="text-sm font-medium text-blue-600 hover:underline">
-                        My Bookings ▾
-                      </button>
+                      <motion.button className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 focus:outline-none"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        {/* Avatar */}
+                        <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-200 border border-gray-300">
+                          <Image
+                            src={userImage || "/Icon/default-avatar.png"} // Provide default avatar path
+                            alt="User Avatar"
+                            width={32}
+                            height={32}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                        {/* Username + Arrow */}
+                        <span className="flex items-center gap-1">
+                          {userName}
+                          <motion.span
+                            key={isHovered ? "up" : "down"}
+                            initial={{ rotate: isHovered ? 180 : 0 }}
+                            animate={{ rotate: isHovered ? 360 : 0 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {isHovered ? "▴" : "▾"}
+                          </motion.span>
+                        </span>
+                      </motion.button>
                       <div className="absolute left-0 top-full mt-2 bg-white border rounded-md shadow-md w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                         <Link href="/userProfile" onClick={() => close?.()} className="block px-4 py-2 hover:bg-gray-100 text-sm">
                           My Profile

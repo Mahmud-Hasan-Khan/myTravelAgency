@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 export async function POST(req) {
     try {
-        const { name, email, phone, password, role } = await req.json();
+        const { name, email, phoneNumber, password, role } = await req.json();
 
         const { collection } = await dbConnect('users');
 
@@ -17,7 +17,8 @@ export async function POST(req) {
         const newUser = {
             name,
             email,
-            phone,
+            phoneNumber,
+            passportImage: null,
             password: hashedPassword,
             createdAt: new Date(),
             role,

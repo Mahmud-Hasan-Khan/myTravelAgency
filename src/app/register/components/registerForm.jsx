@@ -152,7 +152,7 @@ import { redirect } from 'next/navigation';
 const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [phone, setPhone] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const isStrongPassword = (password) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
@@ -170,7 +170,7 @@ const RegisterForm = () => {
         const status = 'unblocked';
 
         // Validation
-        if (!phone) {
+        if (!phoneNumber) {
             toast.error('Phone number is required.');
             return;
         }
@@ -186,7 +186,7 @@ const RegisterForm = () => {
             const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, phone, password, role, status }),
+                body: JSON.stringify({ name, email, phoneNumber, password, role, status }),
             });
             const data = await res.json();
 
@@ -194,7 +194,7 @@ const RegisterForm = () => {
 
             toast.success('Registration successful!');
             form.reset();
-            setPhone('');
+            setPhoneNumber('');
         } catch (error) {
             toast.error('Error: ' + error.message);
         } finally {
@@ -240,8 +240,8 @@ const RegisterForm = () => {
                     </label>
                     <PhoneInput
                         country={'bd'}
-                        value={phone}
-                        onChange={(value) => { setPhone('+' + value) }}
+                        value={phoneNumber}
+                        onChange={(value) => { setPhoneNumber('+' + value) }}
                         inputClass="w-full px-3 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
                         containerClass="!w-full focus-within:!outline-[#4081ec] focus-within:!border-[#4081ec] focus-within:!ring-1 focus-within:!ring-[#4081ec] !rounded-md overflow-hidden"
                         inputStyle={{ width: '100%' }}
