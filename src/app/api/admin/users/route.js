@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 
 export async function GET(req) {
     const session = await getServerSession(authOptions);
+    
     if (!session || session.user.role !== "admin") {
         return new Response("Unauthorized", { status: 403 });
     }
