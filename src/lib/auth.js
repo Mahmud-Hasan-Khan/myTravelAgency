@@ -81,8 +81,6 @@ export const authOptions = {
     },
 
     async session({ session, token }) {
-      // session.user.role = token.role;
-      // return session;
       if (token?.role)
         session.user.role = token.role;
       session.user.phoneNumber = token.phoneNumber || null;
