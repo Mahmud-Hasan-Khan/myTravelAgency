@@ -12,7 +12,9 @@ import {
   FaPlaneDeparture,
   FaPassport,
   FaMedal,
+  FaUserEdit,
 } from "react-icons/fa";
+import Link from "next/link";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -25,22 +27,6 @@ const UserProfilePage = () => {
 
   const [profileImagePreview, setProfileImagePreview] = useState(null);
   const [passportImagePreview, setPassportImagePreview] = useState(null);
-
-  const handleProfileImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImagePreview(URL.createObjectURL(file));
-      // TODO: Upload to server
-    }
-  };
-
-  const handlePassportImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPassportImagePreview(URL.createObjectURL(file));
-      // TODO: Upload to server
-    }
-  };
 
   if (status === "loading") return <p className="text-center mt-6">Loading session...</p>;
   if (status === "unauthenticated") return <p className="text-center mt-6">Please log in to view your profile.</p>;
@@ -65,9 +51,9 @@ const UserProfilePage = () => {
                     (isGoogleUser ? session.user?.image : userInfo.image || "/default-avatar.png")
                   }
                   alt="User Avatar"
-                  width={96}
-                  height={96}
-                  className="rounded-full border shadow"
+                  width={120}
+                  height={120}
+                  className="rounded-full border shadow mb-3 object-cover w-28 h-28 mx-auto"
                 />
               </div>
               <div className="text-gray-700 space-y-1 flex-col items-center">
@@ -79,7 +65,7 @@ const UserProfilePage = () => {
                   <FaPhoneAlt className="text-green-500" />{userInfo.phoneNumber || "N/A"}
                 </p>
                 <p className="flex items-center gap-2 text-sm">
-                  <FaCalendarAlt className="text-orange-500" />Created : {" "}
+                  <FaCalendarAlt className="text-orange-500" />Created at : {" "}
                   {new Date(userInfo.createdAt).toLocaleDateString("en-GB", {
                     day: "2-digit",
                     month: "short",
@@ -105,18 +91,6 @@ const UserProfilePage = () => {
               </p>
             </div>
           </div>
-
-          {!isGoogleUser && (
-            <div className="mt-4">
-              <label className="font-medium mb-1 block">Upload Profile Image</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleProfileImageChange}
-                className="file-input file-input-sm file-input-bordered w-full max-w-sm"
-              />
-            </div>
-          )}
         </div>
 
         {/* Passport Info Section */}
@@ -136,16 +110,12 @@ const UserProfilePage = () => {
                 height={180}
                 className="rounded-lg shadow object-cover border w-full max-w-md"
               />
-              <div>
-                <label className="font-medium mb-1 block">Upload Passport Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePassportImageChange}
-                  className="file-input file-input-sm file-input-bordered w-full max-w-sm"
-                />
-              </div>
             </div>
+          </div>
+          <div className="flex items-center justify-center my-4 ">
+              <Link href="/update-user-profile" className="flex items-center gap-2 border p-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 hover:shadow-md">
+                <FaUserEdit className="text-white" />
+                Edit Profile</Link>
           </div>
         </section>
       </div>
