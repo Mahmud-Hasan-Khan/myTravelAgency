@@ -56,13 +56,85 @@ const EditProfilePage = () => {
     }
   };
 
+  // const handleUpdateProfile = async () => {
+  //   if (!phoneNumber || !passportNumber || !dateOfBirth || !passportExpiry) {
+  //     return toast.error("All fields are required.");
+  //   }
+
+  //   setIsUpdating(true);
+  //   toast.info("Updating...");
+
+  //   const imgbbKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+
+  //   const uploadImageToImgbb = async (imageFile) => {
+  //     const formData = new FormData();
+  //     formData.append("image", imageFile);
+  //     const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (!data.success) {
+  //       throw new Error("Image upload failed.");
+  //     }
+
+  //     return data.data.url;
+  //   };
+
+  //   try {
+  //     let profileImageUrl = userInfo.image;
+  //     let passportImageUrl = userInfo.passportImage;
+
+  //     if (profileImage) profileImageUrl = await uploadImageToImgbb(profileImage);
+  //     if (passportImage) passportImageUrl = await uploadImageToImgbb(passportImage);
+
+  //     const res = await fetch("/api/users/update", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         email: userInfo.email,
+  //         phoneNumber,
+  //         dateOfBirth,
+  //         passportNumber,
+  //         passportExpiry,
+  //         image: profileImageUrl,
+  //         passportImage: passportImageUrl,
+  //       }),
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (data.success) {
+  //       toast.success("Profile updated!");
+
+  //       // Update the preview images immediately
+  //       setProfileImagePreview(profileImageUrl);
+  //       setPassportImagePreview(passportImageUrl);
+
+  //       mutate("/api/users"); // Refresh cache
+  //       setTimeout(() => {
+  //         router.push("/userProfile");
+  //       }, 1000);
+  //     } else {
+  //       toast.error(data.error || "Update failed.");
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error("Something went wrong.");
+  //   } finally {
+  //     setIsUpdating(false);
+  //   }
+  // };
+
   const handleUpdateProfile = async () => {
     if (!phoneNumber || !passportNumber || !dateOfBirth || !passportExpiry) {
       return toast.error("All fields are required.");
     }
 
     setIsUpdating(true);
-    toast.info("Updating...");
+    const toastId = toast.loading("Updating profile...");
 
     const imgbbKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
@@ -107,26 +179,40 @@ const EditProfilePage = () => {
       const data = await res.json();
 
       if (data.success) {
-        toast.success("Profile updated!");
+        toast.update(toastId, {
+          render: "Profile updated!",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+        });
 
-        // Update the preview images immediately
         setProfileImagePreview(profileImageUrl);
         setPassportImagePreview(passportImageUrl);
 
-        mutate("/api/users"); // Refresh cache
+        mutate("/api/users");
         setTimeout(() => {
           router.push("/userProfile");
         }, 1000);
       } else {
-        toast.error(data.error || "Update failed.");
+        toast.update(toastId, {
+          render: data.error || "Update failed.",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
       }
     } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong.");
+      toast.update(toastId, {
+        render: "Something went wrong.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
     } finally {
       setIsUpdating(false);
     }
   };
+
 
   if (status === "loading" || isLoading) return <p className="text-center mt-6">Loading...</p>;
   if (status === "unauthenticated") return <p className="text-center mt-6">Please login.</p>;
@@ -217,12 +303,34 @@ const EditProfilePage = () => {
           />
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center mx-auto flex justify-center">
           <button
             onClick={handleUpdateProfile}
             disabled={isUpdating}
-            className={`btn btn-primary px-6 ${isUpdating ? "opacity-60 cursor-not-allowed" : ""}`}
+            className={`btn bg-orange-400 hover:bg-orange-500 flex items-center justify-center gap-2 px-6 ${isUpdating ? "bg-orange-600 cursor-not-allowed text-white" : ""}`}
           >
+            {isUpdating && (
+              <svg
+                className="animate-spin h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="orange"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                />
+              </svg>
+            )}
             {isUpdating ? "Updating..." : "Save Changes"}
           </button>
         </div>
