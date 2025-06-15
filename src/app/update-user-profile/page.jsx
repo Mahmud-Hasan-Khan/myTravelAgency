@@ -307,13 +307,15 @@ const EditProfilePage = () => {
           <button
             onClick={handleUpdateProfile}
             disabled={isUpdating}
-            className={`btn bg-orange-400 hover:bg-orange-500 flex items-center justify-center gap-2 px-6 ${isUpdating ? "bg-orange-600 cursor-not-allowed text-white" : ""}`}
+            className={`flex items-center justify-center gap-2 px-6 py-3 rounded-md font-semibold text-white transition
+    ${isUpdating ? "bg-blue-500 cursor-not-allowed" : "bg-primary hover:bg-primary-focus"}
+  `}
           >
             {isUpdating && (
               <svg
                 className="animate-spin h-4 w-4 text-white"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="orange"
+                fill="none"
                 viewBox="0 0 24 24"
               >
                 <circle
@@ -333,6 +335,7 @@ const EditProfilePage = () => {
             )}
             {isUpdating ? "Updating..." : "Save Changes"}
           </button>
+
         </div>
       </div>
     </div>
