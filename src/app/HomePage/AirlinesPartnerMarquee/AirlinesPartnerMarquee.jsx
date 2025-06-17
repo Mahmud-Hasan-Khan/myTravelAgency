@@ -10,9 +10,9 @@ const AirlinesPartnerMarquee = async () => {
   const airlinesLogo = await airlinesPartnerLogoCollection.find({}).toArray();
 
   return (
-    <div className="my-3">
+    <div className="py-3 bg-white rounded-md">
       <SectionTitle heading="Top Airlines Partner" subheading="Wakia Travels connects all top airlines. Enjoy a comfortable and hassle-free journey on any destination and get tickets of top airlines easily." />
-      <div className="">
+      <div>
         <Marquee pauseOnHover speed={60} gradient={false}>
           {airlinesLogo.map((logo, index) => (
             <div key={index} className='mx-6 h-12 flex items-center justify-center'>

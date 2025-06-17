@@ -91,8 +91,8 @@ const OfferNoticeSlider = () => {
 
 
   return (
-    <div className="relative w-full">
-      <SectionTitle heading="Travel Updates & Exclusive Offers" subheading="Stay up to date with official airline Updates and limited-time promotional fares" ></SectionTitle>
+    <div className="relative w-full bg-white rounded-md py-2">
+      <SectionTitle heading="Travel Updates & Exclusive Offers" subheading="Stay up to date with official airline Updates and promotional fares" ></SectionTitle>
       {/* Carousel */}
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex">

@@ -5,7 +5,7 @@ const OfferNoticeCard = ({ card, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="relative cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform group"
+      className="relative cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform group border-t-2 border-t-brandBlue"
     >
       <div className="relative w-full h-40 rounded-lg overflow-hidden">
         <Image
