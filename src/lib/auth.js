@@ -7,25 +7,32 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      credentials: {},
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize(credentials) {
         const { email, password } = credentials;
+        try {
+          const { collection } = await dbConnect("users");
+          const user = await collection.findOne({ email });
 
-        const { collection } = await dbConnect("users");
-        const user = await collection.findOne({ email });
+          if (!user) throw new Error("User not found");
+          if (user.status === "blocked") throw new Error("Your account has been blocked");
 
-        if (!user) throw new Error("User not found");
-        if (user.status === "blocked") throw new Error("Your account has been blocked");
+          const valid = await bcrypt.compare(password, user.password);
+          if (!valid) throw new Error("Invalid password");
 
-        const valid = await bcrypt.compare(password, user.password);
-        if (!valid) throw new Error("Invalid password");
-
-        return {
-          id: user._id.toString(),
-          name: user.name,
-          email: user.email,
-          role: user.role || "user",
-        };
+          return {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            role: user.role || "user",
+          };
+        } catch (error) {
+          console.error("Authorize error:", error);
+          throw new Error("Login failed");
+        }
       },
     }),
 
@@ -38,34 +45,38 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account }) {
       const { name, email } = user;
-      const { collection } = await dbConnect("users");
+      try {
+        const { collection } = await dbConnect("users");
+        const existingUser = await collection.findOne({ email });
 
-      const existingUser = await collection.findOne({ email });
+        if (account.provider === "google") {
+          if (existingUser) {
+            if (existingUser.status === "blocked") {
+              throw new Error("Your account has been blocked");
+            }
+          } else {
+            const bangladeshTime = new Date(
+              new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
+            );
 
-      if (account.provider === "google") {
-        if (existingUser) {
-          if (existingUser.status === "blocked") {
-            throw new Error("Your account has been blocked");
+            await collection.insertOne({
+              name,
+              email,
+              phoneNumber: null,
+              passportImage: null,
+              role: "user",
+              status: "unblocked", // default for new users
+              provider: "google",
+              createdAt: bangladeshTime,
+            });
+            return "/update-user-profile";
           }
-        } else {
-          const bangladeshTime = new Date(
-            new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
-          );
-
-          await collection.insertOne({
-            name,
-            email,
-            phoneNumber: null,
-            passportImage: null,
-            role: "user",
-            status: "unblocked", // default for new users
-            provider: "google",
-            createdAt: bangladeshTime,
-          });
-          return "/update-user-profile";
         }
+        return true;
+      } catch (error) {
+        console.error("SignIn error:", error);
+        throw new Error("Authentication failed");
       }
-      return true;
     },
 
     async jwt({ token, user }) {
@@ -81,12 +92,9 @@ export const authOptions = {
     },
 
     async session({ session, token }) {
-      if (token?.role)
-        session.user.role = token.role;
+      if (token?.role) session.user.role = token.role;
       session.user.phoneNumber = token.phoneNumber || null;
-
-      session.user.profileComplete = !!(token.phoneNumber);
-
+      session.user.profileComplete = !!token.phoneNumber;
       return session;
     },
 

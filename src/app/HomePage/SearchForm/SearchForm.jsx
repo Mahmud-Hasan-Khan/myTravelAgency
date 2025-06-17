@@ -593,8 +593,8 @@ const SearchForm = () => {
               }`}
             onClick={() => setActiveTab(tab.id)}
           >
-            <Image src={tab.icon} alt={tab.label} style={{ width: 25, height: 'auto' }} width={25}
-              height={20} />
+            <Image src={tab.icon} alt={tab.label} style={{ width: 'auto', height: 'auto' }} width={32}
+              height={32} />
             {tab.label}
           </button>))}
       </div>
