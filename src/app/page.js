@@ -6,7 +6,7 @@ import VideoBanner from "./HomePage/VideoBanner/VideoBanner";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="bg-[#e2e8f0]">
       {/* Banner section */}
       <div className="relative w-full overflow-hidden">
 

@@ -17,7 +17,10 @@ const GoogleReviews = () => {
 
     return (
         <div>
-            <SectionTitle heading='What Our Customers Say' subheading='Hear Directly from Our Happy Clients'></SectionTitle>
+            <div className='bg-white rounded-t-md pt-2'>
+
+                <SectionTitle heading='What Our Customers Say' subheading='Hear Directly from Our Happy Clients'></SectionTitle>
+            </div>
             <div className="elfsight-app-988aa58e-51ae-41c8-807a-d5a716d7faa2" data-elfsight-app-lazy></div>
         </div>
     );
