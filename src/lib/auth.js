@@ -31,7 +31,7 @@ export const authOptions = {
           };
         } catch (error) {
           console.error("Authorize error:", error);
-          throw new Error("Login failed");
+          throw new Error("Login failed1");
         }
       },
     }),
@@ -87,7 +87,6 @@ export const authOptions = {
         token.role = dbUser?.role || "user";
         token.phoneNumber = dbUser?.phoneNumber || null;
       }
-
       return token;
     },
 
