@@ -49,6 +49,7 @@ import "./globals.css";
 import NextAuthProvider from "@/Providers/NextAuthProvider";
 import { ToastContainer } from "react-toastify";
 import ClientLayout from "./ClientLayout"; // new wrapper component
+import ProfileUpdatePromptModal from "./components/ProfileUpdatePromptModal/ProfileUpdatePromptModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,7 +74,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextAuthProvider>
-          <ClientLayout>{children}</ClientLayout>
+          <ClientLayout>
+            <ProfileUpdatePromptModal />
+            {children}
+          </ClientLayout>
           <ToastContainer
             position="top-right"
             autoClose={3000}

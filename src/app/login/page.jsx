@@ -44,7 +44,7 @@ const Login = () => {
                 <h4 className='mt-4 pb-1 text-2xl lg:text-4xl font-semibold px-4 text-center' style={{ textShadow: '3px 3px 5px rgba(0, 0, 0, 0.4)' }}>Please  Login</h4>
                 <p className='md:text-base text-sm text-center text-[#5a6573]'>You need to Login first to continue</p>
                 <button
-                    onClick={() => signIn("google", { callbackUrl })}
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
                     className='flex justify-center items-center space-x-2 border p-2 border-gray-300 border-rounded rounded-md cursor-pointer bg-[#4081ec] text-white mt-3'
                 >
                     <FcGoogle className='bg-white rounded-full' size={32} />

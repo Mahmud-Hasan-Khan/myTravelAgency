@@ -31,7 +31,7 @@ export const authOptions = {
           };
         } catch (error) {
           console.error("Authorize error:", error);
-          throw new Error("Login failed1");
+          throw new Error("Login failed");
         }
       },
     }),
@@ -65,11 +65,10 @@ export const authOptions = {
               phoneNumber: null,
               passportImage: null,
               role: "user",
-              status: "unblocked", // default for new users
+              status: "unblocked",
               provider: "google",
               createdAt: bangladeshTime,
             });
-            return "/update-user-profile";
           }
         }
         return true;
@@ -86,18 +85,19 @@ export const authOptions = {
 
         token.role = dbUser?.role || "user";
         token.phoneNumber = dbUser?.phoneNumber || null;
+        token.profileComplete = !!dbUser?.phoneNumber;
       }
       return token;
     },
 
     async session({ session, token }) {
-      if (token?.role) session.user.role = token.role;
-      session.user.phoneNumber = token.phoneNumber || null;
-      session.user.profileComplete = !!token.phoneNumber;
+      session.user.role = token.role;
+      session.user.phoneNumber = token.phoneNumber;
+      session.user.profileComplete = token.profileComplete;
       return session;
     },
 
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl, token }) {
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       if (url.startsWith(baseUrl)) return url;
       return baseUrl;
