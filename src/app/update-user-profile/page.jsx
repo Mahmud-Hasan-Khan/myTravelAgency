@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import useSWR, { mutate } from "swr";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -57,12 +57,12 @@ const EditProfilePage = () => {
   };
 
   // const handleUpdateProfile = async () => {
-  //   if (!phoneNumber || !passportNumber || !dateOfBirth || !passportExpiry) {
-  //     return toast.error("All fields are required.");
+  //   if (!phoneNumber) {
+  //     return toast.error("Please input your mobile number must!");
   //   }
 
   //   setIsUpdating(true);
-  //   toast.info("Updating...");
+  //   const toastId = toast.loading("Updating profile...");
 
   //   const imgbbKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
@@ -105,32 +105,53 @@ const EditProfilePage = () => {
   //     });
 
   //     const data = await res.json();
+  //     console.log("Update response:", data);
 
   //     if (data.success) {
-  //       toast.success("Profile updated!");
+  //       try {
+  //         console.log("Trying to refresh session...");
+  //         const result = await signIn(undefined, { redirect: false });
+  //         console.log("SignIn result:", result); // 👉 এখানে null বা error আসলে বুঝবেন
+  //         console.log("Session refreshed!");
+  //       } catch (err) {
+  //         console.error("SignIn error:", err); // 👉 এইটা নিশ্চিতভাবে error ধরবে
+  //       }
+  //       toast.update(toastId, {
+  //         render: "Profile updated!",
+  //         type: "success",
+  //         isLoading: false,
+  //         autoClose: 2000,
+  //       });
 
-  //       // Update the preview images immediately
   //       setProfileImagePreview(profileImageUrl);
   //       setPassportImagePreview(passportImageUrl);
 
-  //       mutate("/api/users"); // Refresh cache
-  //       setTimeout(() => {
-  //         router.push("/userProfile");
-  //       }, 1000);
+  //       mutate("/api/users");
+  //       router.push("/userProfile")
+
   //     } else {
-  //       toast.error(data.error || "Update failed.");
+  //       toast.update(toastId, {
+  //         render: data.error || "Update failed.",
+  //         type: "error",
+  //         isLoading: false,
+  //         autoClose: 3000,
+  //       });
   //     }
   //   } catch (err) {
-  //     console.error(err);
-  //     toast.error("Something went wrong.");
+  //     toast.update(toastId, {
+  //       render: "Something went wrong.",
+  //       type: "error",
+  //       isLoading: false,
+  //       autoClose: 3000,
+  //     });
   //   } finally {
   //     setIsUpdating(false);
   //   }
   // };
 
   const handleUpdateProfile = async () => {
-    if (!phoneNumber || !passportNumber || !dateOfBirth || !passportExpiry) {
-      return toast.error("All fields are required.");
+    if (!phoneNumber) {
+      return toast.error("Please input your mobile number must!");
     }
 
     setIsUpdating(true);
@@ -177,8 +198,13 @@ const EditProfilePage = () => {
       });
 
       const data = await res.json();
+      console.log("Update response:", data);
 
       if (data.success) {
+        // ✅ refresh session from server
+        await fetch("/api/auth/session?update", { method: "POST" });
+        await getSession();
+
         toast.update(toastId, {
           render: "Profile updated!",
           type: "success",
@@ -190,9 +216,8 @@ const EditProfilePage = () => {
         setPassportImagePreview(passportImageUrl);
 
         mutate("/api/users");
-        setTimeout(() => {
-          router.push("/userProfile");
-        }, 1000);
+
+        router.push("/userProfile");
       } else {
         toast.update(toastId, {
           render: data.error || "Update failed.",
@@ -202,6 +227,7 @@ const EditProfilePage = () => {
         });
       }
     } catch (err) {
+      console.error("Update error:", err);
       toast.update(toastId, {
         render: "Something went wrong.",
         type: "error",
@@ -212,7 +238,6 @@ const EditProfilePage = () => {
       setIsUpdating(false);
     }
   };
-
 
   if (status === "loading" || isLoading) return <p className="text-center mt-6">Loading...</p>;
   if (status === "unauthenticated") return <p className="text-center mt-6">Please login.</p>;

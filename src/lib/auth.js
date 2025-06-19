@@ -78,19 +78,40 @@ export const authOptions = {
       }
     },
 
-    async jwt({ token, user }) {
-      if (user?.email) {
-        const { collection } = await dbConnect("users");
-        const dbUser = await collection.findOne({ email: user.email });
+    // async jwt({ token, user }) {
+    //   if (user || token?.email) {
+    //     const email = user?.email || token.email;
+    //     const { collection } = await dbConnect("users");
+    //     const dbUser = await collection.findOne({ email });
 
+    //     token.email = email;
+    //     token.role = dbUser?.role || "user";
+    //     token.phoneNumber = dbUser?.phoneNumber || null;
+    //     token.profileComplete = !!dbUser?.phoneNumber;
+    //   }
+    //   return token;
+    // },
+
+    async jwt({ token, user }) {
+      try {
+        const email = user?.email || token.email;
+        if (!email) return token; // এইটা না থাকলে user logout হয়ে যাবে
+
+        const { collection } = await dbConnect("users");
+        const dbUser = await collection.findOne({ email });
+
+        token.email = email;
         token.role = dbUser?.role || "user";
         token.phoneNumber = dbUser?.phoneNumber || null;
         token.profileComplete = !!dbUser?.phoneNumber;
+      } catch (err) {
+        console.error("JWT callback error:", err);
       }
+
       return token;
     },
-
     async session({ session, token }) {
+      session.user.email = token.email;
       session.user.role = token.role;
       session.user.phoneNumber = token.phoneNumber;
       session.user.profileComplete = token.profileComplete;

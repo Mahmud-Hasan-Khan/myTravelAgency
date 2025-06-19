@@ -22,7 +22,7 @@ export async function POST(req) {
         } = body;
 
         // Validate required fields
-        if (!phoneNumber || !passportNumber || !dateOfBirth || !passportExpiry) {
+        if (!phoneNumber) {
             return NextResponse.json(
                 { success: false, error: "Missing required fields." },
                 { status: 400 }
