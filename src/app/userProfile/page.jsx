@@ -13,6 +13,7 @@ import {
   FaPassport,
   FaMedal,
   FaUserEdit,
+  FaWhatsapp,
 } from "react-icons/fa";
 import Link from "next/link";
 
@@ -65,6 +66,9 @@ const UserProfilePage = () => {
                   <FaPhoneAlt className="text-green-500" /><strong>Phone: </strong>{userInfo.phoneNumber || "N/A"}
                 </p>
                 <p className="flex items-center gap-2 text-sm">
+                  <FaWhatsapp className="text-green-500 text-base" /><strong>Whatsapp: </strong>{userInfo.whatsappNumber || "N/A"}
+                </p>
+                <p className="flex items-center gap-2 text-sm">
                   <FaCalendarAlt className="text-orange-500" /><strong>Created at :</strong> {" "}
                   {new Date(userInfo.createdAt).toLocaleDateString("en-GB", {
                     day: "2-digit",
@@ -98,6 +102,8 @@ const UserProfilePage = () => {
           <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Passport Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3 text-gray-700 text-sm font-medium">
+              <p><strong>Given Name:</strong> {userInfo.givenName || "N/A"}</p>
+              <p><strong>Surname:</strong> {userInfo.surName || "N/A"}</p>
               <p><strong>Date of Birth: </strong> 
                  {new Date(userInfo.dateOfBirth).toLocaleDateString("en-GB", {
                   day: "2-digit",
