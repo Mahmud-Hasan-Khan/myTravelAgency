@@ -1,11 +1,13 @@
 "use client";
 
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import useSWR, { mutate } from "swr";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -17,6 +19,9 @@ const EditProfilePage = () => {
   );
 
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [givenName, setGivenName] = useState("");
+  const [surName, setSurName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [passportNumber, setPassportNumber] = useState("");
   const [passportExpiry, setPassportExpiry] = useState("");
@@ -30,11 +35,14 @@ const EditProfilePage = () => {
   useEffect(() => {
     if (userInfo) {
       setPhoneNumber(userInfo.phoneNumber || "");
+      setWhatsappNumber(userInfo.whatsappNumber || "");
+      setGivenName(userInfo.givenName || "");
+      setSurName(userInfo.surName || "");
       setDateOfBirth(userInfo.dateOfBirth || "");
       setPassportNumber(userInfo.passportNumber || "");
       setPassportExpiry(userInfo.passportExpiry || "");
-      setProfileImagePreview(userInfo.image || "/default-avatar.png");
-      setPassportImagePreview(userInfo.passportImage || "/default-passport.png");
+      setProfileImagePreview(userInfo.image || "/Icon/default-avatar.png");
+      setPassportImagePreview(userInfo.passportImage || "/Icon/default-passport.png");
     }
   }, [userInfo]);
 
@@ -58,7 +66,7 @@ const EditProfilePage = () => {
 
   const handleUpdateProfile = async () => {
     if (!phoneNumber) {
-      return toast.error("Please input your mobile number must!");
+      return toast.error("Please input your mobile number!");
     }
 
     setIsUpdating(true);
@@ -75,7 +83,6 @@ const EditProfilePage = () => {
       });
 
       const data = await res.json();
-
       if (!data.success) {
         throw new Error("Image upload failed.");
       }
@@ -96,6 +103,9 @@ const EditProfilePage = () => {
         body: JSON.stringify({
           email: userInfo.email,
           phoneNumber,
+          whatsappNumber,
+          givenName,
+          surName,
           dateOfBirth,
           passportNumber,
           passportExpiry,
@@ -105,7 +115,6 @@ const EditProfilePage = () => {
       });
 
       const data = await res.json();
-      console.log("Update response:", data);
 
       if (data.success) {
         // ✅ refresh session from server
@@ -119,11 +128,7 @@ const EditProfilePage = () => {
           autoClose: 2000,
         });
 
-        setProfileImagePreview(profileImageUrl);
-        setPassportImagePreview(passportImageUrl);
-
         mutate("/api/users");
-
         router.push("/userProfile");
       } else {
         toast.update(toastId, {
@@ -156,10 +161,10 @@ const EditProfilePage = () => {
         <h1 className="text-2xl font-semibold mb-6 text-center">Edit Profile</h1>
 
         {!isGoogleUser && (
-          <div className="mt-10 text-center">
+          <div className="mt-6 text-center">
             <label className="block font-semibold mb-2">Profile Image</label>
             <Image
-              src={profileImagePreview}
+              src={profileImagePreview || "/Icon/default-avatar.png"}
               alt="Profile"
               width={120}
               height={120}
@@ -176,12 +181,81 @@ const EditProfilePage = () => {
 
         <div className="grid md:grid-cols-2 gap-6 mt-6">
           <div>
-            <label className="block font-semibold mb-1">Phone Number<span className="text-red-600">*</span> </label>
+            <label className="label mb-1">
+              <span className="inputLabel">Given Name (As per Passport)</span>
+            </label>
             <input
-              type="tel"
+              type="text"
+              value={givenName}
+              onChange={(e) => setGivenName(e.target.value)}
+              placeholder="Enter given name"
+              className="w-full px-4 py-3 rounded-md bg-base-200 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="label mb-1">
+              <span className="inputLabel">Surname (As per Passport)</span>
+            </label>
+            <input
+              type="text"
+              value={surName}
+              onChange={(e) => setSurName(e.target.value)}
+              placeholder="Enter surname"
+              className="w-full px-4 py-3 rounded-md bg-base-200 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="label">
+              <span className="inputLabel">Phone Number<span className="text-red-600">*</span></span>
+            </label>
+            <PhoneInput
+              country={'bd'}
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="+880 1XXXXXXXXX"
+              onChange={(value) => {
+                setPhoneNumber(value.startsWith("+") ? value : "+" + value);
+              }}
+              inputClass="w-full px-3 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
+              containerClass="!w-full focus-within:!outline-[#4081ec] focus-within:!border-[#4081ec] focus-within:!ring-1 focus-within:!ring-[#4081ec] !rounded-md"
+              inputStyle={{ width: '100%' }}
+              enableSearch={true}
+              placeholder="Your mobile number"
+              inputProps={{
+                name: "phone",
+                required: true,
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="label">
+              <span className="inputLabel">WhatsApp Number<span className="text-red-600">*</span> </span>
+            </label>
+            <PhoneInput
+              country={'bd'}
+              enableSearch={true}
+              value={whatsappNumber}
+              onChange={(value) => {
+                setWhatsappNumber(value.startsWith("+") ? value : "+" + value);
+              }}
+              inputClass="w-full px-3 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
+              containerClass="!w-full focus-within:!outline-[#4081ec] focus-within:!border-[#4081ec] focus-within:!ring-1 focus-within:!ring-[#4081ec] !rounded-md"
+              inputStyle={{ width: '100%' }}
+              placeholder="Your WhatsApp number"
+              inputProps={{
+                name: "whatsapp",
+                required: true,
+              }}
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-1">Date of Birth</label>
+            <input
+              type="date"
+              value={dateOfBirth}
+              onChange={(e) => setDateOfBirth(e.target.value)}
               className="w-full px-4 py-3 rounded-md bg-base-200 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -192,17 +266,7 @@ const EditProfilePage = () => {
               type="text"
               value={passportNumber}
               onChange={(e) => setPassportNumber(e.target.value)}
-              placeholder="Your passport number"
-              className="w-full px-4 py-3 rounded-md bg-base-200 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold mb-1">Date of Birth</label>
-            <input
-              type="date"
-              value={dateOfBirth}
-              onChange={(e) => setDateOfBirth(e.target.value)}
+              placeholder="AB1234567"
               className="w-full px-4 py-3 rounded-md bg-base-200 border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -221,7 +285,7 @@ const EditProfilePage = () => {
         <div className="mt-10 text-center">
           <label className="block font-semibold mb-2">Passport Bio Page Image</label>
           <Image
-            src={passportImagePreview}
+            src={passportImagePreview || "/Icon/logoDesktop.png"}
             alt="Passport"
             width={300}
             height={160}
@@ -240,8 +304,8 @@ const EditProfilePage = () => {
             onClick={handleUpdateProfile}
             disabled={isUpdating}
             className={`flex items-center justify-center gap-2 px-6 py-3 rounded-md font-semibold text-white transition
-    ${isUpdating ? "bg-blue-500 cursor-not-allowed" : "bg-primary hover:bg-primary-focus"}
-  `}
+              ${isUpdating ? "bg-blue-500 cursor-not-allowed" : "bg-primary hover:bg-primary-focus"}
+            `}
           >
             {isUpdating && (
               <svg
@@ -267,7 +331,6 @@ const EditProfilePage = () => {
             )}
             {isUpdating ? "Updating..." : "Save Changes"}
           </button>
-
         </div>
       </div>
     </div>

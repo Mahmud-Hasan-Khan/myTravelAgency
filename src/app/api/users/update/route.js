@@ -14,6 +14,9 @@ export async function POST(req) {
         const body = await req.json();
         const {
             phoneNumber,
+            whatsappNumber,
+            givenName,
+            surName,
             passportNumber,
             dateOfBirth,
             passportExpiry,
@@ -33,6 +36,9 @@ export async function POST(req) {
         const { collection } = await dbConnect("users");
         const updateFields = {
             phoneNumber,
+            whatsappNumber,
+            givenName,
+            surName,
             passportNumber,
             dateOfBirth,
             passportExpiry,

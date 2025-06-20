@@ -98,7 +98,9 @@ const RegisterForm = () => {
                     <PhoneInput
                         country={'bd'}
                         value={phoneNumber}
-                        onChange={(value) => { setPhoneNumber('+' + value) }}
+                        onChange={(value) => {
+                            setPhoneNumber(value.startsWith("+") ? value : "+" + value);
+                        }}
                         inputClass="w-full px-3 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
                         containerClass="!w-full focus-within:!outline-[#4081ec] focus-within:!border-[#4081ec] focus-within:!ring-1 focus-within:!ring-[#4081ec] !rounded-md overflow-hidden"
                         inputStyle={{ width: '100%' }}
