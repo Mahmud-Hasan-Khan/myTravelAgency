@@ -44,13 +44,13 @@ export default function ProfileUpdatePromptModal() {
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center w-screen h-screen">
       <div className="bg-white rounded-2xl p-6 mx-4 w-full max-w-[320px] sm:max-w-sm md:max-w-md shadow-lg text-center space-y-4 animate-fadeIn">
-        <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">Complete Your Profile</h2>
+        <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">Please Complete Your Profile</h2>
         <p className="text-sm md:text-base text-gray-600">
           To plan your trip smoothly, please provide your contact details.
         </p>
         <button
           onClick={handleConfirm}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          className="p-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
           Update Now
         </button>

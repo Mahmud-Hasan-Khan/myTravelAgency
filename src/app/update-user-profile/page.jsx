@@ -269,7 +269,7 @@ const EditProfilePage = () => {
 
         <div className="grid md:grid-cols-2 gap-6 mt-6">
           <div>
-            <label className="block font-semibold mb-1">Phone Number</label>
+            <label className="block font-semibold mb-1">Phone Number<span className="text-red-600">*</span> </label>
             <input
               type="tel"
               value={phoneNumber}
@@ -312,7 +312,7 @@ const EditProfilePage = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <label className="block font-semibold mb-2">Passport Image</label>
+          <label className="block font-semibold mb-2">Passport Bio Page Image</label>
           <Image
             src={passportImagePreview}
             alt="Passport"
