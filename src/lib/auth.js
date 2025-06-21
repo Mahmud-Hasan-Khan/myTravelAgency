@@ -23,6 +23,13 @@ export const authOptions = {
           const valid = await bcrypt.compare(password, user.password);
           if (!valid) throw new Error("Invalid password");
 
+          // to update last login date time
+          const bangladeshTime = new Date(
+            new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
+          );
+
+          await collection.updateOne({ email }, { $set: { lastLogin: bangladeshTime } })
+
           return {
             id: user._id.toString(),
             name: user.name,
@@ -54,10 +61,11 @@ export const authOptions = {
             if (existingUser.status === "blocked") {
               throw new Error("Your account has been blocked");
             }
-          } else {
             const bangladeshTime = new Date(
               new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
             );
+            await collection.updateOne({ email }, { $set: { lastLogin: bangladeshTime } });
+          } else {
 
             await collection.insertOne({
               name,
@@ -68,6 +76,7 @@ export const authOptions = {
               status: "unblocked",
               provider: "google",
               createdAt: bangladeshTime,
+              lastLogin: bangladeshTime,
             });
           }
         }
