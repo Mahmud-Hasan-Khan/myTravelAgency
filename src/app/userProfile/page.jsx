@@ -44,19 +44,19 @@ const UserProfilePage = () => {
         <div className="bg-white p-6 rounded-2xl shadow-md">
           <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Basic Information</h2>
           <div className="flex flex-col lg:flex-row justify-between gap-6">
-            <div className="flex flex-col lg:flex-row justify-between gap-6">
-              <div>
+            <div className="flex flex-col lg:flex-row justify-between md:gap-6 gap-2">
+
                 <Image
                   src={
                     profileImagePreview ||
-                    (isGoogleUser ? session.user?.image : userInfo.image || "/default-avatar.png")
+                    (isGoogleUser ? session.user?.image : userInfo.image || "/Icon/default-avatar.png")
                   }
                   alt="User Avatar"
                   width={120}
                   height={120}
-                  className="rounded-full border shadow mb-3 object-cover w-28 h-28 mx-auto my-auto"
+                  className="rounded-full border shadow object-cover w-28 h-28 mx-auto my-auto"
                 />
-              </div>
+
               <div className="text-gray-700 space-y-1 flex-col items-center md:justify-items-start justify-items-center font-medium">
                 <h3 className="text-xl font-bold">{userInfo.name}</h3>
                 <p className="flex items-center gap-2 text-sm ">
@@ -65,9 +65,9 @@ const UserProfilePage = () => {
                 <p className="flex items-center gap-2 text-sm">
                   <FaPhoneAlt className="text-green-500" /><strong>Phone: </strong>{userInfo.phoneNumber || "N/A"}
                 </p>
-                <p className="flex items-center gap-2 text-sm">
-                  <FaWhatsapp className="text-green-500 text-base" /><strong>Whatsapp: </strong>{userInfo.whatsappNumber || "N/A"}
-                </p>
+                <Link href={`tel:+${userInfo.whatsappNumber}`} className="flex items-center gap-2 text-sm">
+                  <FaWhatsapp className="text-green-500 text-base" />  <strong>Whatsapp: </strong>{userInfo.whatsappNumber || "N/A"}
+                </Link>
                 <p className="flex items-center gap-2 text-sm">
                   <FaCalendarAlt className="text-orange-500" /><strong>Created at :</strong> {" "}
                   {new Date(userInfo.createdAt).toLocaleDateString("en-GB", {

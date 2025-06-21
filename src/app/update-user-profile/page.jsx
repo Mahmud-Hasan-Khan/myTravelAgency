@@ -214,9 +214,9 @@ const EditProfilePage = () => {
               country={'bd'}
               value={phoneNumber}
               onChange={(value) => {
-                setPhoneNumber(value.startsWith("+") ? value : "+" + value);
+                setPhoneNumber(value);
               }}
-              inputClass="w-full px-3 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
+              inputClass="w-full px-3 pl-14 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
               containerClass="!w-full focus-within:!outline-[#4081ec] focus-within:!border-[#4081ec] focus-within:!ring-1 focus-within:!ring-[#4081ec] !rounded-md"
               inputStyle={{ width: '100%' }}
               enableSearch={true}
@@ -237,7 +237,7 @@ const EditProfilePage = () => {
               enableSearch={true}
               value={whatsappNumber}
               onChange={(value) => {
-                setWhatsappNumber(value.startsWith("+") ? value : "+" + value);
+                setWhatsappNumber(value);
               }}
               inputClass="w-full px-3 py-[24px] !rounded-md !bg-base-200 !border !border-gray-300"
               containerClass="!w-full focus-within:!outline-[#4081ec] focus-within:!border-[#4081ec] focus-within:!ring-1 focus-within:!ring-[#4081ec] !rounded-md"
