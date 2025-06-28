@@ -1,7 +1,6 @@
 'use client';
 
 import useSWR from 'swr';
-import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';

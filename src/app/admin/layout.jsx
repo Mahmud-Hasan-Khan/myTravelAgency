@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 
 const adminMenu = [
   { label: 'Dashboard', href: '/admin' },
+  { label: 'Create Air Ticket', href: '/admin/createAirTicket' },
   { label: 'User Management', href: '/admin/users' },
   { label: 'Visa Services', href: '/admin/visa' },
   { label: 'Air Ticket', href: '/admin/tickets' },
@@ -24,7 +25,7 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-[#e2e8f0]">
       {/* Sidebar */}
       <aside
         className={`z-50 bg-white border-r w-56 p-4 fixed h-full transform transition-transform duration-300 ease-in-out 

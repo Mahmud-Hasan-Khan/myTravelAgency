@@ -1,120 +1,157 @@
 [
     {
-        "name": "Biman",
-        "image": "https://i.ibb.co.com/bgQXMrsG/biman.png"
+        "name": "Biman Bangladesh Airlines",
+        "image": "https://i.ibb.co/bgQXMrsG/biman.png",
+        "logo": "https://i.ibb.co/60NC5LxV/BG.png"
     },
     {
-        "name": "US-Bangla",
-        "image": "https://i.ibb.co.com/S4X6tCs5/us-bangla.png"
+        "name": "US-Bangla Airlines",
+        "image": "https://i.ibb.co/S4X6tCs5/us-bangla.png",
+        "logo": "https://i.ibb.co/BVyWXj7L/BS.png"
     },
     {
-        "name": "AirAstra",
-        "image": "https://i.ibb.co.com/wZz0JY3w/air-astra.png"
+        "name": "Air Astra",
+        "image": "https://i.ibb.co/wZz0JY3w/air-astra.png",
+        "logo": "https://i.ibb.co/8gS9WSCq/2A.png"
     },
     {
-        "name": "Novo Air",
-        "image": "https://i.ibb.co.com/Kjgz2h0t/NovoAir.png"
+        "name": "NOVOAIR",
+        "image": "https://i.ibb.co/Kjgz2h0t/NovoAir.png",
+        "logo": "https://i.ibb.co/Kct5xTjM/VQ.png"
     },
     {
         "name": "Emirates",
-        "image": "https://i.ibb.co.com/JwBmzrkG/emirats.png"
+        "image": "https://i.ibb.co/JwBmzrkG/emirats.png",
+        "logo": "https://i.ibb.co/pr6zMC2x/EK.png"
     },
     {
         "name": "Qatar Airways",
-        "image": "https://i.ibb.co.com/KjrzNZqt/Qater.png"
+        "image": "https://i.ibb.co/KjrzNZqt/Qater.png",
+        "logo": "https://i.ibb.co/TxwqWpwL/QR.png"
     },
     {
         "name": "Turkish Airlines",
-        "image": "https://i.ibb.co.com/V0QLRmRN/Turkish.png"
+        "image": "https://i.ibb.co/V0QLRmRN/Turkish.png",
+        "logo": "https://i.ibb.co/twLZYw5J/TK.png"
     },
     {
         "name": "Saudia",
-        "image": "https://i.ibb.co.com/GQ3mJZRs/Saudia.png"
+        "image": "https://i.ibb.co/GQ3mJZRs/Saudia.png",
+        "logo": "https://i.ibb.co/Kx5L89dq/SV.png"
     },
     {
         "name": "Singapore Airlines",
-        "image": "https://i.ibb.co.com/60rVjGxf/singapur.png"
+        "image": "https://i.ibb.co/60rVjGxf/singapur.png",
+        "logo": "https://i.ibb.co/dJt2FgXL/SQ.png"
     },
     {
         "name": "SriLankan Airlines",
-        "image": "https://i.ibb.co.com/HpkH3v1Q/Srilankan.png"
+        "image": "https://i.ibb.co/HpkH3v1Q/Srilankan.png",
+        "logo": "https://i.ibb.co/MDc1MRdm/UL.png"
     },
     {
         "name": "Thai Airways",
-        "image": "https://i.ibb.co.com/gLQJJMrm/thai.png"
+        "image": "https://i.ibb.co/gLQJJMrm/thai.png",
+        "logo": "https://i.ibb.co/SX7chKff/TG.png"
     },
     {
         "name": "Air Arabia",
-        "image": "https://i.ibb.co.com/zVpV81z5/airabia.png"
+        "image": "https://i.ibb.co/zVpV81z5/airabia.png",
+        "logo": "https://i.ibb.co/kgCYQ0yK/J9.png"
     },
     {
         "name": "AirAsia",
-        "image": "https://i.ibb.co.com/pj1S4thR/airasia.png"
+        "image": "https://i.ibb.co/pj1S4thR/airasia.png",
+        "logo": "https://i.ibb.co/N2PxJj2L/AK.png"
     },
     {
         "name": "Air India",
-        "image": "https://i.ibb.co.com/7JhW6Qv6/airIndia.png"
+        "image": "https://i.ibb.co/7JhW6Qv6/airIndia.png",
+        "logo": "https://i.ibb.co/FLtC3ggG/AI.png"
     },
     {
-        "name": "Batik",
-        "image": "https://i.ibb.co.com/M59psfJm/batik.png"
+        "name": "Batik Air",
+        "image": "https://i.ibb.co/M59psfJm/batik.png",
+        "logo": "https://i.ibb.co/vgFJQWr/ID.png"
     },
     {
         "name": "Cathay Pacific",
-        "image": "https://i.ibb.co.com/Sw3wcGkh/Cathay.png"
+        "image": "https://i.ibb.co/Sw3wcGkh/Cathay.png",
+        "logo": "https://i.ibb.co/8L9djsmy/CX.png"
     },
     {
         "name": "China Southern",
-        "image": "https://i.ibb.co.com/gF3075NX/CZ.jpg"
+        "image": "https://i.ibb.co/gF3075NX/CZ.jpg",
+        "logo": "https://i.ibb.co/Fbmxpk8r/CZ.png"
     },
     {
         "name": "Air China",
-        "image": "https://i.ibb.co.com/Txy91J5P/Air-China-logo-logotype-emblem-Custom.png"
+        "image": "https://i.ibb.co/Txy91J5P/Air-China-logo-logotype-emblem-Custom.png",
+        "logo": "https://i.ibb.co/7tJy6jDy/CA.png"
     },
     {
         "name": "FitsAir",
-        "image": "https://i.ibb.co.com/Cs4SRV63/fitsair.png"
+        "image": "https://i.ibb.co/Cs4SRV63/fitsair.png",
+        "logo": "https://i.ibb.co/XZDHyyhd/8D.png"
     },
     {
         "name": "FlyDubai",
-        "image": "https://i.ibb.co.com/Fq59C4Cc/flydubai.png"
+        "image": "https://i.ibb.co/Fq59C4Cc/flydubai.png",
+        "logo": "https://i.ibb.co/CK68d51x/FZ.png"
     },
     {
         "name": "Gulf Air",
-        "image": "https://i.ibb.co.com/Xx4WtsRd/Gulfair.png"
+        "image": "https://i.ibb.co/Xx4WtsRd/Gulfair.png",
+        "logo": "https://i.ibb.co/20fBzJ3f/GF.jpg"
     },
     {
         "name": "EgyptAir",
-        "image": "https://i.ibb.co.com/ycsHLrCm/egyptair.png"
+        "image": "https://i.ibb.co/ycsHLrCm/egyptair.png",
+        "logo": "https://i.ibb.co/gZbmD7rt/MS.png"
     },
     {
         "name": "Himalayan",
-        "image": "https://i.ibb.co.com/rKH7gsbP/himalayan.png"
+        "image": "https://i.ibb.co/rKH7gsbP/himalayan.png",
+        "logo": "https://i.ibb.co/Zpn5NKDr/H9.png"
     },
     {
         "name": "IndiGo",
-        "image": "https://i.ibb.co.com/FbZPzDKm/indigo.png"
+        "image": "https://i.ibb.co/FbZPzDKm/indigo.png",
+        "logo": "https://i.ibb.co/wFr5cc7W/6E.png"
     },
     {
         "name": "Kuwait Airways",
-        "image": "https://i.ibb.co.com/YVqBCwD/KU.jpg"
+        "image": "https://i.ibb.co/YVqBCwD/KU.jpg",
+        "logo": "https://i.ibb.co/G3FsB8cX/KU.png"
+    },
+    {
+        "name": "Jazeera Airways",
+        "image": "https://i.ibb.co/kgCYQ0yK/J9.png",
+        "logo": "https://i.ibb.co/kgCYQ0yK/J9.png"
     },
     {
         "name": "Malaysia Airlines",
-        "image": "https://i.ibb.co.com/GfG6TX47/malaysia.png"
+        "image": "https://i.ibb.co/GfG6TX47/malaysia.png",
+        "logo": "https://i.ibb.co/YTLqNMCM/MH.png"
     },
     {
         "name": "China Eastern",
-        "image": "https://i.ibb.co.com/dHqqR5r/MU.jpg"
+        "image": "https://i.ibb.co/dHqqR5r/MU.jpg",
+        "logo": "https://i.ibb.co/hGbmXBn/MU.png"
     },
     {
         "name": "Oman Air",
-        "image": "https://i.ibb.co.com/JWc1dcRL/Oman-Air-Logo-wine-Custom.png"
-    },  
+        "image": "https://i.ibb.co/JWc1dcRL/Oman-Air-Logo-wine-Custom.png",
+        "logo": "https://ibb.co/svKppMgr"
+    },
+    {
+        "name": "Etihad Airways",
+        "image": "https://i.ibb.co/JWc1dcRL/Oman-Air-Logo-wine-Custom.png",
+        "logo": "https://i.ibb.co/6ch5CgMn/EY.png"
+    },
     {
         "name": "Vistara",
-        "image": "https://i.ibb.co.com/9kW8btPJ/Vistara.png"
+        "image": "https://i.ibb.co/9kW8btPJ/Vistara.png",
+        "logo": "https://ibb.co/ccV2NjcV"
     }
 ]
-
-

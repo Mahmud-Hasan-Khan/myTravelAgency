@@ -87,20 +87,6 @@ export const authOptions = {
       }
     },
 
-    // async jwt({ token, user }) {
-    //   if (user || token?.email) {
-    //     const email = user?.email || token.email;
-    //     const { collection } = await dbConnect("users");
-    //     const dbUser = await collection.findOne({ email });
-
-    //     token.email = email;
-    //     token.role = dbUser?.role || "user";
-    //     token.phoneNumber = dbUser?.phoneNumber || null;
-    //     token.profileComplete = !!dbUser?.phoneNumber;
-    //   }
-    //   return token;
-    // },
-
     async jwt({ token, user }) {
       try {
         const email = user?.email || token.email;
